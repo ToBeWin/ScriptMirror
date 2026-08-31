@@ -1,0 +1,219 @@
+<!DOCTYPE html><html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>文稿编辑 - Obsidian Cyber</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-fixed": "#00fbfb",
+                        "outline": "#8e9192",
+                        "on-secondary-container": "#b6b8bf",
+                        "on-tertiary-container": "#007070",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "primary": "#ffffff",
+                        "inverse-on-surface": "#313030",
+                        "background-obsidian": "#0B0C0E",
+                        "surface-bright": "#3a3939",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-fixed-variant": "#44474c",
+                        "surface-layer": "#1B1E23",
+                        "on-tertiary-fixed": "#002020",
+                        "surface-dim": "#141313",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-variant": "#353434",
+                        "on-primary": "#2f3131",
+                        "secondary": "#c4c6cd",
+                        "tertiary-fixed-dim": "#00dddd",
+                        "on-error": "#690005",
+                        "surface": "#141313",
+                        "secondary-fixed-dim": "#c4c6cd",
+                        "on-secondary": "#2e3036",
+                        "surface-container-high": "#2a2a2a",
+                        "background": "#141313",
+                        "surface-container": "#201f1f",
+                        "on-background": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#004f4f",
+                        "on-surface-variant": "#c4c7c8",
+                        "secondary-container": "#46494f",
+                        "inverse-primary": "#5d5f5f",
+                        "tertiary-container": "#00fbfb",
+                        "on-primary-fixed-variant": "#454747",
+                        "surface-border": "#31363F",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-fixed": "#191c21",
+                        "tertiary": "#ffffff",
+                        "primary-container": "#e2e2e2",
+                        "primary-fixed": "#e2e2e2",
+                        "on-tertiary": "#003737",
+                        "surface-container-highest": "#353434",
+                        "outline-variant": "#444748",
+                        "error-container": "#93000a",
+                        "button-outline": "#BEC4CC",
+                        "on-primary-fixed": "#1a1c1c",
+                        "on-primary-container": "#636565",
+                        "secondary-fixed": "#e1e2e9",
+                        "status-recording": "#FF4D4F",
+                        "on-error-container": "#ffdad6",
+                        "surface-tint": "#c6c6c7",
+                        "error": "#ffb4ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "gutter": "16px",
+                        "margin-edge": "24px",
+                        "stack-sm": "8px",
+                        "touch-target-min": "48px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "prompter-display": ["Inter"],
+                        "prompter-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "prompter-display": ["42px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "prompter-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background-obsidian');
+            color: theme('colors.on-background');
+        }
+        .glass-card {
+            background: linear-gradient(145deg, rgba(27,30,35,0.8) 0%, rgba(27,30,35,0.4) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid theme('colors.surface-border');
+        }
+        .glass-card:hover {
+            background: rgba(58,57,57,0.5);
+        }
+        .active-card {
+            border-color: theme('colors.tertiary-fixed');
+            box-shadow: 0 0 20px rgba(0, 251, 251, 0.1);
+        }
+        .pulse-recording {
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 77, 79, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-body-md text-body-md pb-24 bg-background-obsidian">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-layer/90 dark:bg-surface-layer/90 backdrop-blur-xl border-b border-surface-border">
+<div class="flex justify-between items-center px-margin-edge h-touch-target-min w-full max-w-3xl mx-auto">
+<button class="text-primary active:scale-95 duration-200 hover:bg-surface-bright/20 transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary text-center flex-1">夏季防晒分享</h1>
+<button class="text-on-surface-variant active:scale-95 duration-200 hover:bg-surface-bright/20 transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-3xl mx-auto mt-[64px] px-margin-edge py-stack-md flex flex-col gap-stack-md bg-background-obsidian">
+<!-- Script Stats -->
+<div class="flex items-center justify-between mb-stack-sm px-2">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">EST. 1M 45S</span>
+<span class="w-1 h-1 rounded-full bg-surface-border"></span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">320 WORDS</span>
+</div>
+<button class="font-label-caps text-label-caps text-tertiary-fixed border border-button-outline rounded-full px-4 py-1 hover:bg-surface-bright transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">edit</span>
+                EDIT
+            </button>
+</div>
+<!-- Script Cards Layout -->
+<!-- Card 1 -->
+<div class="glass-card rounded-lg p-stack-md flex flex-col gap-stack-sm relative transition-all duration-300">
+<div class="flex justify-between items-start w-full">
+<span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-variant px-2 py-1 rounded">01</span>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">more_horiz</span>
+</button>
+</div>
+<p class="font-body-lg text-body-lg text-on-background">
+                大家好！炎炎夏日又到了，今天来和大家分享几个我私藏的夏日防晒小秘诀。防晒不仅是防止变黑，更是保护皮肤免受紫外线伤害哦。
+            </p>
+<div class="flex justify-end mt-2">
+<span class="font-label-caps text-label-caps text-tertiary-fixed opacity-70">~ 15s</span>
+</div>
+</div>
+<!-- Card 2 (Active) -->
+<div class="glass-card active-card rounded-lg p-stack-md flex flex-col gap-stack-sm relative transition-all duration-300 transform scale-[1.02] bg-surface-layer">
+<div class="flex justify-between items-start w-full">
+<span class="font-label-caps text-label-caps text-background-obsidian bg-tertiary-fixed px-2 py-1 rounded">02</span>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-status-recording pulse-recording"></span>
+<button class="text-tertiary-fixed hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">drag_indicator</span>
+</button>
+</div>
+</div>
+<textarea class="w-full bg-transparent border-none focus:ring-0 resize-none font-prompter-lg text-prompter-lg text-primary placeholder-on-surface-variant p-0 h-32 leading-relaxed" placeholder="Type script here...">首先，防晒霜的选择非常重要。对于日常通勤，SPF 30 左右就足够了。但如果去海边，一定要选择 SPF 50+ 且具有防水功能的防晒霜。记得每两小时补涂一次！</textarea>
+<div class="flex justify-end mt-2">
+<span class="font-label-caps text-label-caps text-tertiary-fixed">~ 25s</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-card rounded-lg p-stack-md flex flex-col gap-stack-sm relative transition-all duration-300 opacity-60 hover:opacity-100">
+<div class="flex justify-between items-start w-full">
+<span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-variant px-2 py-1 rounded">03</span>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">more_horiz</span>
+</button>
+</div>
+<p class="font-body-lg text-body-lg text-on-background line-clamp-3">
+                除了硬防晒，软防晒也必不可少。出门撑一把防紫外线的遮阳伞，戴上墨镜和宽沿帽，物理防晒才是最直接有效的手段。
+            </p>
+<div class="flex justify-end mt-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant opacity-70">~ 20s</span>
+</div>
+</div>
+<!-- Add New Block Button -->
+<button class="w-full py-stack-md border border-dashed border-surface-border rounded-lg text-on-surface-variant hover:text-tertiary-fixed hover:border-tertiary-fixed transition-colors flex flex-col items-center justify-center gap-2">
+<span class="material-symbols-outlined text-2xl">add_circle</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest">Add Script Block</span>
+</button>
+</main>
+<!-- Fixed Bottom Action Area -->
+<div class="fixed bottom-0 left-0 right-0 p-margin-edge bg-gradient-to-t from-background-obsidian via-background-obsidian/90 to-transparent flex justify-center pb-8 z-40">
+<button class="w-full max-w-sm h-14 rounded-full bg-surface-layer border border-tertiary-fixed/30 flex items-center justify-center gap-3 text-primary font-prompter-lg text-[20px] font-semibold tracking-wide hover:shadow-[0_0_20px_rgba(0,251,251,0.2)] hover:border-tertiary-fixed transition-all duration-300 active:scale-95 group">
+<span class="material-symbols-outlined text-tertiary-fixed group-hover:scale-110 transition-transform">videocam</span>
+             进入拍摄准备
+        </button>
+</div>
+
+
+</body></html>

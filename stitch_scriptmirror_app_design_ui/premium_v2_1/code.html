@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>首页 - 最近文稿 | ScriptMirror</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-fixed": "#00fbfb",
+                        "outline": "#8e9192",
+                        "on-secondary-container": "#b6b8bf",
+                        "on-tertiary-container": "#007070",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "primary": "#ffffff",
+                        "inverse-on-surface": "#313030",
+                        "background-obsidian": "#0B0C0E",
+                        "surface-bright": "#3a3939",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-fixed-variant": "#44474c",
+                        "surface-layer": "#1B1E23",
+                        "on-tertiary-fixed": "#002020",
+                        "surface-dim": "#141313",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-variant": "#353434",
+                        "on-primary": "#2f3131",
+                        "secondary": "#c4c6cd",
+                        "tertiary-fixed-dim": "#00dddd",
+                        "on-error": "#690005",
+                        "surface": "#141313",
+                        "secondary-fixed-dim": "#c4c6cd",
+                        "on-secondary": "#2e3036",
+                        "surface-container-high": "#2a2a2a",
+                        "background": "#141313",
+                        "surface-container": "#201f1f",
+                        "on-background": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#004f4f",
+                        "on-surface-variant": "#c4c7c8",
+                        "secondary-container": "#46494f",
+                        "inverse-primary": "#5d5f5f",
+                        "tertiary-container": "#00fbfb",
+                        "on-primary-fixed-variant": "#454747",
+                        "surface-border": "#31363F",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-fixed": "#191c21",
+                        "tertiary": "#ffffff",
+                        "primary-container": "#e2e2e2",
+                        "primary-fixed": "#e2e2e2",
+                        "on-tertiary": "#003737",
+                        "surface-container-highest": "#353434",
+                        "outline-variant": "#444748",
+                        "error-container": "#93000a",
+                        "button-outline": "#BEC4CC",
+                        "on-primary-fixed": "#1a1c1c",
+                        "on-primary-container": "#636565",
+                        "secondary-fixed": "#e1e2e9",
+                        "status-recording": "#FF4D4F",
+                        "on-error-container": "#ffdad6",
+                        "surface-tint": "#c6c6c7",
+                        "error": "#ffb4ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "gutter": "16px",
+                        "margin-edge": "24px",
+                        "stack-sm": "8px",
+                        "touch-target-min": "48px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "prompter-display": ["Inter"],
+                        "prompter-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "prompter-display": ["42px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "prompter-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .hero-glow {
+            box-shadow: 0 0 40px rgba(0, 251, 251, 0.15), inset 0 0 20px rgba(0, 251, 251, 0.05);
+            transition: all 0.3s ease;
+        }
+        .hero-glow:hover {
+            box-shadow: 0 0 60px rgba(0, 251, 251, 0.25), inset 0 0 30px rgba(0, 251, 251, 0.1);
+            transform: scale(1.02);
+        }
+        .pulse-recording {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    </style>
+</head>
+<body class="bg-background-obsidian text-on-surface min-h-screen font-body-md flex flex-col md:pb-0 pb-[100px]">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-layer/90 dark:bg-surface-layer/90 backdrop-blur-xl border-b border-surface-border">
+<div class="flex justify-between items-center px-margin-edge h-touch-target-min w-full max-w-3xl mx-auto">
+<button class="text-on-surface-variant hover:bg-surface-bright/20 transition-colors active:scale-95 duration-200 flex items-center justify-center p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-label-caps text-label-caps tracking-widest text-tertiary-fixed uppercase">
+                脚本镜像
+            </h1>
+<button class="text-on-surface-variant hover:bg-surface-bright/20 transition-colors active:scale-95 duration-200 flex items-center justify-center p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="w-full max-w-3xl mx-auto pt-[80px] px-margin-edge flex-grow flex flex-col gap-stack-lg">
+<!-- Hero Button: Start Recording -->
+<div class="pt-8 pb-4 flex justify-center">
+<button class="hero-glow relative w-64 h-64 rounded-full bg-surface-layer border border-tertiary-fixed/30 flex flex-col items-center justify-center gap-4 group">
+<div class="absolute inset-0 rounded-full bg-gradient-to-b from-tertiary-fixed/5 to-transparent pointer-events-none"></div>
+<div class="w-4 h-4 rounded-full bg-status-recording pulse-recording mb-2 shadow-[0_0_10px_rgba(255,77,79,0.8)]"></div>
+<span class="material-symbols-outlined text-[64px] text-tertiary-fixed group-hover:scale-110 transition-transform duration-300" data-icon="videocam">videocam</span>
+<span class="font-prompter-lg text-prompter-lg text-primary tracking-tight">开始拍摄</span>
+</button>
+</div>
+<!-- Recent Scripts Section -->
+<section class="flex flex-col gap-stack-md">
+<div class="flex justify-between items-end pb-2 border-b border-surface-border/50">
+<h2 class="font-headline-md text-headline-md text-primary">最近文稿</h2>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-tertiary-fixed transition-colors" href="#">全部文稿 <span class="material-symbols-outlined text-[14px] align-middle ml-1" data-icon="arrow_forward">arrow_forward</span></a>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Script Item 1 -->
+<button class="w-full text-left bg-surface-layer/60 hover:bg-surface-bright/50 border border-surface-border backdrop-blur-md rounded-lg p-4 transition-all duration-200 flex flex-col gap-2 group">
+<h3 class="font-body-lg text-body-lg text-on-surface group-hover:text-tertiary-fixed transition-colors truncate">产品发布会宣讲稿_V3_最终版</h3>
+<div class="flex items-center gap-2 font-label-caps text-label-caps text-on-surface-variant">
+<span>125 行</span>
+<span class="w-1 h-1 rounded-full bg-surface-border"></span>
+<span>08:45</span>
+<span class="w-1 h-1 rounded-full bg-surface-border"></span>
+<span>今天 14:30</span>
+</div>
+</button>
+<!-- Script Item 2 -->
+<button class="w-full text-left bg-surface-layer/40 hover:bg-surface-bright/50 border border-surface-border backdrop-blur-md rounded-lg p-4 transition-all duration-200 flex flex-col gap-2 group">
+<h3 class="font-body-lg text-body-lg text-on-surface group-hover:text-tertiary-fixed transition-colors truncate">2024年度总结视频大纲</h3>
+<div class="flex items-center gap-2 font-label-caps text-label-caps text-on-surface-variant">
+<span>84 行</span>
+<span class="w-1 h-1 rounded-full bg-surface-border"></span>
+<span>05:12</span>
+<span class="w-1 h-1 rounded-full bg-surface-border"></span>
+<span>昨天 09:15</span>
+</div>
+</button>
+<!-- Script Item 3 -->
+<button class="w-full text-left bg-surface-layer/40 hover:bg-surface-bright/50 border border-surface-border backdrop-blur-md rounded-lg p-4 transition-all duration-200 flex flex-col gap-2 group">
+<h3 class="font-body-lg text-body-lg text-on-surface group-hover:text-tertiary-fixed transition-colors truncate">短视频口播素材_科技数码向</h3>
+<div class="flex items-center gap-2 font-label-caps text-label-caps text-on-surface-variant">
+<span>42 行</span>
+<span class="w-1 h-1 rounded-full bg-surface-border"></span>
+<span>02:30</span>
+<span class="w-1 h-1 rounded-full bg-surface-border"></span>
+<span>10-24 16:40</span>
+</div>
+</button>
+</div>
+<!-- Action Buttons -->
+<div class="grid grid-cols-2 gap-4 mt-4 pb-8">
+<button class="flex items-center justify-center gap-2 py-3 px-4 rounded-full border border-button-outline/30 bg-surface-layer hover:bg-surface-bright/40 text-primary font-body-md text-body-md transition-colors">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                    新建文稿
+                </button>
+<button class="flex items-center justify-center gap-2 py-3 px-4 rounded-full border border-surface-border bg-surface-container-low hover:bg-surface-bright/40 text-on-surface-variant font-body-md text-body-md transition-colors">
+<span class="material-symbols-outlined" data-icon="folder">folder</span>
+                    从文件导入
+                </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-6 left-0 right-0 z-50 flex justify-around items-center px-stack-md py-stack-sm bg-surface-container-highest/95 dark:bg-surface-container-highest/95 backdrop-blur-2xl border border-surface-border shadow-lg shadow-black/40 mx-auto w-[calc(100%-48px)] max-w-md rounded-full">
+<button class="flex items-center justify-center text-on-surface-variant p-4 hover:text-primary transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined font-variation-settings-'FILL'-1" data-icon="skip_previous">skip_previous</span>
+</button>
+<button class="flex items-center justify-center bg-tertiary-fixed/10 text-tertiary-fixed rounded-full p-4 hover:text-primary transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined" data-icon="fiber_manual_record" data-weight="fill" style="font-variation-settings: 'FILL' 1;">fiber_manual_record</span>
+</button>
+<button class="flex items-center justify-center text-on-surface-variant p-4 hover:text-primary transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined font-variation-settings-'FILL'-1" data-icon="skip_next">skip_next</span>
+</button>
+</nav>
+</body></html>

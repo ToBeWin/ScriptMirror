@@ -1,0 +1,246 @@
+<!DOCTYPE html><html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>设置与个性化 - 脚本镜像</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-fixed": "#00fbfb",
+                        "outline": "#8e9192",
+                        "on-secondary-container": "#b6b8bf",
+                        "on-tertiary-container": "#007070",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "primary": "#ffffff",
+                        "inverse-on-surface": "#313030",
+                        "background-obsidian": "#0B0C0E",
+                        "surface-bright": "#3a3939",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-fixed-variant": "#44474c",
+                        "surface-layer": "#1B1E23",
+                        "on-tertiary-fixed": "#002020",
+                        "surface-dim": "#141313",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-variant": "#353434",
+                        "on-primary": "#2f3131",
+                        "secondary": "#c4c6cd",
+                        "tertiary-fixed-dim": "#00dddd",
+                        "on-error": "#690005",
+                        "surface": "#141313",
+                        "secondary-fixed-dim": "#c4c6cd",
+                        "on-secondary": "#2e3036",
+                        "surface-container-high": "#2a2a2a",
+                        "background": "#141313",
+                        "surface-container": "#201f1f",
+                        "on-background": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#004f4f",
+                        "on-surface-variant": "#c4c7c8",
+                        "secondary-container": "#46494f",
+                        "inverse-primary": "#5d5f5f",
+                        "tertiary-container": "#00fbfb",
+                        "on-primary-fixed-variant": "#454747",
+                        "surface-border": "#31363F",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-fixed": "#191c21",
+                        "tertiary": "#ffffff",
+                        "primary-container": "#e2e2e2",
+                        "primary-fixed": "#e2e2e2",
+                        "on-tertiary": "#003737",
+                        "surface-container-highest": "#353434",
+                        "outline-variant": "#444748",
+                        "error-container": "#93000a",
+                        "button-outline": "#BEC4CC",
+                        "on-primary-fixed": "#1a1c1c",
+                        "on-primary-container": "#636565",
+                        "secondary-fixed": "#e1e2e9",
+                        "status-recording": "#FF4D4F",
+                        "on-error-container": "#ffdad6",
+                        "surface-tint": "#c6c6c7",
+                        "error": "#ffb4ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "gutter": "16px",
+                        "margin-edge": "24px",
+                        "stack-sm": "8px",
+                        "touch-target-min": "48px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "prompter-display": ["Inter"],
+                        "prompter-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "prompter-display": ["42px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "prompter-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background-obsidian');
+            color: theme('colors.on-background');
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: linear-gradient(145deg, rgba(27, 30, 35, 0.8) 0%, rgba(27, 30, 35, 0.4) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid theme('colors.surface-border');
+        }
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: theme('colors.tertiary-fixed');
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: theme('colors.tertiary-fixed');
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-32" style="background-color: rgb(11, 12, 14);">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 dark:bg-surface-layer/90 backdrop-blur-xl border-b border-surface-border bg-surface">
+<div class="flex justify-between items-center px-margin-edge h-touch-target-min w-full max-w-3xl mx-auto">
+<button class="text-on-surface-variant hover:bg-surface-bright/20 transition-colors active:scale-95 duration-200 p-2 rounded-full">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary">脚本镜像</h1>
+<button class="text-primary hover:bg-surface-bright/20 transition-colors active:scale-95 duration-200 p-2 rounded-full">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<main class="max-w-3xl mx-auto pt-24 px-margin-edge flex flex-col gap-stack-lg">
+<!-- Settings Section 1: Prompter Preferences -->
+<section>
+<h2 class="font-label-caps text-label-caps text-on-surface-variant mb-stack-sm uppercase">提词器偏好</h2>
+<div class="glass-card rounded-xl overflow-hidden flex flex-col">
+<!-- Font Size Setting -->
+<div class="p-gutter border-b border-surface-border/50 flex justify-between items-center hover:bg-surface-bright/20 transition-colors">
+<div class="flex items-center gap-gutter">
+<span class="material-symbols-outlined text-tertiary-fixed">format_size</span>
+<div>
+<p class="font-body-lg text-body-lg text-on-surface">默认字号</p>
+<p class="font-body-md text-body-md text-on-surface-variant">大号 (32px)</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+<!-- Transparency Setting -->
+<div class="p-gutter border-b border-surface-border/50 flex justify-between items-center hover:bg-surface-bright/20 transition-colors">
+<div class="flex items-center gap-gutter">
+<span class="material-symbols-outlined text-tertiary-fixed">opacity</span>
+<div>
+<p class="font-body-lg text-body-lg text-on-surface">背景透明度</p>
+<p class="font-body-md text-body-md text-on-surface-variant">40% 磨砂玻璃</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+<!-- Future Lines Setting -->
+<div class="p-gutter flex justify-between items-center hover:bg-surface-bright/20 transition-colors">
+<div class="flex items-center gap-gutter">
+<span class="material-symbols-outlined text-tertiary-fixed">visibility</span>
+<div>
+<p class="font-body-lg text-body-lg text-on-surface">前瞻行数</p>
+<p class="font-body-md text-body-md text-on-surface-variant">显示当前及后续 3 行</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Settings Section 2: Storage & Behavior -->
+<section>
+<h2 class="font-label-caps text-label-caps text-on-surface-variant mb-stack-sm uppercase">存储与行为</h2>
+<div class="glass-card rounded-xl overflow-hidden flex flex-col">
+<!-- Auto Save Toggle -->
+<div class="p-gutter border-b border-surface-border/50 flex justify-between items-center hover:bg-surface-bright/20 transition-colors">
+<div class="flex items-center gap-gutter">
+<span class="material-symbols-outlined text-primary">save</span>
+<div>
+<p class="font-body-lg text-body-lg text-on-surface">自动保存录制</p>
+<p class="font-body-md text-body-md text-on-surface-variant">录制结束后自动保存视频</p>
+</div>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-surface border-4 appearance-none cursor-pointer border-surface-border" id="toggle-save" name="toggle" type="checkbox">
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-tertiary-fixed cursor-pointer" for="toggle-save"></label>
+</div>
+</div>
+<!-- Storage Path -->
+<div class="p-gutter flex justify-between items-center hover:bg-surface-bright/20 transition-colors">
+<div class="flex items-center gap-gutter">
+<span class="material-symbols-outlined text-primary">folder</span>
+<div>
+<p class="font-body-lg text-body-lg text-on-surface">存储路径</p>
+<p class="font-body-md text-body-md text-on-surface-variant">系统相册</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Settings Section 3: About -->
+<section>
+<h2 class="font-label-caps text-label-caps text-on-surface-variant mb-stack-sm uppercase">关于</h2>
+<div class="glass-card rounded-xl overflow-hidden flex flex-col">
+<div class="p-gutter flex justify-between items-center hover:bg-surface-bright/20 transition-colors">
+<div class="flex items-center gap-gutter">
+<span class="material-symbols-outlined text-primary">info</span>
+<div>
+<p class="font-body-lg text-body-lg text-on-surface">关于镜词</p>
+<p class="font-body-md text-body-md text-on-surface-variant">版本 v2.4.1 Premium</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Logout Button -->
+<button class="w-full py-stack-md rounded-lg border border-error/50 text-error font-body-lg text-body-lg hover:bg-error/10 transition-colors">
+            退出登录
+        </button>
+</main>
+<!-- BottomNavBar (Settings is not a primary destination for bottom nav typically, but keeping it per JSON instructions if it were part of a main flow, however JSON says "fiber_manual_record" is one of them. For a purely settings page, we might suppress it, but I will render it as instructed, though styling it as inactive for settings) -->
+<!-- Note: Following Shell Visibility & Relevance: Settings is a top-level destination? Actually it says "Suppress on Settings". So I will NOT render BottomNavBar. -->
+<script>
+        // Simple toggle interaction
+        document.querySelectorAll('.toggle-checkbox').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const label = this.nextElementSibling;
+                if(this.checked) {
+                    label.style.backgroundColor = 'theme("colors.tertiary-fixed")';
+                    this.style.borderColor = 'theme("colors.tertiary-fixed")';
+                } else {
+                    label.style.backgroundColor = 'theme("colors.surface-variant")';
+                    this.style.borderColor = 'theme("colors.surface-border")';
+                }
+            });
+        });
+    </script>
+
+
+</body></html>

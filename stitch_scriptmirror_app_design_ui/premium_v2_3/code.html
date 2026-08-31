@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>拍摄准备 - Obsidian Cyber</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-fixed": "#00fbfb",
+                        "outline": "#8e9192",
+                        "on-secondary-container": "#b6b8bf",
+                        "on-tertiary-container": "#007070",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "primary": "#ffffff",
+                        "inverse-on-surface": "#313030",
+                        "background-obsidian": "#0B0C0E",
+                        "surface-bright": "#3a3939",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-fixed-variant": "#44474c",
+                        "surface-layer": "#1B1E23",
+                        "on-tertiary-fixed": "#002020",
+                        "surface-dim": "#141313",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-variant": "#353434",
+                        "on-primary": "#2f3131",
+                        "secondary": "#c4c6cd",
+                        "tertiary-fixed-dim": "#00dddd",
+                        "on-error": "#690005",
+                        "surface": "#141313",
+                        "secondary-fixed-dim": "#c4c6cd",
+                        "on-secondary": "#2e3036",
+                        "surface-container-high": "#2a2a2a",
+                        "background": "#141313",
+                        "surface-container": "#201f1f",
+                        "on-background": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#004f4f",
+                        "on-surface-variant": "#c4c7c8",
+                        "secondary-container": "#46494f",
+                        "inverse-primary": "#5d5f5f",
+                        "tertiary-container": "#00fbfb",
+                        "on-primary-fixed-variant": "#454747",
+                        "surface-border": "#31363F",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-fixed": "#191c21",
+                        "tertiary": "#ffffff",
+                        "primary-container": "#e2e2e2",
+                        "primary-fixed": "#e2e2e2",
+                        "on-tertiary": "#003737",
+                        "surface-container-highest": "#353434",
+                        "outline-variant": "#444748",
+                        "error-container": "#93000a",
+                        "button-outline": "#BEC4CC",
+                        "on-primary-fixed": "#1a1c1c",
+                        "on-primary-container": "#636565",
+                        "secondary-fixed": "#e1e2e9",
+                        "status-recording": "#FF4D4F",
+                        "on-error-container": "#ffdad6",
+                        "surface-tint": "#c6c6c7",
+                        "error": "#ffb4ab"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                    spacing: {
+                        "stack-md": "16px",
+                        "gutter": "16px",
+                        "margin-edge": "24px",
+                        "stack-sm": "8px",
+                        "touch-target-min": "48px",
+                        "stack-lg": "32px"
+                    },
+                    fontFamily: {
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "prompter-display": ["Inter"],
+                        "prompter-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    fontSize: {
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+                        "prompter-display": ["42px", { lineHeight: "52px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "prompter-lg": ["32px", { lineHeight: "40px", fontWeight: "600" }],
+                        "label-caps": ["12px", { lineHeight: "16px", letterSpacing: "0.08em", fontWeight: "700" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }]
+                    }
+                }
+            }
+        };
+    </script>
+<style>
+        @keyframes pulse-cyan {
+            0% { box-shadow: 0 0 0 0 rgba(0, 251, 251, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 251, 251, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 251, 251, 0); }
+        }
+        @keyframes pulse-recording {
+            0% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.4); transform: scale(1); }
+            50% { box-shadow: 0 0 20px 5px rgba(255, 77, 79, 0.2); transform: scale(1.02); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0); transform: scale(1); }
+        }
+        .animate-pulse-cyan {
+            animation: pulse-cyan 2s infinite;
+        }
+        .hover-glow-cyan:hover {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+        }
+        /* Custom Checkbox */
+        input[type="checkbox"]:checked {
+            background-color: theme('colors.tertiary-fixed');
+            border-color: theme('colors.tertiary-fixed');
+        }
+        input[type="checkbox"]:checked:hover, input[type="checkbox"]:checked:focus {
+            background-color: theme('colors.tertiary-fixed-dim');
+            border-color: theme('colors.tertiary-fixed-dim');
+        }
+    </style>
+</head>
+<body class="bg-background-obsidian text-on-surface min-h-screen flex flex-col items-center">
+<!-- TopAppBar (Transactional - Nav hidden, but header present) -->
+<header class="fixed top-0 w-full z-50 bg-surface-layer/90 dark:bg-surface-layer/90 backdrop-blur-xl border-b border-surface-border">
+<div class="flex justify-between items-center px-margin-edge h-touch-target-min w-full max-w-3xl mx-auto">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center w-touch-target-min h-touch-target-min rounded-full hover:bg-surface-bright/20 active:scale-95 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary">拍摄准备</h1>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center w-touch-target-min h-touch-target-min rounded-full hover:bg-surface-bright/20 active:scale-95 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="w-full max-w-3xl flex-1 px-margin-edge pt-24 pb-32 flex flex-col gap-stack-lg">
+<!-- Script Preview Hint -->
+<div class="flex items-center justify-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed animate-pulse-cyan"></span>
+<span class="font-label-caps text-label-caps text-tertiary-fixed tracking-widest uppercase">语音跟稿可用</span>
+</div>
+<!-- Camera Selection Bento -->
+<section class="grid grid-cols-2 gap-gutter">
+<!-- Front Camera Card -->
+<button class="group flex flex-col items-center justify-center gap-stack-sm p-6 rounded-xl bg-surface-layer border border-tertiary-fixed/30 hover-glow-cyan transition-all relative overflow-hidden bg-gradient-to-b from-surface-layer to-surface-bright/20">
+<div class="absolute inset-0 bg-tertiary-fixed/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="material-symbols-outlined text-4xl text-tertiary-fixed" style="font-variation-settings: 'FILL' 1;">4g_mobiledata</span>
+<span class="font-body-md text-body-md text-primary font-semibold">前置镜头</span>
+<div class="absolute top-3 right-3 w-4 h-4 rounded-full border-2 border-tertiary-fixed bg-tertiary-fixed/20 flex items-center justify-center">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span>
+</div>
+</button>
+<!-- Rear Camera Card -->
+<button class="group flex flex-col items-center justify-center gap-stack-sm p-6 rounded-xl bg-surface-layer border border-surface-border hover:bg-surface-bright/50 transition-colors">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant group-hover:text-primary transition-colors" style="font-variation-settings: 'FILL' 0;">rear_camera</span>
+<span class="font-body-md text-body-md text-on-surface-variant group-hover:text-primary transition-colors">后置镜头</span>
+</button>
+</section>
+<!-- Settings List -->
+<section class="flex flex-col gap-stack-sm">
+<!-- Video Quality -->
+<div class="flex items-center justify-between p-4 rounded-lg bg-surface-layer/60 backdrop-blur-md border border-surface-border">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">high_quality</span>
+<span class="font-body-lg text-body-lg text-primary">视频画质</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-body-md text-body-md text-tertiary-fixed">1080p</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">chevron_right</span>
+</div>
+</div>
+<!-- Prompter Speed -->
+<div class="flex flex-col gap-2 p-4 rounded-lg bg-surface-layer/60 backdrop-blur-md border border-surface-border">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">speed</span>
+<span class="font-body-lg text-body-lg text-primary">提词速度</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface-variant">中速</span>
+</div>
+<input class="w-full h-1 bg-surface-bright rounded-lg appearance-none cursor-pointer accent-tertiary-fixed mt-2" max="100" min="1" type="range" value="50"/>
+</div>
+<!-- Auto-scroll Switch -->
+<label class="flex items-center justify-between p-4 rounded-lg bg-surface-layer/60 backdrop-blur-md border border-surface-border cursor-pointer hover:bg-surface-bright/30 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">graphic_eq</span>
+<div>
+<span class="font-body-lg text-body-lg text-primary block">语音跟稿</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">根据说话速度自动滚动</span>
+</div>
+</div>
+<div class="relative inline-block w-12 h-6 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition-transform duration-200 ease-in-out translate-x-6 checked:border-tertiary-fixed" id="toggle" name="toggle" style="border-color: #00fbfb; background-color: white;" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-tertiary-fixed cursor-pointer" for="toggle"></label>
+</div>
+</label>
+</section>
+</main>
+<!-- Bottom Action (Hero Button) -->
+<div class="fixed bottom-0 left-0 w-full p-margin-edge bg-gradient-to-t from-background-obsidian via-background-obsidian/90 to-transparent flex justify-center pb-8">
+<button class="w-full max-w-md h-[80px] rounded-full bg-surface-layer border-2 border-status-recording/50 flex items-center justify-center gap-4 hover:bg-surface-bright/20 transition-all active:scale-95 duration-200" style="animation: pulse-recording 2s infinite;">
+<div class="w-6 h-6 rounded-full bg-status-recording flex items-center justify-center">
+<!-- Inner dot -->
+<div class="w-2 h-2 rounded-full bg-white"></div>
+</div>
+<span class="font-prompter-lg text-prompter-lg text-status-recording tracking-wide">开始录制</span>
+</button>
+</div>
+</body></html>

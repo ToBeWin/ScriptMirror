@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Obsidian Cyber - Immersive Recording</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-fixed": "#00fbfb",
+                        "outline": "#8e9192",
+                        "on-secondary-container": "#b6b8bf",
+                        "on-tertiary-container": "#007070",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "primary": "#ffffff",
+                        "inverse-on-surface": "#313030",
+                        "background-obsidian": "#0B0C0E",
+                        "surface-bright": "#3a3939",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-fixed-variant": "#44474c",
+                        "surface-layer": "#1B1E23",
+                        "on-tertiary-fixed": "#002020",
+                        "surface-dim": "#141313",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-variant": "#353434",
+                        "on-primary": "#2f3131",
+                        "secondary": "#c4c6cd",
+                        "tertiary-fixed-dim": "#00dddd",
+                        "on-error": "#690005",
+                        "surface": "#141313",
+                        "secondary-fixed-dim": "#c4c6cd",
+                        "on-secondary": "#2e3036",
+                        "surface-container-high": "#2a2a2a",
+                        "background": "#141313",
+                        "surface-container": "#201f1f",
+                        "on-background": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#004f4f",
+                        "on-surface-variant": "#c4c7c8",
+                        "secondary-container": "#46494f",
+                        "inverse-primary": "#5d5f5f",
+                        "tertiary-container": "#00fbfb",
+                        "on-primary-fixed-variant": "#454747",
+                        "surface-border": "#31363F",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-fixed": "#191c21",
+                        "tertiary": "#ffffff",
+                        "primary-container": "#e2e2e2",
+                        "primary-fixed": "#e2e2e2",
+                        "on-tertiary": "#003737",
+                        "surface-container-highest": "#353434",
+                        "outline-variant": "#444748",
+                        "error-container": "#93000a",
+                        "button-outline": "#BEC4CC",
+                        "on-primary-fixed": "#1a1c1c",
+                        "on-primary-container": "#636565",
+                        "secondary-fixed": "#e1e2e9",
+                        "status-recording": "#FF4D4F",
+                        "on-error-container": "#ffdad6",
+                        "surface-tint": "#c6c6c7",
+                        "error": "#ffb4ab"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "stack-md": "16px",
+                        "gutter": "16px",
+                        "margin-edge": "24px",
+                        "stack-sm": "8px",
+                        "touch-target-min": "48px",
+                        "stack-lg": "32px"
+                    },
+                    fontFamily: {
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "prompter-display": ["Inter"],
+                        "prompter-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    fontSize: {
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+                        "prompter-display": ["42px", { lineHeight: "52px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "prompter-lg": ["32px", { lineHeight: "40px", fontWeight: "600" }],
+                        "label-caps": ["12px", { lineHeight: "16px", letterSpacing: "0.08em", fontWeight: "700" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background-obsidian h-screen w-full overflow-hidden relative select-none">
+<!-- Camera Feed Background Layer -->
+<div class="absolute inset-0 z-0 bg-cover bg-center" data-alt="A cinematic, high-quality portrait of a professional content creator looking directly into the camera lens. The scene is lit with a cyber-minimalist aesthetic, featuring deep black shadows and subtle, high-contrast neon cyan and red rim lighting. The subject is positioned to leave the top half of the frame mostly clear, emphasizing a high-tech studio environment." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDXj3tiAEQiN0c_Hg9KISuv5IsBlQB3BNy21LP580OTakB1-BkGeSB4O_HL7QPAY8E1s4USAs6t6ODRETrjYR9bzfHglto38hrOi0pbL7rkCoyKonpz9XKHwRjeqqxqYXyBNzMCseeU42uhhZkvEJaDDHH-RSUg8sfqUVidTHcy2ZOuJ6g5yowwFs79ZvN_9IMUidxgQ7sGAok5cfuaxlnXkBsEeVSPukl1XHExLxPbJ7Gi9dT3RHrHUQ')">
+</div>
+<!-- Top Heavy Blur Overlay -->
+<div class="absolute inset-x-0 top-0 h-[60vh] bg-gradient-to-b from-background-obsidian/95 via-surface-layer/80 to-transparent backdrop-blur-2xl z-10 pointer-events-none border-b border-surface-border/20"></div>
+<!-- Top Status Bar (Timer) -->
+<div class="absolute top-0 inset-x-0 z-20 flex justify-center items-start pt-12 px-margin-edge pointer-events-none">
+<div class="flex items-center gap-2 bg-surface-layer/60 backdrop-blur-xl px-4 py-2 rounded-full border border-surface-border/50 shadow-lg shadow-black/50">
+<div class="w-2.5 h-2.5 rounded-full bg-status-recording animate-pulse"></div>
+<span class="font-label-caps text-label-caps text-primary tracking-widest tabular-nums mt-0.5">00:03:42</span>
+</div>
+</div>
+<!-- Teleprompter Canvas -->
+<div class="absolute top-[22vh] inset-x-0 z-20 px-margin-edge flex flex-col items-center text-center gap-stack-md pointer-events-none">
+<!-- Current Sentence -->
+<p class="font-prompter-lg text-prompter-lg text-tertiary-fixed tracking-tight drop-shadow-[0_0_12px_rgba(0,251,251,0.3)] w-full max-w-2xl">
+            全屏录制模式下，界面极其克制。
+        </p>
+<!-- Future Sentences -->
+<div class="flex flex-col gap-stack-sm opacity-60 w-full max-w-2xl mt-4">
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                不遮挡人物面部，保持视线专注。
+            </p>
+<p class="font-body-md text-body-md text-on-surface-variant/80">
+                上半部覆有极高模糊度的黑色磨砂层。
+            </p>
+</div>
+</div>
+<!-- Bottom Controls Area -->
+<div class="absolute bottom-10 inset-x-0 z-20 flex justify-center items-center gap-stack-lg px-margin-edge">
+<!-- Previous Button -->
+<button class="w-14 h-14 rounded-full bg-surface-layer/30 backdrop-blur-xl border border-surface-border/40 flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-layer/60 transition-all active:scale-90 shadow-lg">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">skip_previous</span>
+</button>
+<!-- Record/Stop Hero Button -->
+<button class="w-20 h-20 rounded-full bg-surface-layer/40 backdrop-blur-2xl border border-status-recording/40 flex items-center justify-center group hover:border-status-recording hover:bg-status-recording/10 transition-all active:scale-95 shadow-[0_0_40px_rgba(255,77,79,0.15)] hover:shadow-[0_0_50px_rgba(255,77,79,0.3)] relative">
+<!-- Pulsing outer ring -->
+<div class="absolute inset-0 rounded-full border border-status-recording/30 animate-ping opacity-20"></div>
+<!-- Core Stop Square -->
+<div class="w-7 h-7 rounded-[4px] bg-status-recording group-hover:scale-95 transition-transform shadow-[0_0_15px_rgba(255,77,79,0.5)]"></div>
+</button>
+<!-- Next Button -->
+<button class="w-14 h-14 rounded-full bg-surface-layer/30 backdrop-blur-xl border border-surface-border/40 flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-layer/60 transition-all active:scale-90 shadow-lg">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">skip_next</span>
+</button>
+</div>
+</body></html>

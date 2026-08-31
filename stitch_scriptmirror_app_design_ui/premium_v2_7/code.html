@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>全屏录制 - 识别不确定</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-fixed": "#00fbfb",
+                        "outline": "#8e9192",
+                        "on-secondary-container": "#b6b8bf",
+                        "on-tertiary-container": "#007070",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "primary": "#ffffff",
+                        "inverse-on-surface": "#313030",
+                        "background-obsidian": "#0B0C0E",
+                        "surface-bright": "#3a3939",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-fixed-variant": "#44474c",
+                        "surface-layer": "#1B1E23",
+                        "on-tertiary-fixed": "#002020",
+                        "surface-dim": "#141313",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-variant": "#353434",
+                        "on-primary": "#2f3131",
+                        "secondary": "#c4c6cd",
+                        "tertiary-fixed-dim": "#00dddd",
+                        "on-error": "#690005",
+                        "surface": "#141313",
+                        "secondary-fixed-dim": "#c4c6cd",
+                        "on-secondary": "#2e3036",
+                        "surface-container-high": "#2a2a2a",
+                        "background": "#141313",
+                        "surface-container": "#201f1f",
+                        "on-background": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#004f4f",
+                        "on-surface-variant": "#c4c7c8",
+                        "secondary-container": "#46494f",
+                        "inverse-primary": "#5d5f5f",
+                        "tertiary-container": "#00fbfb",
+                        "on-primary-fixed-variant": "#454747",
+                        "surface-border": "#31363F",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-fixed": "#191c21",
+                        "tertiary": "#ffffff",
+                        "primary-container": "#e2e2e2",
+                        "primary-fixed": "#e2e2e2",
+                        "on-tertiary": "#003737",
+                        "surface-container-highest": "#353434",
+                        "outline-variant": "#444748",
+                        "error-container": "#93000a",
+                        "button-outline": "#BEC4CC",
+                        "on-primary-fixed": "#1a1c1c",
+                        "on-primary-container": "#636565",
+                        "secondary-fixed": "#e1e2e9",
+                        "status-recording": "#FF4D4F",
+                        "on-error-container": "#ffdad6",
+                        "surface-tint": "#c6c6c7",
+                        "error": "#ffb4ab",
+                        "status-amber": "#F59E0B"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "gutter": "16px",
+                        "margin-edge": "24px",
+                        "stack-sm": "8px",
+                        "touch-target-min": "48px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "prompter-display": ["Inter"],
+                        "prompter-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "prompter-display": ["42px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "prompter-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #0B0C0E; color: #e5e2e1; }
+        .glass-panel {
+            background: rgba(27, 30, 35, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid #31363F;
+        }
+        @keyframes pulse-amber {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+        .animate-pulse-amber {
+            animation: pulse-amber 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased min-h-screen flex flex-col items-center justify-center font-body-lg overflow-hidden select-none">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface-layer/90 dark:bg-surface-layer/90 backdrop-blur-xl border-b border-surface-border">
+<div class="flex justify-between items-center px-margin-edge h-touch-target-min w-full max-w-3xl mx-auto">
+<button aria-label="Back" class="text-primary dark:text-primary active:scale-95 duration-200 hover:bg-surface-bright/20 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold tracking-tight text-primary">脚本镜像</h1>
+<button aria-label="Settings" class="text-on-surface-variant active:scale-95 duration-200 hover:bg-surface-bright/20 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="w-full max-w-3xl flex-1 flex flex-col justify-center px-margin-edge pt-24 pb-32">
+<!-- Status Indicator -->
+<div class="flex items-center justify-center gap-2 mb-stack-lg">
+<div class="w-3 h-3 rounded-full bg-status-amber animate-pulse-amber shadow-[0_0_10px_rgba(245,158,11,0.5)]"></div>
+<span class="font-label-caps text-label-caps text-status-amber">正在确认...</span>
+</div>
+<!-- Prompter View -->
+<div class="glass-panel rounded-2xl p-8 flex flex-col gap-stack-md relative overflow-hidden group transition-all duration-300">
+<!-- Subtle gradient overlay for uncertain state -->
+<div class="absolute inset-0 bg-gradient-to-b from-status-amber/5 to-transparent opacity-50 pointer-events-none"></div>
+<p class="font-prompter-display text-prompter-display text-on-surface-variant/40 text-center opacity-0 group-hover:opacity-100 transition-opacity">
+                这是上一句已经说过的台词，现在变暗了。
+            </p>
+<!-- Current Line (Uncertain) -->
+<p class="font-prompter-display text-prompter-display text-primary text-center leading-tight">
+<span class="text-tertiary-fixed">当前正在</span>说的这句话，系统有些不确定。
+            </p>
+<p class="font-prompter-display text-prompter-display text-on-surface-variant/40 text-center opacity-0 group-hover:opacity-100 transition-opacity">
+                这是即将要说的下一句台词，同样也变暗。
+            </p>
+</div>
+</main>
+<!-- Bottom Nav Bar / Controls -->
+<nav class="fixed bottom-6 left-0 right-0 z-50 flex justify-around items-center px-stack-md py-stack-sm bg-surface-container-highest/95 dark:bg-surface-container-highest/95 backdrop-blur-2xl border border-surface-border shadow-lg shadow-black/40 w-[calc(100%-48px)] max-w-md mx-auto rounded-full">
+<button aria-label="Previous" class="flex items-center justify-center text-on-surface-variant p-4 hover:text-primary transition-all active:scale-90 duration-150 rounded-full">
+<span class="material-symbols-outlined text-3xl" data-icon="skip_previous">skip_previous</span>
+</button>
+<!-- Prominent Manual Next Button -->
+<button aria-label="Manual Advance" class="flex items-center justify-center bg-status-amber/20 text-status-amber rounded-full p-4 hover:bg-status-amber/30 transition-all active:scale-90 duration-150 shadow-[0_0_15px_rgba(245,158,11,0.2)] border border-status-amber/30">
+<span class="material-symbols-outlined text-4xl" data-icon="fiber_manual_record">fiber_manual_record</span>
+</button>
+<button aria-label="Next" class="flex items-center justify-center text-on-surface-variant p-4 hover:text-primary transition-all active:scale-90 duration-150 rounded-full">
+<span class="material-symbols-outlined text-3xl" data-icon="skip_next">skip_next</span>
+</button>
+</nav>
+</body></html>

@@ -1,0 +1,3895 @@
+{
+  "version": "2.17",
+  "children": [
+    {
+      "type": "frame",
+      "id": "jqDpH",
+      "x": 0,
+      "y": 0,
+      "name": "Home — 390×844",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$ink",
+      "layout": "vertical",
+      "padding": [
+        0,
+        20,
+        20,
+        20
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "x6HZb",
+          "name": "Status Bar",
+          "width": "fill_container",
+          "height": 62,
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "tLTe3",
+              "name": "Brand Mark",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "RDUtZ",
+                  "name": "Brand Icon",
+                  "width": 22,
+                  "height": 22,
+                  "icon": "video",
+                  "library": "lucide",
+                  "fill": "$cyan"
+                },
+                {
+                  "type": "text",
+                  "id": "YF8St",
+                  "name": "Brand Name",
+                  "fill": "$paper",
+                  "content": "镜词",
+                  "fontFamily": "$font",
+                  "fontSize": 20,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "icon",
+              "id": "yjCIJ",
+              "name": "Settings Shortcut",
+              "width": 22,
+              "height": 22,
+              "icon": "settings-2",
+              "library": "lucide",
+              "fill": "$muted"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "FQxzQ",
+          "name": "Home Content",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "padding": [
+            14,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "f8K4FH",
+              "name": "Home Eyebrow",
+              "fill": "$cyan",
+              "content": "SCRIPT MIRROR  /  CREATOR TOOL",
+              "fontFamily": "$font",
+              "fontSize": 10,
+              "fontWeight": "700",
+              "letterSpacing": 1.4
+            },
+            {
+              "type": "text",
+              "id": "O4CFS7",
+              "name": "Home Headline",
+              "fill": "$paper",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "看着镜头，\n也不用忘记下一句。",
+              "lineHeight": 1.12,
+              "fontFamily": "$font",
+              "fontSize": 30,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "EHhuW",
+              "name": "Home Subtitle",
+              "fill": "$muted",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "把注意力留给镜头，把节奏交给镜词。",
+              "lineHeight": 1.35,
+              "fontFamily": "$font",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "m5ILQG",
+              "name": "Primary Capture CTA",
+              "width": "fill_container",
+              "height": 68,
+              "fill": "$cyan",
+              "cornerRadius": 20,
+              "gap": 10,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "WY4s5",
+                  "name": "Start Icon",
+                  "width": 23,
+                  "height": 23,
+                  "icon": "video",
+                  "library": "lucide",
+                  "fill": "$ink"
+                },
+                {
+                  "type": "text",
+                  "id": "QO2wN",
+                  "name": "Start Label",
+                  "fill": "$ink",
+                  "content": "开始拍摄",
+                  "fontFamily": "$font",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "eKfiG",
+              "name": "Secondary Actions",
+              "width": "fill_container",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "uuGQz",
+                  "name": "New Script Button",
+                  "width": "fill_container",
+                  "height": 44,
+                  "fill": "$surface",
+                  "cornerRadius": 14,
+                  "stroke": "$line",
+                  "strokeWidth": 1,
+                  "gap": 7,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "v41rL",
+                      "name": "New Icon",
+                      "width": 17,
+                      "height": 17,
+                      "icon": "plus",
+                      "library": "lucide",
+                      "fill": "$paper"
+                    },
+                    {
+                      "type": "text",
+                      "id": "gqM5S",
+                      "name": "New Label",
+                      "fill": "$paper",
+                      "content": "新建文稿",
+                      "fontFamily": "$font",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "svm0l",
+                  "name": "All Scripts Button",
+                  "width": "fill_container",
+                  "height": 44,
+                  "fill": "$surface",
+                  "cornerRadius": 14,
+                  "stroke": "$line",
+                  "strokeWidth": 1,
+                  "gap": 7,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "bXFOZ",
+                      "name": "All Icon",
+                      "width": 17,
+                      "height": 17,
+                      "icon": "library",
+                      "library": "lucide",
+                      "fill": "$muted"
+                    },
+                    {
+                      "type": "text",
+                      "id": "pFxFi",
+                      "name": "All Label",
+                      "fill": "$muted",
+                      "content": "全部文稿",
+                      "fontFamily": "$font",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "VqdeL",
+              "name": "Recent Header",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "xiFLT",
+                  "name": "Recent Title",
+                  "fill": "$paper",
+                  "content": "最近文稿",
+                  "fontFamily": "$font",
+                  "fontSize": 16,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "QeVMT",
+                  "name": "Recent Count",
+                  "fill": "$cyan",
+                  "content": "03 篇",
+                  "fontFamily": "$font",
+                  "fontSize": 12,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Ncw7f",
+              "name": "Script Card — 防晒分享",
+              "width": "fill_container",
+              "height": 76,
+              "fill": "$panel",
+              "cornerRadius": 16,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 12,
+              "padding": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Lm9Bc",
+                  "name": "Script Card — 防晒分享 Badge",
+                  "width": 40,
+                  "height": 40,
+                  "fill": "$cyan",
+                  "cornerRadius": 12,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nUH28",
+                      "name": "Script Card — 防晒分享 Badge Text",
+                      "fill": "$ink",
+                      "content": "01",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "GjWYo",
+                  "name": "Script Card — 防晒分享 Info",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "iAinX",
+                      "name": "Script Card — 防晒分享 Title",
+                      "fill": "$paper",
+                      "content": "夏季防晒分享",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "XSrq6",
+                      "name": "Script Card — 防晒分享 Meta",
+                      "fill": "$muted",
+                      "content": "24 行  ·  01:36  ·  今天",
+                      "fontFamily": "$font",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "I4YLQ",
+                  "name": "Script Card — 防晒分享 Chevron",
+                  "width": 18,
+                  "height": 18,
+                  "icon": "chevron-right",
+                  "library": "lucide",
+                  "fill": "$muted"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Yjsuq",
+              "name": "Script Card — 课程开场",
+              "width": "fill_container",
+              "height": 76,
+              "fill": "$panel",
+              "cornerRadius": 16,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 12,
+              "padding": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "qgkSZ",
+                  "name": "Script Card — 课程开场 Badge",
+                  "width": 40,
+                  "height": 40,
+                  "fill": "$amber",
+                  "cornerRadius": 12,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "BjxCr",
+                      "name": "Script Card — 课程开场 Badge Text",
+                      "fill": "$ink",
+                      "content": "02",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "LTl5e",
+                  "name": "Script Card — 课程开场 Info",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Bu43e",
+                      "name": "Script Card — 课程开场 Title",
+                      "fill": "$paper",
+                      "content": "课程开场",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "lQ9F7",
+                      "name": "Script Card — 课程开场 Meta",
+                      "fill": "$muted",
+                      "content": "18 行  ·  01:12  ·  昨天",
+                      "fontFamily": "$font",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "r9A5b",
+                  "name": "Script Card — 课程开场 Chevron",
+                  "width": 18,
+                  "height": 18,
+                  "icon": "chevron-right",
+                  "library": "lucide",
+                  "fill": "$muted"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "IRK1G",
+              "name": "Script Card — 产品介绍",
+              "width": "fill_container",
+              "height": 76,
+              "fill": "$panel",
+              "cornerRadius": 16,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 12,
+              "padding": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "cRF6k",
+                  "name": "Script Card — 产品介绍 Badge",
+                  "width": 40,
+                  "height": 40,
+                  "fill": "$cyanDim",
+                  "cornerRadius": 12,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "KbMPf",
+                      "name": "Script Card — 产品介绍 Badge Text",
+                      "fill": "$ink",
+                      "content": "03",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "GL4dF",
+                  "name": "Script Card — 产品介绍 Info",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Yctzz",
+                      "name": "Script Card — 产品介绍 Title",
+                      "fill": "$paper",
+                      "content": "产品介绍短视频",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "OGuAE",
+                      "name": "Script Card — 产品介绍 Meta",
+                      "fill": "$muted",
+                      "content": "31 行  ·  02:10  ·  3 天前",
+                      "fontFamily": "$font",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "FEpZS",
+                  "name": "Script Card — 产品介绍 Chevron",
+                  "width": 18,
+                  "height": 18,
+                  "icon": "chevron-right",
+                  "library": "lucide",
+                  "fill": "$muted"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "BM4U4",
+              "name": "Privacy Note",
+              "fill": "$muted",
+              "content": "离线优先  ·  文稿与视频只保存在本机",
+              "fontFamily": "$font",
+              "fontSize": 11,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "GejQz",
+      "x": 470,
+      "y": 0,
+      "name": "Script Editor — 390×844",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$ink",
+      "layout": "vertical",
+      "padding": [
+        0,
+        20,
+        20,
+        20
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "qwj8U",
+          "name": "Editor Status Bar",
+          "width": "fill_container",
+          "height": 62,
+          "gap": 14,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "a8CDs0",
+              "name": "Editor Back",
+              "width": 22,
+              "height": 22,
+              "icon": "arrow-left",
+              "library": "lucide",
+              "fill": "$paper"
+            },
+            {
+              "type": "text",
+              "id": "GpjVW",
+              "name": "Editor Title",
+              "fill": "$paper",
+              "content": "脚本编辑",
+              "fontFamily": "$font",
+              "fontSize": 18,
+              "fontWeight": "700"
+            },
+            {
+              "type": "icon",
+              "id": "HC2pZ",
+              "name": "Editor More",
+              "width": 22,
+              "height": 22,
+              "icon": "ellipsis",
+              "library": "lucide",
+              "fill": "$muted"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "YYEXr",
+          "name": "Editor Header",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 8,
+          "padding": [
+            12,
+            0,
+            4,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "fysMw",
+              "name": "Editor Script Name",
+              "fill": "$paper",
+              "content": "夏季防晒分享",
+              "fontFamily": "$font",
+              "fontSize": 25,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "FdAtA",
+              "name": "Editor Meta Row",
+              "width": "fill_container",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "qiNt2",
+                  "name": "Editor Meta",
+                  "fill": "$muted",
+                  "content": "24 行  ·  预计 01:36",
+                  "fontFamily": "$font",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "gBksS",
+                  "name": "Saved Chip",
+                  "height": 24,
+                  "fill": "#123D3D",
+                  "cornerRadius": 12,
+                  "gap": 5,
+                  "padding": [
+                    5,
+                    8
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "efgXz",
+                      "name": "Saved Dot",
+                      "width": 12,
+                      "height": 12,
+                      "icon": "check",
+                      "library": "lucide",
+                      "fill": "$cyan"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Fakyp",
+                      "name": "Saved Text",
+                      "fill": "$cyan",
+                      "content": "已保存",
+                      "fontFamily": "$font",
+                      "fontSize": 10,
+                      "fontWeight": "600"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "gEAt7",
+          "layoutPosition": "absolute",
+          "x": 20,
+          "y": 146,
+          "name": "Editor Quick Actions",
+          "width": "fill_container(350)",
+          "height": 30,
+          "gap": 8,
+          "padding": [
+            2,
+            0
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "m3lcDV",
+              "name": "Editor Content Label",
+              "fill": "$paper",
+              "content": "台词内容",
+              "fontFamily": "$font",
+              "fontSize": 13,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "HUCQk",
+              "name": "Auto Split Chip",
+              "height": 24,
+              "fill": "#123D3D",
+              "cornerRadius": 12,
+              "padding": [
+                5,
+                8
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "kkXVH",
+                  "name": "Auto Split Text",
+                  "fill": "$cyan",
+                  "content": "自动分句",
+                  "fontFamily": "$font",
+                  "fontSize": 10,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "jjQBe",
+              "name": "Add Line Action",
+              "height": 28,
+              "fill": "$cyan",
+              "cornerRadius": 10,
+              "gap": 4,
+              "padding": [
+                5,
+                8
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "v38aEb",
+                  "name": "Add Line Icon",
+                  "width": 14,
+                  "height": 14,
+                  "icon": "plus",
+                  "library": "lucide",
+                  "fill": "$ink"
+                },
+                {
+                  "type": "text",
+                  "id": "m14G7s",
+                  "name": "Add Line Text",
+                  "fill": "$ink",
+                  "content": "添加台词",
+                  "fontFamily": "$font",
+                  "fontSize": 10,
+                  "fontWeight": "700"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "YxXIi",
+          "x": 20,
+          "y": 146,
+          "name": "Editor Hint",
+          "enabled": false,
+          "fill": "$muted",
+          "content": "长按拖动排序 · 点击编辑时长与停顿",
+          "fontFamily": "$font",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "B3fnP",
+          "layoutPosition": "absolute",
+          "x": 20,
+          "y": 180,
+          "name": "Script Lines",
+          "width": 350,
+          "height": 406,
+          "layout": "vertical",
+          "gap": 10,
+          "padding": [
+            10,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "OsWnm",
+              "name": "Line 01",
+              "width": "fill_container",
+              "height": 108,
+              "fill": "#152A2C",
+              "cornerRadius": 16,
+              "stroke": "$cyan",
+              "strokeWidth": 1.5,
+              "gap": 12,
+              "padding": 14,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "a4PKP7",
+                  "name": "Line 01 Number",
+                  "width": 32,
+                  "height": 32,
+                  "fill": "$cyan",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "cQlFq",
+                      "name": "Line 01 Number Text",
+                      "fill": "$ink",
+                      "content": "01",
+                      "fontFamily": "$font",
+                      "fontSize": 12,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "OFdgW",
+                  "name": "Line 01 Body",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 7,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "uG0R6",
+                      "name": "Line 01 Copy",
+                      "fill": "$paper",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "今天想和你分享，夏天如何做好日常防晒。",
+                      "lineHeight": 1.28,
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "FmLo3",
+                      "name": "Line 01 Meta",
+                      "gap": 10,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "rSDZN",
+                          "name": "Line 01 Duration",
+                          "fill": "$cyan",
+                          "content": "预计 04.0s",
+                          "fontFamily": "$font",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "Zk33x",
+                          "name": "Line 01 Pause",
+                          "fill": "$muted",
+                          "content": "停顿 0.4s",
+                          "fontFamily": "$font",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "BjPta",
+                  "name": "Line 01 Edit",
+                  "width": 17,
+                  "height": 17,
+                  "icon": "sliders-horizontal",
+                  "library": "lucide",
+                  "fill": "$cyan"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "MRVR8",
+              "name": "Line 02",
+              "width": "fill_container",
+              "height": 108,
+              "fill": "$panel",
+              "cornerRadius": 16,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 12,
+              "padding": 14,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "u6qaC3",
+                  "name": "Line 02 Number",
+                  "width": 32,
+                  "height": 32,
+                  "fill": "$surface",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "DnFU0",
+                      "name": "Line 02 Number Text",
+                      "fill": "$muted",
+                      "content": "02",
+                      "fontFamily": "$font",
+                      "fontSize": 12,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "IrM4h",
+                  "name": "Line 02 Body",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 7,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "IvfE2",
+                      "name": "Line 02 Copy",
+                      "fill": "$paper",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "选对产品只是开始，真正重要的是每天坚持使用。",
+                      "lineHeight": 1.28,
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "k9jfN",
+                      "name": "Line 02 Meta",
+                      "gap": 10,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nMeEu",
+                          "name": "Line 02 Duration",
+                          "fill": "$muted",
+                          "content": "预计 05.0s",
+                          "fontFamily": "$font",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "ArFem",
+                          "name": "Line 02 Pause",
+                          "fill": "$muted",
+                          "content": "停顿 0.4s",
+                          "fontFamily": "$font",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "AXBVW",
+                  "name": "Line 02 Edit",
+                  "width": 17,
+                  "height": 17,
+                  "icon": "sliders-horizontal",
+                  "library": "lucide",
+                  "fill": "$muted"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "IpwGs",
+              "name": "Line 03",
+              "width": "fill_container",
+              "height": 108,
+              "fill": "$panel",
+              "cornerRadius": 16,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 12,
+              "padding": 14,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ilgxG",
+                  "name": "Line 03 Number",
+                  "width": 32,
+                  "height": 32,
+                  "fill": "$surface",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "PrV6t",
+                      "name": "Line 03 Number Text",
+                      "fill": "$muted",
+                      "content": "03",
+                      "fontFamily": "$font",
+                      "fontSize": 12,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "RDEWt",
+                  "name": "Line 03 Body",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 7,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "F8lnMd",
+                      "name": "Line 03 Copy",
+                      "fill": "$paper",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "出门前二十分钟涂好，户外记得及时补涂。",
+                      "lineHeight": 1.28,
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ZbwKz",
+                      "name": "Line 03 Meta",
+                      "gap": 10,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "i6rNEo",
+                          "name": "Line 03 Duration",
+                          "fill": "$muted",
+                          "content": "预计 04.0s",
+                          "fontFamily": "$font",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "yYl0Z",
+                          "name": "Line 03 Pause",
+                          "fill": "$muted",
+                          "content": "停顿 0.6s",
+                          "fontFamily": "$font",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "A4nfj1",
+                  "name": "Line 03 Edit",
+                  "width": 17,
+                  "height": 17,
+                  "icon": "sliders-horizontal",
+                  "library": "lucide",
+                  "fill": "$muted"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "WQXNG",
+              "name": "More Lines Hint",
+              "width": "fill_container",
+              "height": 42,
+              "fill": "$surface",
+              "cornerRadius": 14,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "kTxdG",
+                  "name": "More Lines Text",
+                  "fill": "$muted",
+                  "content": "+ 21 行在文稿中",
+                  "fontFamily": "$font",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "R9oCW0",
+          "layoutPosition": "absolute",
+          "x": 20,
+          "y": 600,
+          "name": "Editor Footer",
+          "width": 350,
+          "height": 94,
+          "layout": "vertical",
+          "gap": 10,
+          "padding": [
+            14,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "a7Q8i",
+              "name": "Editor Primary CTA",
+              "width": "fill_container",
+              "height": 56,
+              "fill": "$cyan",
+              "cornerRadius": 18,
+              "gap": 8,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "G0XWI",
+                  "name": "Editor CTA Icon",
+                  "width": 19,
+                  "height": 19,
+                  "icon": "video",
+                  "library": "lucide",
+                  "fill": "$ink"
+                },
+                {
+                  "type": "text",
+                  "id": "CcX8c",
+                  "name": "Editor CTA Label",
+                  "fill": "$ink",
+                  "content": "进入拍摄准备",
+                  "fontFamily": "$font",
+                  "fontSize": 15,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "kDSwF",
+              "name": "Editor Footer Note",
+              "fill": "$muted",
+              "content": "保存后会保留当前文稿与每句时长",
+              "textAlign": "center",
+              "fontFamily": "$font",
+              "fontSize": 10,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "O8mXqL",
+      "x": 940,
+      "y": 0,
+      "name": "Preparation — 390×844",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$ink",
+      "layout": "vertical",
+      "padding": [
+        0,
+        20,
+        20,
+        20
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "QAdk7",
+          "name": "Prepare Status Bar",
+          "width": "fill_container",
+          "height": 62,
+          "gap": 14,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "LFl55",
+              "name": "Prepare Back",
+              "width": 22,
+              "height": 22,
+              "icon": "arrow-left",
+              "library": "lucide",
+              "fill": "$paper"
+            },
+            {
+              "type": "text",
+              "id": "T7U7q",
+              "name": "Prepare Title",
+              "fill": "$paper",
+              "content": "拍摄准备",
+              "fontFamily": "$font",
+              "fontSize": 18,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "NYiUi",
+              "name": "Prepare Step Chip",
+              "height": 26,
+              "fill": "$surface",
+              "cornerRadius": 13,
+              "padding": [
+                6,
+                9
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "p8RFKz",
+                  "name": "Prepare Step Text",
+                  "fill": "$muted",
+                  "content": "STEP 02 / 03",
+                  "fontFamily": "$font",
+                  "fontSize": 10,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "lcrhk",
+          "name": "Preparation Content",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 12,
+          "padding": [
+            12,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "bgOUs",
+              "name": "Script Summary",
+              "width": "fill_container",
+              "height": 84,
+              "fill": "$panel",
+              "cornerRadius": 16,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 12,
+              "padding": 14,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "IeD9f",
+                  "name": "Summary Badge",
+                  "width": 42,
+                  "height": 42,
+                  "fill": "$cyan",
+                  "cornerRadius": 12,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "LaKOR",
+                      "name": "Summary Badge Text",
+                      "fill": "$ink",
+                      "content": "01",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Gz4xW",
+                  "name": "Summary Info",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 5,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "n1hip1",
+                      "name": "Summary Title",
+                      "fill": "$paper",
+                      "content": "夏季防晒分享",
+                      "fontFamily": "$font",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "A4Apjt",
+                      "name": "Summary Meta",
+                      "fill": "$muted",
+                      "content": "24 行  ·  预计 01:36  ·  本机文稿",
+                      "fontFamily": "$font",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "wiJoB",
+                  "name": "Summary Chevron",
+                  "width": 18,
+                  "height": 18,
+                  "icon": "chevron-right",
+                  "library": "lucide",
+                  "fill": "$muted"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "zysBW",
+              "name": "Camera Section Label",
+              "fill": "$muted",
+              "content": "镜头",
+              "fontFamily": "$font",
+              "fontSize": 11,
+              "fontWeight": "700",
+              "letterSpacing": 1.2
+            },
+            {
+              "type": "frame",
+              "id": "oIi8D",
+              "name": "Camera Choices",
+              "width": "fill_container",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "NElJj",
+                  "name": "Front Camera",
+                  "width": "fill_container",
+                  "height": 78,
+                  "fill": "#142D2F",
+                  "cornerRadius": 16,
+                  "stroke": "$cyan",
+                  "strokeWidth": 1.5,
+                  "layout": "vertical",
+                  "gap": 5,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "i3PKcF",
+                      "name": "Front Camera Icon",
+                      "width": 21,
+                      "height": 21,
+                      "icon": "camera",
+                      "library": "lucide",
+                      "fill": "$cyan"
+                    },
+                    {
+                      "type": "text",
+                      "id": "zXmyd",
+                      "name": "Front Camera Label",
+                      "fill": "$paper",
+                      "content": "前置镜头",
+                      "fontFamily": "$font",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "K3YLcc",
+                      "name": "Front Camera Caption",
+                      "fill": "$cyan",
+                      "content": "已选择",
+                      "fontFamily": "$font",
+                      "fontSize": 9,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "c2rgwa",
+                  "name": "Rear Camera",
+                  "width": "fill_container",
+                  "height": 78,
+                  "fill": "$panel",
+                  "cornerRadius": 16,
+                  "stroke": "$line",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 5,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "cX0lG",
+                      "name": "Rear Camera Icon",
+                      "width": 21,
+                      "height": 21,
+                      "icon": "camera",
+                      "library": "lucide",
+                      "fill": "$muted"
+                    },
+                    {
+                      "type": "text",
+                      "id": "QZM54",
+                      "name": "Rear Camera Label",
+                      "fill": "$paper",
+                      "content": "后置镜头",
+                      "fontFamily": "$font",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "tKrIw",
+                      "name": "Rear Camera Caption",
+                      "fill": "$muted",
+                      "content": "点击切换",
+                      "fontFamily": "$font",
+                      "fontSize": 9,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "CCxXE",
+              "name": "Capture Section Label",
+              "fill": "$muted",
+              "content": "录制设置",
+              "fontFamily": "$font",
+              "fontSize": 11,
+              "fontWeight": "700",
+              "letterSpacing": 1.2
+            },
+            {
+              "type": "frame",
+              "id": "r6hbuv",
+              "name": "Resolution Setting",
+              "width": "fill_container",
+              "height": 60,
+              "fill": "$panel",
+              "cornerRadius": 14,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 11,
+              "padding": [
+                10,
+                13
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "WxIwr",
+                  "name": "Resolution Setting Icon Box",
+                  "width": 34,
+                  "height": 34,
+                  "fill": "#163D3F",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "iRHce",
+                      "name": "Resolution Setting Icon",
+                      "width": 17,
+                      "height": 17,
+                      "icon": "video",
+                      "library": "lucide",
+                      "fill": "$cyan"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "TYpVf",
+                  "name": "Resolution Setting Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "U4yYZn",
+                      "name": "Resolution Setting Label",
+                      "fill": "$paper",
+                      "content": "视频画质",
+                      "fontFamily": "$font",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "DnkJ8",
+                      "name": "Resolution Setting Value",
+                      "fill": "$muted",
+                      "content": "1080p · 自动适配设备",
+                      "fontFamily": "$font",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "SjzKa",
+                  "name": "Resolution Setting Chevron",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "chevron-right",
+                  "library": "lucide",
+                  "fill": "$muted"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Hkfbz",
+              "name": "Speed Setting",
+              "width": "fill_container",
+              "height": 60,
+              "fill": "$panel",
+              "cornerRadius": 14,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 11,
+              "padding": [
+                10,
+                13
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "dbySL",
+                  "name": "Speed Setting Icon Box",
+                  "width": 34,
+                  "height": 34,
+                  "fill": "#163D3F",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "dWMkK",
+                      "name": "Speed Setting Icon",
+                      "width": 17,
+                      "height": 17,
+                      "icon": "gauge",
+                      "library": "lucide",
+                      "fill": "$cyan"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "sc6EN",
+                  "name": "Speed Setting Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "LgsPn",
+                      "name": "Speed Setting Label",
+                      "fill": "$paper",
+                      "content": "提词速度",
+                      "fontFamily": "$font",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "DanQs",
+                      "name": "Speed Setting Value",
+                      "fill": "$muted",
+                      "content": "中速 · 按句时长推进",
+                      "fontFamily": "$font",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "U95VNz",
+                  "name": "Speed Setting Chevron",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "chevron-right",
+                  "library": "lucide",
+                  "fill": "$muted"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "khkxr",
+              "name": "Voice Follow Setting",
+              "width": "fill_container",
+              "height": 72,
+              "fill": "$panel",
+              "cornerRadius": 14,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 11,
+              "padding": [
+                11,
+                13
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "sfSi5",
+                  "name": "Voice Icon Box",
+                  "width": 34,
+                  "height": 34,
+                  "fill": "#3E2D16",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "kp2Dy",
+                      "name": "Voice Icon",
+                      "width": 17,
+                      "height": 17,
+                      "icon": "mic",
+                      "library": "lucide",
+                      "fill": "$amber"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "BCmJl",
+                  "name": "Voice Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "QLoj7",
+                      "name": "Voice Label",
+                      "fill": "$paper",
+                      "content": "语音跟稿",
+                      "fontFamily": "$font",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "EqpJJ",
+                      "name": "Voice Value",
+                      "fill": "$amber",
+                      "content": "识别不可用时，按时长/手动推进",
+                      "fontFamily": "$font",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Q4H1s",
+                  "name": "Voice Toggle",
+                  "width": 40,
+                  "height": 24,
+                  "fill": "$cyanDim",
+                  "cornerRadius": 12,
+                  "justifyContent": "end",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "GABLO",
+                      "name": "Toggle Knob",
+                      "fill": "$cyan",
+                      "width": 18,
+                      "height": 18
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "raSNx",
+              "name": "Permission Note",
+              "width": "fill_container",
+              "height": 44,
+              "fill": "#241E14",
+              "cornerRadius": 12,
+              "gap": 8,
+              "padding": [
+                8,
+                11
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "i1Uka",
+                  "name": "Permission Icon",
+                  "width": 15,
+                  "height": 15,
+                  "icon": "info",
+                  "library": "lucide",
+                  "fill": "$amber"
+                },
+                {
+                  "type": "text",
+                  "id": "rwS5r",
+                  "name": "Permission Copy",
+                  "fill": "$amber",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "开始时请求相机与麦克风权限，仅用于录制",
+                  "fontFamily": "$font",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "P4qdvB",
+          "layoutPosition": "absolute",
+          "x": 20,
+          "y": 686,
+          "name": "Prepare Footer",
+          "width": "fill_container(350)",
+          "layout": "vertical",
+          "gap": 8,
+          "padding": [
+            14,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "tEKbo",
+              "name": "Start Recording CTA",
+              "width": "fill_container",
+              "height": 58,
+              "fill": "$red",
+              "cornerRadius": 18,
+              "gap": 9,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "DlWpW",
+                  "name": "Record Dot",
+                  "width": 17,
+                  "height": 17,
+                  "icon": "circle",
+                  "library": "lucide",
+                  "fill": "$paper"
+                },
+                {
+                  "type": "text",
+                  "id": "FElNE",
+                  "name": "Record Label",
+                  "fill": "$paper",
+                  "content": "开始录制",
+                  "fontFamily": "$font",
+                  "fontSize": 16,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "fcLf3",
+              "name": "Prepare Footer Note",
+              "fill": "$muted",
+              "content": "录制期间可随时手动翻句，台词位置会自动保留",
+              "textAlign": "center",
+              "fontFamily": "$font",
+              "fontSize": 10,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "iMqK1",
+      "x": 0,
+      "y": 924,
+      "name": "Recording — 390×844",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$ink",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "ILrWf",
+          "x": 0,
+          "y": 0,
+          "name": "Camera Preview",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 180,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#203A3B",
+                "position": 0
+              },
+              {
+                "color": "#0B0C0E",
+                "position": 0.52
+              },
+              {
+                "color": "#050607",
+                "position": 1
+              }
+            ]
+          },
+          "width": 390,
+          "height": 844
+        },
+        {
+          "type": "frame",
+          "id": "Vj07A",
+          "x": 120,
+          "y": 250,
+          "name": "Camera Subject Placeholder",
+          "opacity": 0.28,
+          "width": 150,
+          "height": 260,
+          "layout": "vertical",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "VCdcv",
+              "name": "Subject Icon",
+              "width": 120,
+              "height": 120,
+              "icon": "user-round",
+              "library": "lucide",
+              "fill": "$muted"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "s7n4c",
+          "x": 20,
+          "y": 22,
+          "name": "Recording Top Bar",
+          "width": 350,
+          "height": 42,
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "JluNw",
+              "name": "Recording State",
+              "height": 30,
+              "fill": "#2B2418",
+              "cornerRadius": 15,
+              "gap": 7,
+              "padding": [
+                7,
+                10
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "S4NnAI",
+                  "name": "Recording State Dot",
+                  "fill": "$amber",
+                  "width": 8,
+                  "height": 8
+                },
+                {
+                  "type": "text",
+                  "id": "d4lzQL",
+                  "name": "Recording State Label",
+                  "fill": "$amber",
+                  "content": "按节奏提词",
+                  "fontFamily": "$font",
+                  "fontSize": 11,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "eY0h2",
+              "name": "Recording Timer",
+              "height": 34,
+              "fill": "#0B0C0ED9",
+              "cornerRadius": 17,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 7,
+              "padding": [
+                8,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "guMVQ",
+                  "name": "Timer Dot",
+                  "fill": "$red",
+                  "width": 7,
+                  "height": 7
+                },
+                {
+                  "type": "text",
+                  "id": "Ni7ll",
+                  "name": "Timer Value",
+                  "fill": "$paper",
+                  "content": "00:16",
+                  "fontFamily": "$font",
+                  "fontSize": 14,
+                  "fontWeight": "700",
+                  "letterSpacing": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "icon",
+          "id": "raTz3",
+          "x": 348,
+          "y": 31,
+          "name": "Recording Settings",
+          "width": 20,
+          "height": 20,
+          "icon": "sliders-horizontal",
+          "library": "lucide",
+          "fill": "$paper"
+        },
+        {
+          "type": "frame",
+          "id": "ql7wb",
+          "x": 20,
+          "y": 105,
+          "name": "Teleprompter Overlay",
+          "width": 350,
+          "height": 344,
+          "fill": "#0B0C0EE8",
+          "cornerRadius": 22,
+          "stroke": "#2B7779",
+          "strokeWidth": 1,
+          "layout": "vertical",
+          "gap": 14,
+          "padding": 20,
+          "children": [
+            {
+              "type": "frame",
+              "id": "h5alW",
+              "name": "Overlay Header",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "SAnim",
+                  "name": "Line Counter",
+                  "fill": "$cyan",
+                  "content": "01  /  24",
+                  "fontFamily": "$font",
+                  "fontSize": 11,
+                  "fontWeight": "700",
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "text",
+                  "id": "HynFC",
+                  "name": "Line Timing",
+                  "fill": "$muted",
+                  "content": "预设 04.0s",
+                  "fontFamily": "$font",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "iwElZ",
+              "name": "Current Prompt",
+              "fill": "$paper",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "今天想和你分享，夏天如何做好日常防晒。",
+              "lineHeight": 1.3,
+              "fontFamily": "$font",
+              "fontSize": 26,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "h8N5ib",
+              "name": "Prompt Divider",
+              "width": "fill_container",
+              "height": 1,
+              "fill": "#2A3238"
+            },
+            {
+              "type": "frame",
+              "id": "cqlmq",
+              "name": "Upcoming Prompts",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "WHLrA",
+                  "name": "Next Prompt One",
+                  "fill": "#AEB6C2B8",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "选对产品只是开始，真正重要的是每天坚持使用。",
+                  "lineHeight": 1.3,
+                  "fontFamily": "$font",
+                  "fontSize": 17,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "i2UV8H",
+                  "name": "Next Prompt Two",
+                  "fill": "#AEB6C280",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "出门前二十分钟涂好，户外记得及时补涂。",
+                  "lineHeight": 1.3,
+                  "fontFamily": "$font",
+                  "fontSize": 15,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "fxGpC",
+          "x": 20,
+          "y": 466,
+          "name": "Line Progress",
+          "width": 350,
+          "height": 4,
+          "fill": "#2D383D",
+          "cornerRadius": 2,
+          "children": [
+            {
+              "type": "frame",
+              "id": "ybxHZ",
+              "name": "Line Progress Fill",
+              "width": 92,
+              "height": 4,
+              "fill": "$cyan",
+              "cornerRadius": 2
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "e5A82L",
+          "x": 20,
+          "y": 686,
+          "name": "Manual Hint",
+          "fill": "#AEB6C2B8",
+          "content": "手动翻句后，自动跟稿会短暂冻结",
+          "textAlign": "center",
+          "fontFamily": "$font",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "WXDDO",
+          "x": 20,
+          "y": 730,
+          "name": "Recording Controls",
+          "width": 350,
+          "height": 92,
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "W3mFt",
+              "name": "Previous Control",
+              "width": 72,
+              "height": 86,
+              "layout": "vertical",
+              "gap": 6,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "UBvRl",
+                  "name": "Previous Control Circle",
+                  "width": 50,
+                  "height": 50,
+                  "fill": "#0B0C0ED9",
+                  "cornerRadius": 25,
+                  "stroke": "$line",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "LKw84",
+                      "name": "Previous Control Icon",
+                      "width": 21,
+                      "height": 21,
+                      "icon": "skip-back",
+                      "library": "lucide",
+                      "fill": "$paper"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "h7G8YD",
+                  "name": "Previous Control Label",
+                  "fill": "$paper",
+                  "content": "上一句",
+                  "fontFamily": "$font",
+                  "fontSize": 10,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "n3XRz",
+              "name": "Stop Control",
+              "width": 72,
+              "height": 86,
+              "layout": "vertical",
+              "gap": 6,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "uidrs",
+                  "name": "Stop Control Circle",
+                  "width": 64,
+                  "height": 64,
+                  "fill": "$red",
+                  "cornerRadius": 32,
+                  "stroke": "$red",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "h8FtpL",
+                      "name": "Stop Control Icon",
+                      "width": 25,
+                      "height": 25,
+                      "icon": "square",
+                      "library": "lucide",
+                      "fill": "$paper"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "UMiJr",
+                  "name": "Stop Control Label",
+                  "fill": "$paper",
+                  "content": "停止",
+                  "fontFamily": "$font",
+                  "fontSize": 10,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "LesAM",
+              "name": "Next Control",
+              "width": 72,
+              "height": 86,
+              "layout": "vertical",
+              "gap": 6,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "CwmCQ",
+                  "name": "Next Control Circle",
+                  "width": 50,
+                  "height": 50,
+                  "fill": "#0B0C0ED9",
+                  "cornerRadius": 25,
+                  "stroke": "$line",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "J4ETdw",
+                      "name": "Next Control Icon",
+                      "width": 21,
+                      "height": 21,
+                      "icon": "skip-forward",
+                      "library": "lucide",
+                      "fill": "$paper"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "itoDO",
+                  "name": "Next Control Label",
+                  "fill": "$paper",
+                  "content": "下一句",
+                  "fontFamily": "$font",
+                  "fontSize": 10,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "rJ5QC",
+      "x": 470,
+      "y": 924,
+      "name": "Complete — 390×844",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$ink",
+      "layout": "vertical",
+      "padding": [
+        0,
+        20,
+        20,
+        20
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "ZVjDR",
+          "name": "Complete Status Bar",
+          "width": "fill_container",
+          "height": 62,
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "H3Cu8x",
+              "name": "Complete Wordmark",
+              "fill": "$paper",
+              "content": "镜词",
+              "fontFamily": "$font",
+              "fontSize": 18,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "nqa9E",
+              "name": "Complete Step",
+              "fill": "$muted",
+              "content": "CAPTURE COMPLETE",
+              "fontFamily": "$font",
+              "fontSize": 10,
+              "fontWeight": "600",
+              "letterSpacing": 1
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "D71XQ4",
+          "name": "Complete Content",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 14,
+          "padding": [
+            20,
+            0,
+            0,
+            0
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "yeDdV",
+              "name": "Success Icon",
+              "width": 92,
+              "height": 92,
+              "fill": "#123D3D",
+              "cornerRadius": 46,
+              "stroke": "$cyan",
+              "strokeWidth": 1.5,
+              "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "CNGeC",
+                  "name": "Success Check",
+                  "width": 45,
+                  "height": 45,
+                  "icon": "check",
+                  "library": "lucide",
+                  "fill": "$cyan"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "Eo59Z",
+              "name": "Complete Title",
+              "fill": "$paper",
+              "content": "录制完成",
+              "fontFamily": "$font",
+              "fontSize": 30,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "K06Si",
+              "name": "Complete Subtitle",
+              "fill": "$muted",
+              "content": "视频已保存到系统相册",
+              "fontFamily": "$font",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "dOKZG",
+              "name": "Media Summary",
+              "width": "fill_container",
+              "fill": "$panel",
+              "cornerRadius": 18,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 1,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "MZ5Ne",
+                  "name": "Resolution Info",
+                  "width": "fill_container",
+                  "height": 32,
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Ez8cF",
+                      "name": "Resolution Info Label",
+                      "fill": "$muted",
+                      "content": "分辨率",
+                      "fontFamily": "$font",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "fRj0d",
+                      "name": "Resolution Info Value",
+                      "fill": "$paper",
+                      "content": "1280 × 720",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "ppLJo",
+                  "name": "Duration Info",
+                  "width": "fill_container",
+                  "height": 32,
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "pvZsp",
+                      "name": "Duration Info Label",
+                      "fill": "$muted",
+                      "content": "时长",
+                      "fontFamily": "$font",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "ansMH",
+                      "name": "Duration Info Value",
+                      "fill": "$paper",
+                      "content": "00:16",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "qi8JP",
+                  "name": "Storage Info",
+                  "width": "fill_container",
+                  "height": 32,
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "OmqKe",
+                      "name": "Storage Info Label",
+                      "fill": "$muted",
+                      "content": "位置",
+                      "fontFamily": "$font",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "bhhpG",
+                      "name": "Storage Info Value",
+                      "fill": "$cyan",
+                      "content": "系统相册 / ScriptMirror",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "JcLne",
+              "name": "Complete Note",
+              "fill": "$muted",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "视频文件已由 CameraX 写入；文稿仍保存在本机",
+              "textAlign": "center",
+              "fontFamily": "$font",
+              "fontSize": 11,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "wmlvL",
+          "name": "Complete Actions",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 9,
+          "padding": [
+            20,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "byAWj",
+              "name": "Done CTA",
+              "width": "fill_container",
+              "height": 56,
+              "fill": "$cyan",
+              "cornerRadius": 18,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "VobmP",
+                  "name": "Done Label",
+                  "fill": "$ink",
+                  "content": "完成",
+                  "fontFamily": "$font",
+                  "fontSize": 15,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "fBI90",
+              "name": "Rerecord CTA",
+              "width": "fill_container",
+              "height": 52,
+              "fill": "$surface",
+              "cornerRadius": 17,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "F0u68x",
+                  "name": "Rerecord Label",
+                  "fill": "$paper",
+                  "content": "再录一次",
+                  "fontFamily": "$font",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "Jnuf0",
+              "name": "Continue Link",
+              "fill": "$muted",
+              "content": "继续拍同一文稿  →",
+              "textAlign": "center",
+              "fontFamily": "$font",
+              "fontSize": 12,
+              "fontWeight": "600"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "HZbg2",
+      "x": 940,
+      "y": 924,
+      "name": "Settings — 390×844",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$ink",
+      "layout": "vertical",
+      "padding": [
+        0,
+        20,
+        20,
+        20
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "VmCWR",
+          "name": "Settings Status Bar",
+          "width": "fill_container",
+          "height": 62,
+          "gap": 14,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "l4fDq",
+              "name": "Settings Back",
+              "width": 22,
+              "height": 22,
+              "icon": "arrow-left",
+              "library": "lucide",
+              "fill": "$paper"
+            },
+            {
+              "type": "text",
+              "id": "thgb6",
+              "name": "Settings Title",
+              "fill": "$paper",
+              "content": "设置",
+              "fontFamily": "$font",
+              "fontSize": 18,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "UZfyr",
+          "name": "Settings Content",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 10,
+          "padding": [
+            14,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "HuxU0",
+              "name": "Settings Intro",
+              "fill": "$paper",
+              "content": "让提词更像你的节奏",
+              "fontFamily": "$font",
+              "fontSize": 24,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "oF76M",
+              "name": "Settings Intro Note",
+              "fill": "$muted",
+              "content": "偏好会保存在本机，下次录制自动生效",
+              "fontFamily": "$font",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "u34mj9",
+              "name": "Text Section Label",
+              "fill": "$muted",
+              "content": "提词器偏好",
+              "fontFamily": "$font",
+              "fontSize": 11,
+              "fontWeight": "700",
+              "letterSpacing": 1.2
+            },
+            {
+              "type": "frame",
+              "id": "IBo8b",
+              "name": "Font Size Preference",
+              "width": "fill_container",
+              "height": 58,
+              "fill": "$panel",
+              "cornerRadius": 14,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 11,
+              "padding": [
+                9,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Ik3B8",
+                  "name": "Font Size Preference Icon Box",
+                  "width": 32,
+                  "height": 32,
+                  "fill": "#163D3F",
+                  "cornerRadius": 9,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "Qv1fW",
+                      "name": "Font Size Preference Icon",
+                      "width": 16,
+                      "height": 16,
+                      "icon": "type",
+                      "library": "lucide",
+                      "fill": "$cyan"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "chgW8",
+                  "name": "Font Size Preference Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "c3eTHg",
+                      "name": "Font Size Preference Label",
+                      "fill": "$paper",
+                      "content": "默认字号",
+                      "fontFamily": "$font",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "BBErs",
+                      "name": "Font Size Preference Value",
+                      "fill": "$muted",
+                      "content": "32sp",
+                      "fontFamily": "$font",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "s57Mv",
+                  "name": "Font Size Preference Chevron",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "chevron-right",
+                  "library": "lucide",
+                  "fill": "$muted"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "msFQd",
+              "name": "Opacity Preference",
+              "width": "fill_container",
+              "height": 58,
+              "fill": "$panel",
+              "cornerRadius": 14,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 11,
+              "padding": [
+                9,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "uOgvR",
+                  "name": "Opacity Preference Icon Box",
+                  "width": 32,
+                  "height": 32,
+                  "fill": "#163D3F",
+                  "cornerRadius": 9,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "c4x8VF",
+                      "name": "Opacity Preference Icon",
+                      "width": 16,
+                      "height": 16,
+                      "icon": "sun",
+                      "library": "lucide",
+                      "fill": "$cyan"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "sxNI7",
+                  "name": "Opacity Preference Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "olt8V",
+                      "name": "Opacity Preference Label",
+                      "fill": "$paper",
+                      "content": "背景透明度",
+                      "fontFamily": "$font",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Cai7U",
+                      "name": "Opacity Preference Value",
+                      "fill": "$muted",
+                      "content": "55%",
+                      "fontFamily": "$font",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "Sx40a",
+                  "name": "Opacity Preference Chevron",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "chevron-right",
+                  "library": "lucide",
+                  "fill": "$muted"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "CBH6M",
+              "name": "Lookahead Preference",
+              "width": "fill_container",
+              "height": 58,
+              "fill": "$panel",
+              "cornerRadius": 14,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 11,
+              "padding": [
+                9,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "A6Kpc",
+                  "name": "Lookahead Preference Icon Box",
+                  "width": 32,
+                  "height": 32,
+                  "fill": "#163D3F",
+                  "cornerRadius": 9,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "jxAMk",
+                      "name": "Lookahead Preference Icon",
+                      "width": 16,
+                      "height": 16,
+                      "icon": "layers",
+                      "library": "lucide",
+                      "fill": "$cyan"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "t7KKZE",
+                  "name": "Lookahead Preference Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "TnqaK",
+                      "name": "Lookahead Preference Label",
+                      "fill": "$paper",
+                      "content": "前瞻行数",
+                      "fontFamily": "$font",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "qmKcq",
+                      "name": "Lookahead Preference Value",
+                      "fill": "$muted",
+                      "content": "当前及后续 2 句",
+                      "fontFamily": "$font",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "Hg7YS",
+                  "name": "Lookahead Preference Chevron",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "chevron-right",
+                  "library": "lucide",
+                  "fill": "$muted"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "RMZRt",
+              "name": "Line Height Preference",
+              "width": "fill_container",
+              "height": 58,
+              "fill": "$panel",
+              "cornerRadius": 14,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 11,
+              "padding": [
+                9,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "y7mUOc",
+                  "name": "Line Height Preference Icon Box",
+                  "width": 32,
+                  "height": 32,
+                  "fill": "#163D3F",
+                  "cornerRadius": 9,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "HVY1k",
+                      "name": "Line Height Preference Icon",
+                      "width": 16,
+                      "height": 16,
+                      "icon": "list",
+                      "library": "lucide",
+                      "fill": "$cyan"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Z7ilAt",
+                  "name": "Line Height Preference Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "SeNWv",
+                      "name": "Line Height Preference Label",
+                      "fill": "$paper",
+                      "content": "行距",
+                      "fontFamily": "$font",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "RuEB7",
+                      "name": "Line Height Preference Value",
+                      "fill": "$muted",
+                      "content": "1.35x",
+                      "fontFamily": "$font",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "jVqn5",
+                  "name": "Line Height Preference Chevron",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "chevron-right",
+                  "library": "lucide",
+                  "fill": "$muted"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "gk8Xq",
+              "name": "Capture Section Label Settings",
+              "fill": "$muted",
+              "content": "录制与行为",
+              "fontFamily": "$font",
+              "fontSize": 11,
+              "fontWeight": "700",
+              "letterSpacing": 1.2
+            },
+            {
+              "type": "frame",
+              "id": "Luktl",
+              "name": "Mirror Preference",
+              "width": "fill_container",
+              "height": 58,
+              "fill": "$panel",
+              "cornerRadius": 14,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 11,
+              "padding": [
+                9,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "QZYdt",
+                  "name": "Mirror Preference Icon Box",
+                  "width": 32,
+                  "height": 32,
+                  "fill": "#163D3F",
+                  "cornerRadius": 9,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "gFDZb",
+                      "name": "Mirror Preference Icon",
+                      "width": 16,
+                      "height": 16,
+                      "icon": "flip-horizontal-2",
+                      "library": "lucide",
+                      "fill": "$cyan"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "yKoOl",
+                  "name": "Mirror Preference Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "bBrSt",
+                      "name": "Mirror Preference Label",
+                      "fill": "$paper",
+                      "content": "镜像预览",
+                      "fontFamily": "$font",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "guyPw",
+                      "name": "Mirror Preference Value",
+                      "fill": "$muted",
+                      "content": "开启 · 仅前置镜头",
+                      "fontFamily": "$font",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "HcvbP",
+                  "name": "Mirror Preference Chevron",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "chevron-right",
+                  "library": "lucide",
+                  "fill": "$muted"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "p75Ex",
+              "name": "Quality Preference",
+              "width": "fill_container",
+              "height": 58,
+              "fill": "$panel",
+              "cornerRadius": 14,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 11,
+              "padding": [
+                9,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "IAtXQ",
+                  "name": "Quality Preference Icon Box",
+                  "width": 32,
+                  "height": 32,
+                  "fill": "#163D3F",
+                  "cornerRadius": 9,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "NRxUP",
+                      "name": "Quality Preference Icon",
+                      "width": 16,
+                      "height": 16,
+                      "icon": "video",
+                      "library": "lucide",
+                      "fill": "$muted"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "R0uWiL",
+                  "name": "Quality Preference Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Jwv7n",
+                      "name": "Quality Preference Label",
+                      "fill": "$paper",
+                      "content": "默认画质",
+                      "fontFamily": "$font",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "nMrnh",
+                      "name": "Quality Preference Value",
+                      "fill": "$muted",
+                      "content": "1080p",
+                      "fontFamily": "$font",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "PKnzy",
+                  "name": "Quality Preference Chevron",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "chevron-right",
+                  "library": "lucide",
+                  "fill": "$muted"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "EeAsZ",
+              "name": "Storage Preference",
+              "width": "fill_container",
+              "height": 58,
+              "fill": "$panel",
+              "cornerRadius": 14,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 11,
+              "padding": [
+                9,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "vYonZ",
+                  "name": "Storage Preference Icon Box",
+                  "width": 32,
+                  "height": 32,
+                  "fill": "#163D3F",
+                  "cornerRadius": 9,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "d9BLa",
+                      "name": "Storage Preference Icon",
+                      "width": 16,
+                      "height": 16,
+                      "icon": "library",
+                      "library": "lucide",
+                      "fill": "$muted"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "sZdFI",
+                  "name": "Storage Preference Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 3,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "HqYfn",
+                      "name": "Storage Preference Label",
+                      "fill": "$paper",
+                      "content": "存储位置",
+                      "fontFamily": "$font",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Aghmn",
+                      "name": "Storage Preference Value",
+                      "fill": "$muted",
+                      "content": "系统相册 / ScriptMirror",
+                      "fontFamily": "$font",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "Yg9gO",
+                  "name": "Storage Preference Chevron",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "chevron-right",
+                  "library": "lucide",
+                  "fill": "$muted"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "UYZK0",
+              "name": "About Card",
+              "width": "fill_container",
+              "height": 72,
+              "fill": "$surface",
+              "cornerRadius": 16,
+              "gap": 12,
+              "padding": 14,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "x17Ob",
+                  "name": "About Icon",
+                  "width": 20,
+                  "height": 20,
+                  "icon": "info",
+                  "library": "lucide",
+                  "fill": "$muted"
+                },
+                {
+                  "type": "frame",
+                  "id": "Hv10E",
+                  "name": "About Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "FnCev",
+                      "name": "About Title",
+                      "fill": "$paper",
+                      "content": "关于镜词",
+                      "fontFamily": "$font",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "UYLj5",
+                      "name": "About Copy",
+                      "fill": "$muted",
+                      "content": "本地优先 · 无账号 · 无默认联网",
+                      "fontFamily": "$font",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "OEysr",
+      "x": 0,
+      "y": 1848,
+      "name": "Script Entry — 390×844",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$ink",
+      "layout": "vertical",
+      "padding": [
+        0,
+        20,
+        20,
+        20
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "Nbhjd",
+          "name": "Entry Status Bar",
+          "width": "fill_container",
+          "height": 62,
+          "gap": 14,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "wYDaH",
+              "name": "Entry Back",
+              "width": 22,
+              "height": 22,
+              "icon": "arrow-left",
+              "library": "lucide",
+              "fill": "$paper"
+            },
+            {
+              "type": "text",
+              "id": "Ivvcj",
+              "name": "Entry Title",
+              "fill": "$paper",
+              "content": "新建文稿",
+              "fontFamily": "$font",
+              "fontSize": 18,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "ZkZyS",
+              "name": "Entry Step Chip",
+              "height": 26,
+              "fill": "$surface",
+              "cornerRadius": 13,
+              "padding": [
+                6,
+                9
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "hMfzM",
+                  "name": "Entry Step Text",
+                  "fill": "$muted",
+                  "content": "STEP 01 / 03",
+                  "fontFamily": "$font",
+                  "fontSize": 10,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "mlFvd",
+          "name": "Entry Content",
+          "width": "fill_container",
+          "height": 706,
+          "layout": "vertical",
+          "gap": 12,
+          "padding": [
+            12,
+            0,
+            14,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "gzsaA",
+              "name": "Entry Hero",
+              "width": "fill_container",
+              "height": 104,
+              "fill": "$panel",
+              "cornerRadius": 20,
+              "stroke": "$cyanDim",
+              "strokeWidth": 1,
+              "gap": 12,
+              "padding": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "r8Yq5",
+                  "name": "Entry Hero Icon",
+                  "width": 42,
+                  "height": 42,
+                  "fill": "$cyan",
+                  "cornerRadius": 13,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "dXuju",
+                      "name": "Entry Spark Icon",
+                      "width": 21,
+                      "height": 21,
+                      "icon": "sparkles",
+                      "library": "lucide",
+                      "fill": "$ink"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "L0x4RQ",
+                  "name": "Entry Hero Copy",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ZfxUQ",
+                      "name": "Entry Hero Title",
+                      "fill": "$paper",
+                      "content": "先把想说的话放进来",
+                      "fontFamily": "$font",
+                      "fontSize": 16,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "jm8TL",
+                      "name": "Entry Hero Detail",
+                      "fill": "$muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "镜词会按标点自动拆成可提词的台词行。",
+                      "fontFamily": "$font",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "L6rLP",
+                  "name": "Entry Local Badge",
+                  "height": 24,
+                  "fill": "#123D3D",
+                  "cornerRadius": 12,
+                  "padding": [
+                    5,
+                    8
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "H127Cq",
+                      "name": "Entry Local Text",
+                      "fill": "$cyan",
+                      "content": "本机",
+                      "fontFamily": "$font",
+                      "fontSize": 10,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "v2tYG",
+              "name": "Entry Info Label",
+              "fill": "$muted",
+              "content": "文稿信息",
+              "fontFamily": "$font",
+              "fontSize": 12,
+              "fontWeight": "700",
+              "letterSpacing": 1.1
+            },
+            {
+              "type": "frame",
+              "id": "p1oXRV",
+              "name": "Entry Title Field",
+              "width": "fill_container",
+              "height": 56,
+              "fill": "$panel",
+              "cornerRadius": 15,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 10,
+              "padding": [
+                12,
+                14
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "R65bSr",
+                  "name": "Entry Title Icon",
+                  "width": 18,
+                  "height": 18,
+                  "icon": "type",
+                  "library": "lucide",
+                  "fill": "$muted"
+                },
+                {
+                  "type": "text",
+                  "id": "KwDWX",
+                  "name": "Entry Title Value",
+                  "fill": "$paper",
+                  "content": "未命名文稿",
+                  "fontFamily": "$font",
+                  "fontSize": 15,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "fRMOV",
+              "name": "Entry Copy Label",
+              "fill": "$muted",
+              "content": "台词内容",
+              "fontFamily": "$font",
+              "fontSize": 12,
+              "fontWeight": "700",
+              "letterSpacing": 1.1
+            },
+            {
+              "type": "frame",
+              "id": "JS8n3",
+              "name": "Entry Copy Field",
+              "width": "fill_container",
+              "height": 220,
+              "fill": "$panel",
+              "cornerRadius": 18,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 10,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "b45np",
+                  "name": "Entry Copy Header",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "vTGYB",
+                      "name": "Entry Copy Icon",
+                      "width": 17,
+                      "height": 17,
+                      "icon": "type",
+                      "library": "lucide",
+                      "fill": "$cyan"
+                    },
+                    {
+                      "type": "text",
+                      "id": "uYLgu",
+                      "name": "Entry Copy Placeholder",
+                      "fill": "$muted",
+                      "content": "输入或粘贴整篇台词……",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "k2TzQh",
+                  "name": "Entry Copy Hint",
+                  "fill": "$muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "每个句号、问号或换行都会成为自然的提词停顿。",
+                  "fontFamily": "$font",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "Nrxl8",
+              "name": "Entry Privacy Note",
+              "fill": "$muted",
+              "content": "↯  离线处理 · 文稿不会上传",
+              "fontFamily": "$font",
+              "fontSize": 11,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "vstsA",
+          "name": "Entry Footer",
+          "width": "fill_container",
+          "height": 56,
+          "fill": "$cyan",
+          "cornerRadius": 17,
+          "gap": 8,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "GQ1d4",
+              "name": "Entry CTA Icon",
+              "width": 18,
+              "height": 18,
+              "icon": "arrow-right",
+              "library": "lucide",
+              "fill": "$ink"
+            },
+            {
+              "type": "text",
+              "id": "m90LLI",
+              "name": "Entry CTA Label",
+              "fill": "$ink",
+              "content": "整理台词并继续",
+              "fontFamily": "$font",
+              "fontSize": 15,
+              "fontWeight": "700"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "rectangle",
+      "id": "N62IWi",
+      "x": 1370,
+      "y": 0,
+      "name": "scriptmirror-logo-v2.png (1254×1254)",
+      "fill": {
+        "type": "image",
+        "enabled": true,
+        "url": "screenshot-site.png",
+        "mode": "fill"
+      },
+      "width": 480,
+      "height": 480
+    },
+    {
+      "type": "frame",
+      "id": "jSKO0",
+      "x": 1410,
+      "y": 924,
+      "name": "Prompt Preview Component",
+      "width": 350,
+      "height": 86,
+      "fill": "#101A1C",
+      "cornerRadius": 18,
+      "stroke": "$cyanDim",
+      "strokeWidth": 1,
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "YQcSc",
+          "layoutPosition": "absolute",
+          "x": 12,
+          "y": 12,
+          "name": "Prompt Preview Header",
+          "width": 326,
+          "height": 17,
+          "layout": "none",
+          "children": [
+            {
+              "type": "icon",
+              "id": "ArS5S",
+              "layoutPosition": "absolute",
+              "x": 0,
+              "y": 0,
+              "name": "Prompt Preview Icon",
+              "width": 16,
+              "height": 16,
+              "icon": "video",
+              "library": "lucide",
+              "fill": "$cyan"
+            },
+            {
+              "type": "text",
+              "id": "Pan3A",
+              "layoutPosition": "absolute",
+              "x": 23,
+              "y": 0,
+              "name": "Prompt Preview Title",
+              "fill": "$paper",
+              "content": "提词预览",
+              "fontFamily": "$font",
+              "fontSize": 12,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "klrh5",
+              "layoutPosition": "absolute",
+              "x": 268,
+              "y": 1,
+              "name": "Prompt Preview Count",
+              "fill": "$muted",
+              "content": "第 01 句 / 24",
+              "fontFamily": "$font",
+              "fontSize": 10,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "pZLPu",
+          "layoutPosition": "absolute",
+          "x": 12,
+          "y": 37,
+          "name": "Prompt Preview Current",
+          "fill": "$paper",
+          "textGrowth": "fixed-width",
+          "width": 326,
+          "content": "今天想和你分享，夏天如何做好日常防晒。",
+          "fontFamily": "$font",
+          "fontSize": 14,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "k5bWYe",
+          "layoutPosition": "absolute",
+          "x": 12,
+          "y": 64,
+          "name": "Prompt Preview Next",
+          "fill": "$muted",
+          "textGrowth": "fixed-width",
+          "width": 326,
+          "content": "下一句  选对产品只是开始……",
+          "fontFamily": "$font",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "bg": {
+      "type": "color",
+      "value": "#F8FAFC"
+    },
+    "panel": {
+      "type": "color",
+      "value": "#1B1E23"
+    },
+    "nav": {
+      "type": "color",
+      "value": "#F1F5FF"
+    },
+    "ink": {
+      "type": "color",
+      "value": "#0B0C0E"
+    },
+    "muted": {
+      "type": "color",
+      "value": "#AEB6C2"
+    },
+    "line": {
+      "type": "color",
+      "value": "#31363F"
+    },
+    "blue": {
+      "type": "color",
+      "value": "#1463E8"
+    },
+    "blueSoft": {
+      "type": "color",
+      "value": "#E7EEFF"
+    },
+    "green": {
+      "type": "color",
+      "value": "#067647"
+    },
+    "surface": {
+      "type": "color",
+      "value": "#15181D"
+    },
+    "paper": {
+      "type": "color",
+      "value": "#F5F6F7"
+    },
+    "cyan": {
+      "type": "color",
+      "value": "#16DDE0"
+    },
+    "cyanDim": {
+      "type": "color",
+      "value": "#0C7377"
+    },
+    "red": {
+      "type": "color",
+      "value": "#FF4D4F"
+    },
+    "amber": {
+      "type": "color",
+      "value": "#FFB454"
+    },
+    "font": {
+      "type": "string",
+      "value": "Inter"
+    }
+  },
+  "fileToken": "aab9154f-e3ff-4ca0-b026-a763ef7aa787"
+}

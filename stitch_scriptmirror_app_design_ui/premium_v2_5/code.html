@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>录制完成</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-fixed": "#00fbfb",
+                        "outline": "#8e9192",
+                        "on-secondary-container": "#b6b8bf",
+                        "on-tertiary-container": "#007070",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "primary": "#ffffff",
+                        "inverse-on-surface": "#313030",
+                        "background-obsidian": "#0B0C0E",
+                        "surface-bright": "#3a3939",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-fixed-variant": "#44474c",
+                        "surface-layer": "#1B1E23",
+                        "on-tertiary-fixed": "#002020",
+                        "surface-dim": "#141313",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-variant": "#353434",
+                        "on-primary": "#2f3131",
+                        "secondary": "#c4c6cd",
+                        "tertiary-fixed-dim": "#00dddd",
+                        "on-error": "#690005",
+                        "surface": "#141313",
+                        "secondary-fixed-dim": "#c4c6cd",
+                        "on-secondary": "#2e3036",
+                        "surface-container-high": "#2a2a2a",
+                        "background": "#141313",
+                        "surface-container": "#201f1f",
+                        "on-background": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#004f4f",
+                        "on-surface-variant": "#c4c7c8",
+                        "secondary-container": "#46494f",
+                        "inverse-primary": "#5d5f5f",
+                        "tertiary-container": "#00fbfb",
+                        "on-primary-fixed-variant": "#454747",
+                        "surface-border": "#31363F",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-fixed": "#191c21",
+                        "tertiary": "#ffffff",
+                        "primary-container": "#e2e2e2",
+                        "primary-fixed": "#e2e2e2",
+                        "on-tertiary": "#003737",
+                        "surface-container-highest": "#353434",
+                        "outline-variant": "#444748",
+                        "error-container": "#93000a",
+                        "button-outline": "#BEC4CC",
+                        "on-primary-fixed": "#1a1c1c",
+                        "on-primary-container": "#636565",
+                        "secondary-fixed": "#e1e2e9",
+                        "status-recording": "#FF4D4F",
+                        "on-error-container": "#ffdad6",
+                        "surface-tint": "#c6c6c7",
+                        "error": "#ffb4ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "gutter": "16px",
+                        "margin-edge": "24px",
+                        "stack-sm": "8px",
+                        "touch-target-min": "48px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "prompter-display": ["Inter"],
+                        "prompter-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "prompter-display": ["42px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "prompter-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .cyber-glow { box-shadow: 0 0 40px rgba(0, 251, 251, 0.2); }
+        .cyber-text-glow { text-shadow: 0 0 10px rgba(0, 251, 251, 0.5); }
+        .glass-card { background: linear-gradient(145deg, rgba(27, 30, 35, 0.8) 0%, rgba(27, 30, 35, 0.4) 100%); backdrop-filter: blur(12px); border: 1px solid #31363F; }
+    </style>
+</head>
+<body class="bg-background-obsidian text-on-surface min-h-screen flex flex-col font-body-md antialiased overflow-hidden">
+<!-- Top Navigation (Suppressed per logic: Transactional "Success" screen) -->
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col items-center justify-center px-margin-edge w-full max-w-3xl mx-auto py-stack-lg relative z-10">
+<!-- Background Ambient Glow -->
+<div class="absolute inset-0 z-0 flex items-center justify-center pointer-events-none opacity-20">
+<div class="w-96 h-96 bg-tertiary-fixed rounded-full blur-[100px]"></div>
+</div>
+<div class="z-10 w-full flex flex-col items-center space-y-stack-lg">
+<!-- Success Icon Animation / Graphic -->
+<div class="relative flex items-center justify-center w-32 h-32 rounded-full border-2 border-tertiary-fixed cyber-glow bg-surface-layer/50 backdrop-blur-md mb-4">
+<span class="material-symbols-outlined text-6xl text-tertiary-fixed cyber-text-glow" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<!-- Subtle pulsing ring -->
+<div class="absolute inset-0 rounded-full border border-tertiary-fixed animate-ping opacity-30"></div>
+</div>
+<!-- Headline -->
+<div class="text-center space-y-stack-sm">
+<h1 class="font-prompter-display text-prompter-display text-primary tracking-tight">录制完成</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">您的视频已成功保存到本地设备</p>
+</div>
+<!-- Video Metadata Summary Card -->
+<div class="glass-card rounded-xl p-6 w-full max-w-md flex flex-col space-y-stack-md mt-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-xl">movie</span>
+<span class="font-body-md text-body-md">分辨率</span>
+</div>
+<span class="font-headline-md text-headline-md text-primary">1080p</span>
+</div>
+<div class="w-full h-px bg-surface-border"></div>
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-xl">timer</span>
+<span class="font-body-md text-body-md">时长</span>
+</div>
+<span class="font-headline-md text-headline-md text-primary">01:36</span>
+</div>
+<div class="w-full h-px bg-surface-border"></div>
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-xl">sd_storage</span>
+<span class="font-body-md text-body-md">文件大小</span>
+</div>
+<span class="font-headline-md text-headline-md text-primary">184MB</span>
+</div>
+</div>
+<!-- Action Buttons Hierarchy -->
+<div class="w-full max-w-md flex flex-col space-y-stack-md mt-8">
+<!-- Primary Action: Finish / Home -->
+<button class="w-full h-14 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-headline-md text-headline-md flex items-center justify-center space-x-2 hover:bg-tertiary-fixed-dim transition-colors active:scale-95 duration-200">
+<span>完成</span>
+<span class="material-symbols-outlined">home</span>
+</button>
+<!-- Secondary Action: Retake -->
+<button class="w-full h-14 rounded-full border border-button-outline text-primary font-body-lg text-body-lg flex items-center justify-center space-x-2 hover:bg-surface-bright/20 transition-colors active:scale-95 duration-200 glass-card">
+<span class="material-symbols-outlined">replay</span>
+<span>再录一次</span>
+</button>
+<!-- Tertiary Action: Continue with same script -->
+<button class="w-full h-12 text-on-surface-variant font-body-md text-body-md flex items-center justify-center space-x-2 hover:text-primary transition-colors mt-2">
+<span class="material-symbols-outlined text-sm">description</span>
+<span class="underline underline-offset-4 decoration-surface-border">继续拍同一文稿</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Suppressed per logic: Transactional "Success" screen) -->
+</body></html>

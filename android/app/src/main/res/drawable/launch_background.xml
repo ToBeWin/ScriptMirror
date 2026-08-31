@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ScriptMirror launch screen: keep the same dark surface and logo as the app. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/scriptmirror_ink" />
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/scriptmirror_logo_splash"
+            android:filter="true" />
+    </item>
+</layer-list>

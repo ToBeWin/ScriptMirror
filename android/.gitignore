@@ -1,0 +1,17 @@
+# Keep the Gradle wrapper launchers and jar in the open-source checkout so a
+# fresh clone can build without relying on a globally installed Gradle.
+gradle-wrapper.jar
+!/gradle/wrapper/gradle-wrapper.jar
+!/gradlew
+!/gradlew.bat
+/.gradle
+/captures/
+/local.properties
+GeneratedPluginRegistrant.java
+.cxx/
+
+# Remember to never publicly share your keystore.
+# See https://flutter.dev/to/reference-keystore
+key.properties
+**/*.keystore
+**/*.jks
