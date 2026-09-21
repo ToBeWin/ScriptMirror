@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:script_mirror/domain/asr_provider.dart';
+import 'package:script_mirror/domain/script_models.dart';
 import 'package:script_mirror/platform/sherpa_asr_provider.dart';
 
 void main() {
@@ -36,5 +37,28 @@ void main() {
       pcm16ToFloat32(bytes),
       orderedEquals(<double>[0, .5, -.5, 0.999969482421875]),
     );
+  });
+
+  test('sherpa provider selects the matching offline language model', () async {
+    final english = SherpaAsrProvider(
+      language: RecognitionLanguage.automatic,
+      scriptLines: const ['Stay focused on the lens.'],
+    );
+    final chinese = SherpaAsrProvider(
+      language: RecognitionLanguage.automatic,
+      scriptLines: const ['看着镜头，不要忘记下一句。'],
+    );
+    final forcedEnglish = SherpaAsrProvider(
+      language: RecognitionLanguage.english,
+      scriptLines: const ['看着镜头'],
+    );
+
+    expect(english.resolvedLanguage, RecognitionLanguage.english);
+    expect(chinese.resolvedLanguage, RecognitionLanguage.chinese);
+    expect(forcedEnglish.resolvedLanguage, RecognitionLanguage.english);
+
+    await english.dispose();
+    await chinese.dispose();
+    await forcedEnglish.dispose();
   });
 }

@@ -46,7 +46,8 @@ class CaptureResult {
   final int? durationMs;
   final String? resolution;
 
-  /// Human-readable MediaStore location, for example `DCIM/ScriptMirror`.
+  /// Human-readable system media location, for example `DCIM/ScriptMirror`
+  /// on Android or `系统相册` on iOS.
   /// It is optional because legacy providers may not expose a path after the
   /// insert; callers should fall back to the generic system gallery label.
   final String? storageLocation;
@@ -68,8 +69,8 @@ class CapturePhaseEvent {
   final String? reason;
 }
 
-/// Flutter-facing contract. The Android implementation owns CameraX, the
-/// microphone, shared audio feed and MediaStore; UI code must not call
+/// Flutter-facing contract. The mobile implementation owns the native camera,
+/// microphone, shared audio feed and system media library; UI code must not call
 /// platform APIs directly.
 abstract interface class CaptureService {
   Stream<CapturePhaseEvent> get phase;
@@ -77,10 +78,10 @@ abstract interface class CaptureService {
   Future<void> prepare(CaptureConfig config);
   Future<void> start({Duration countdown = const Duration(seconds: 3)});
 
-  /// Cancels an asynchronous native start that is waiting for CameraX to
-  /// expose a usable capture use case.
+  /// Cancels an asynchronous native start that is waiting for the platform
+  /// camera owner to expose a usable capture session.
   ///
-  /// A tiny hand-off window exists after CameraX has created a Recording but
+  /// A tiny hand-off window exists after the native owner has created a take but
   /// before Flutter receives the successful platform result. In that window a
   /// user cancel must discard the just-started take, while a host lifecycle
   /// interruption must preserve it for the recovery flow. The native owner
@@ -97,14 +98,16 @@ abstract interface class CaptureService {
   Future<void> dispose();
 }
 
-/// CameraX bridge used on Android. The channel is deliberately small so the
-/// Flutter UI remains independent from CameraX and MediaStore details.
+/// Native capture bridge used on Android and iOS. The channel is deliberately
+/// small so Flutter remains independent from CameraX, AVFoundation, MediaStore
+/// and Photos details.
 class PlatformCaptureService implements CaptureService {
   static const _channel = MethodChannel('scriptmirror/capture');
   static const _events = EventChannel('scriptmirror/capture_events');
 
   static bool get isSupported =>
-      defaultTargetPlatform == TargetPlatform.android;
+      defaultTargetPlatform == TargetPlatform.android ||
+      defaultTargetPlatform == TargetPlatform.iOS;
 
   static Future<bool> requestPermissions() async {
     if (!isSupported) return true;
@@ -144,7 +147,7 @@ class PlatformCaptureService implements CaptureService {
 
   /// Opens this app's system settings page so a permanently denied camera or
   /// microphone permission can be restored without making the user hunt for
-  /// the app in Android settings.
+  /// the app in platform settings.
   static Future<bool> openAppSettings() async {
     if (!isSupported) return false;
     try {
@@ -269,7 +272,7 @@ class PlatformCaptureService implements CaptureService {
   }
 }
 
-/// Non-Android/test fallback. It drives the same lifecycle but never claims
+/// Non-mobile/test fallback. It drives the same lifecycle but never claims
 /// that a video file was written.
 class PreviewCaptureService implements CaptureService {
   PreviewCaptureService()
@@ -309,8 +312,8 @@ class PreviewCaptureService implements CaptureService {
   @override
   Future<void> cancelStart({bool preserveRecording = false}) async {
     // PreviewCaptureService never waits for a native camera future. The
-    // method still exists so tests and non-Android builds exercise the same
-    // cancellation contract as the CameraX implementation.
+    // method still exists so tests and non-mobile builds exercise the same
+    // cancellation contract as the native implementation.
   }
 
   @override

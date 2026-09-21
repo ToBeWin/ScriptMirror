@@ -2,6 +2,7 @@ import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 
 import '../domain/script_models.dart';
+import '../i18n/app_strings.dart';
 import 'script_repository.dart';
 import 'session_recovery_repository.dart';
 import 'settings_repository.dart';
@@ -209,6 +210,10 @@ class SqliteScriptRepository
           captureResolution: CaptureResolution.fromName(
             values['captureResolution'],
           ),
+          recognitionLanguage: RecognitionLanguageX.fromStorage(
+            values['recognitionLanguage'],
+          ),
+          language: AppLanguageX.fromStorage(values['language']),
         )
         .normalized();
   }
@@ -225,6 +230,8 @@ class SqliteScriptRepository
       'lineHeight': settings.lineHeight.toString(),
       'mirrorPreview': settings.mirrorPreview.toString(),
       'captureResolution': settings.captureResolution.name,
+      'recognitionLanguage': settings.recognitionLanguage.storageValue,
+      'language': settings.language.storageValue,
     };
     for (final entry in values.entries) {
       batch.insert('app_settings', <String, Object?>{

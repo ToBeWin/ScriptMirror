@@ -7,25 +7,37 @@ import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa;
 ///
 /// Usage:
 ///   dart run tool/sherpa_asr_smoke.dart path/to/16k-mono.wav
+///   dart run tool/sherpa_asr_smoke.dart path/to/16k-mono.wav --english
 ///
 /// This intentionally exercises the same model family and endpoint settings
 /// as SherpaAsrProvider, without opening a microphone or requiring Android.
 Future<void> main(List<String> args) async {
-  if (args.length != 1) {
-    stderr.writeln('usage: dart run tool/sherpa_asr_smoke.dart <wav>');
+  if (args.isEmpty ||
+      args.length > 2 ||
+      (args.length == 2 && args[1] != '--english')) {
+    stderr.writeln(
+      'usage: dart run tool/sherpa_asr_smoke.dart <wav> [--english]',
+    );
     exitCode = 64;
     return;
   }
 
-  final wavPath = args.single;
+  final wavPath = args.first;
+  final english = args.length == 2;
   final modelDirectory =
       '${Directory.current.path}/assets/asr/'
-      'sherpa-onnx-streaming-zipformer-small-ctc-zh-int8-2025-04-01';
-  final modelPath = '$modelDirectory/model.int8.onnx';
+      '${english ? 'sherpa-onnx-streaming-zipformer-en-20m-2023-02-17' : 'sherpa-onnx-streaming-zipformer-small-ctc-zh-int8-2025-04-01'}';
   final tokensPath = '$modelDirectory/tokens.txt';
+  final modelFiles = english
+      ? <String>[
+          '$modelDirectory/encoder-epoch-99-avg-1.int8.onnx',
+          '$modelDirectory/decoder-epoch-99-avg-1.onnx',
+          '$modelDirectory/joiner-epoch-99-avg-1.int8.onnx',
+        ]
+      : <String>['$modelDirectory/model.int8.onnx'];
   if (!File(wavPath).existsSync() ||
-      !File(modelPath).existsSync() ||
-      !File(tokensPath).existsSync()) {
+      !File(tokensPath).existsSync() ||
+      modelFiles.any((file) => !File(file).existsSync())) {
     stderr.writeln('missing wav or bundled model asset');
     exitCode = 66;
     return;
@@ -44,14 +56,28 @@ Future<void> main(List<String> args) async {
   final recognizer = sherpa.OnlineRecognizer(
     sherpa.OnlineRecognizerConfig(
       feat: const sherpa.FeatureConfig(sampleRate: 16000, featureDim: 80),
-      model: sherpa.OnlineModelConfig(
-        zipformer2Ctc: sherpa.OnlineZipformer2CtcModelConfig(model: modelPath),
-        tokens: tokensPath,
-        numThreads: 1,
-        provider: 'cpu',
-        debug: false,
-        modelingUnit: 'cjkchar',
-      ),
+      model: english
+          ? sherpa.OnlineModelConfig(
+              transducer: sherpa.OnlineTransducerModelConfig(
+                encoder: modelFiles[0],
+                decoder: modelFiles[1],
+                joiner: modelFiles[2],
+              ),
+              tokens: tokensPath,
+              numThreads: 1,
+              provider: 'cpu',
+              debug: false,
+            )
+          : sherpa.OnlineModelConfig(
+              zipformer2Ctc: sherpa.OnlineZipformer2CtcModelConfig(
+                model: modelFiles.single,
+              ),
+              tokens: tokensPath,
+              numThreads: 1,
+              provider: 'cpu',
+              debug: false,
+              modelingUnit: 'cjkchar',
+            ),
       decodingMethod: 'greedy_search',
       enableEndpoint: true,
       rule1MinTrailingSilence: 2.4,

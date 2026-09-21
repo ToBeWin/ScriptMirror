@@ -39,4 +39,31 @@ void main() {
     expect(safe.lookaheadLines, 1);
     expect(safe.lineHeight, 1.15);
   });
+
+  test('automatic recognition language follows the script characters', () {
+    expect(
+      detectRecognitionLanguage(const ['Stay focused on the lens.']),
+      RecognitionLanguage.english,
+    );
+    expect(
+      detectRecognitionLanguage(const ['看着镜头，不要忘记下一句。']),
+      RecognitionLanguage.chinese,
+    );
+  });
+
+  test('recognition language is preserved by settings copyWith', () {
+    const settings = AppSettings(
+      recognitionLanguage: RecognitionLanguage.english,
+    );
+    expect(
+      settings.copyWith().recognitionLanguage,
+      RecognitionLanguage.english,
+    );
+    expect(
+      RecognitionLanguageX.fromStorage(
+        settings.recognitionLanguage.storageValue,
+      ),
+      RecognitionLanguage.english,
+    );
+  });
 }

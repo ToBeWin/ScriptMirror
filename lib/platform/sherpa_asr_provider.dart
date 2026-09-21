@@ -10,34 +10,112 @@ import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa;
 
 import '../domain/alignment_engine.dart';
 import '../domain/asr_provider.dart';
+import '../domain/script_models.dart';
 import 'audio_feed.dart';
 
 /// The model is packaged in the application bundle. It is copied to the
 /// private app-support directory only because sherpa-onnx needs filesystem
 /// paths; no network request is made and no audio leaves the device.
-const _modelAssetDirectory =
+const _zhModelAssetDirectory =
     'assets/asr/sherpa-onnx-streaming-zipformer-small-ctc-zh-int8-2025-04-01';
-const _modelAsset = '$_modelAssetDirectory/model.int8.onnx';
-const _tokensAsset = '$_modelAssetDirectory/tokens.txt';
+const _zhModelAsset = '$_zhModelAssetDirectory/model.int8.onnx';
+const _zhTokensAsset = '$_zhModelAssetDirectory/tokens.txt';
+const _enModelAssetDirectory =
+    'assets/asr/sherpa-onnx-streaming-zipformer-en-20m-2023-02-17';
+const _enEncoderAsset =
+    '$_enModelAssetDirectory/encoder-epoch-99-avg-1.int8.onnx';
+const _enDecoderAsset = '$_enModelAssetDirectory/decoder-epoch-99-avg-1.onnx';
+const _enJoinerAsset =
+    '$_enModelAssetDirectory/joiner-epoch-99-avg-1.int8.onnx';
+const _enTokensAsset = '$_enModelAssetDirectory/tokens.txt';
 const _sampleRateHz = 16000;
-const _modelSha256 =
+const _zhModelSha256 =
     '68c9c943840f7d9cf3e8a4970ba50f404feb5277f611fa82b7e72267786fa84a';
-const _tokensSha256 =
+const _zhTokensSha256 =
     '6fed8c6c248516f38e7faa19404b57413e8ce259f1cbc1fa4aebc86eac32fdfd';
+const _enEncoderSha256 =
+    '3810755ce7c3ab26b42a8bcf39d191308fa27fb0f53358823ba46141d03b7eb3';
+const _enDecoderSha256 =
+    '45a7f940ecfb53d89fa270ad11b88b961e53a317203eb24b1c8e95ed208b0f30';
+const _enJoinerSha256 =
+    'e085d73b593cf9b0707f370dbd656d58327d3fe36d80d849202ef81df02cb01e';
+const _enTokensSha256 =
+    '49e3c2646595fd907228b3c6787069658f67b17377c60aeb8619c4551b2316fb';
 
-/// Local streaming Chinese ASR backed by sherpa-onnx.
+class _BundledAsrModel {
+  const _BundledAsrModel({
+    required this.language,
+    required this.cacheDirectory,
+    required this.tokensAsset,
+    required this.checksums,
+    this.ctcModelAsset,
+    this.encoderAsset,
+    this.decoderAsset,
+    this.joinerAsset,
+  });
+
+  final RecognitionLanguage language;
+  final String cacheDirectory;
+  final String tokensAsset;
+  final Map<String, String> checksums;
+  final String? ctcModelAsset;
+  final String? encoderAsset;
+  final String? decoderAsset;
+  final String? joinerAsset;
+
+  bool get isTransducer => encoderAsset != null;
+
+  String get languageLabel =>
+      language == RecognitionLanguage.english ? '英文' : '中文';
+}
+
+const _zhModel = _BundledAsrModel(
+  language: RecognitionLanguage.chinese,
+  cacheDirectory: 'zh-small-ctc',
+  ctcModelAsset: _zhModelAsset,
+  tokensAsset: _zhTokensAsset,
+  checksums: <String, String>{
+    _zhModelAsset: _zhModelSha256,
+    _zhTokensAsset: _zhTokensSha256,
+  },
+);
+
+const _enModel = _BundledAsrModel(
+  language: RecognitionLanguage.english,
+  cacheDirectory: 'en-20m-transducer',
+  encoderAsset: _enEncoderAsset,
+  decoderAsset: _enDecoderAsset,
+  joinerAsset: _enJoinerAsset,
+  tokensAsset: _enTokensAsset,
+  checksums: <String, String>{
+    _enEncoderAsset: _enEncoderSha256,
+    _enDecoderAsset: _enDecoderSha256,
+    _enJoinerAsset: _enJoinerSha256,
+    _enTokensAsset: _enTokensSha256,
+  },
+);
+
+/// Local streaming Chinese/English ASR backed by sherpa-onnx on Android and
+/// iOS. Automatic selection follows the script language; an explicit setting
+/// can override it for mixed-language scripts.
 ///
 /// CaptureService remains the only microphone owner. This provider subscribes
 /// to its shared PCM EventChannel and never opens a second recorder.
 class SherpaAsrProvider implements AsrProvider {
-  SherpaAsrProvider()
-    : _statusController = StreamController<AsrStatusEvent>.broadcast(),
-      _partialController = StreamController<AsrPartial>.broadcast();
+  SherpaAsrProvider({
+    RecognitionLanguage language = RecognitionLanguage.automatic,
+    Iterable<String> scriptLines = const <String>[],
+  }) : _requestedLanguage = language,
+       _scriptLines = List<String>.unmodifiable(scriptLines),
+       _statusController = StreamController<AsrStatusEvent>.broadcast(),
+       _partialController = StreamController<AsrPartial>.broadcast();
 
   static bool _bindingsInitialized = false;
 
   final StreamController<AsrStatusEvent> _statusController;
   final StreamController<AsrPartial> _partialController;
+  final RecognitionLanguage _requestedLanguage;
+  final List<String> _scriptLines;
   StreamSubscription<AudioPcmFrame>? _audioSubscription;
   sherpa.OnlineRecognizer? _recognizer;
   sherpa.OnlineStream? _stream;
@@ -48,6 +126,14 @@ class SherpaAsrProvider implements AsrProvider {
   int _lastFrameTimestampMs = 0;
   int _startGeneration = 0;
   bool _disposed = false;
+
+  RecognitionLanguage get resolvedLanguage =>
+      _requestedLanguage == RecognitionLanguage.automatic
+      ? detectRecognitionLanguage(_scriptLines)
+      : _requestedLanguage;
+
+  _BundledAsrModel get _model =>
+      resolvedLanguage == RecognitionLanguage.english ? _enModel : _zhModel;
 
   @override
   Stream<AsrPartial> get partials => _partialController.stream;
@@ -86,9 +172,9 @@ class SherpaAsrProvider implements AsrProvider {
     }
 
     _emit(
-      const AsrStatusEvent(
+      AsrStatusEvent(
         status: AsrStatus.initializing,
-        reason: '正在加载本地离线识别模型',
+        reason: '正在加载本地离线${_model.languageLabel}识别模型',
       ),
     );
     try {
@@ -112,9 +198,9 @@ class SherpaAsrProvider implements AsrProvider {
         cancelOnError: false,
       );
       _emit(
-        const AsrStatusEvent(
+        AsrStatusEvent(
           status: AsrStatus.listening,
-          reason: '本地离线识别已就绪，音频不会上传',
+          reason: '本地离线${_model.languageLabel}识别已就绪，音频不会上传',
         ),
       );
       return true;
@@ -187,21 +273,36 @@ class SherpaAsrProvider implements AsrProvider {
       _bindingsInitialized = true;
     }
 
-    final modelPath = await _copyBundledModel(_modelAsset);
-    final tokensPath = await _copyBundledModel(_tokensAsset);
+    final model = _model;
+    final tokensPath = await _copyBundledModel(model, model.tokensAsset);
+    final sherpaModel = model.isTransducer
+        ? sherpa.OnlineModelConfig(
+            transducer: sherpa.OnlineTransducerModelConfig(
+              encoder: await _copyBundledModel(model, model.encoderAsset!),
+              decoder: await _copyBundledModel(model, model.decoderAsset!),
+              joiner: await _copyBundledModel(model, model.joinerAsset!),
+            ),
+            tokens: tokensPath,
+            numThreads: 1,
+            provider: 'cpu',
+            debug: false,
+          )
+        : sherpa.OnlineModelConfig(
+            zipformer2Ctc: sherpa.OnlineZipformer2CtcModelConfig(
+              model: await _copyBundledModel(model, model.ctcModelAsset!),
+            ),
+            tokens: tokensPath,
+            numThreads: 1,
+            provider: 'cpu',
+            debug: false,
+            modelingUnit: 'cjkchar',
+          );
     final config = sherpa.OnlineRecognizerConfig(
       feat: const sherpa.FeatureConfig(
         sampleRate: _sampleRateHz,
         featureDim: 80,
       ),
-      model: sherpa.OnlineModelConfig(
-        zipformer2Ctc: sherpa.OnlineZipformer2CtcModelConfig(model: modelPath),
-        tokens: tokensPath,
-        numThreads: 1,
-        provider: 'cpu',
-        debug: false,
-        modelingUnit: 'cjkchar',
-      ),
+      model: sherpaModel,
       decodingMethod: 'greedy_search',
       enableEndpoint: true,
       rule1MinTrailingSilence: 2.4,
@@ -211,19 +312,18 @@ class SherpaAsrProvider implements AsrProvider {
     _recognizer = sherpa.OnlineRecognizer(config);
   }
 
-  Future<String> _copyBundledModel(String asset) async {
+  Future<String> _copyBundledModel(_BundledAsrModel model, String asset) async {
     final support = await getApplicationSupportDirectory();
     final targetDirectory = Directory(
-      path.join(support.path, 'asr', 'zh-small-ctc'),
+      path.join(support.path, 'asr', model.cacheDirectory),
     );
     await targetDirectory.create(recursive: true);
     final target = File(path.join(targetDirectory.path, path.basename(asset)));
     final data = await rootBundle.load(asset);
-    final expectedSha256 = switch (asset) {
-      _modelAsset => _modelSha256,
-      _tokensAsset => _tokensSha256,
-      _ => throw ArgumentError.value(asset, 'asset', 'Unknown ASR asset'),
-    };
+    final expectedSha256 = model.checksums[asset];
+    if (expectedSha256 == null) {
+      throw ArgumentError.value(asset, 'asset', 'Unknown ASR asset');
+    }
     final bytes = data.buffer.asUint8List(
       data.offsetInBytes,
       data.lengthInBytes,
@@ -337,9 +437,13 @@ Float32List pcm16ToFloat32(Uint8List bytes) {
   return values;
 }
 
-AsrProvider asrProviderForCurrentPlatform() {
-  if (defaultTargetPlatform == TargetPlatform.android) {
-    return SherpaAsrProvider();
+AsrProvider asrProviderForCurrentPlatform({
+  RecognitionLanguage language = RecognitionLanguage.automatic,
+  Iterable<String> scriptLines = const <String>[],
+}) {
+  if (defaultTargetPlatform == TargetPlatform.android ||
+      defaultTargetPlatform == TargetPlatform.iOS) {
+    return SherpaAsrProvider(language: language, scriptLines: scriptLines);
   }
-  return UnavailableAsrProvider(reason: '本地离线识别目前仅支持 Android 录制链路');
+  return UnavailableAsrProvider(reason: '本地离线识别目前仅支持移动端录制链路');
 }

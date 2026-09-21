@@ -7,11 +7,13 @@ import 'package:script_mirror/data/script_repository.dart';
 import 'package:script_mirror/data/session_recovery_repository.dart';
 import 'package:script_mirror/data/settings_repository.dart';
 import 'package:script_mirror/domain/script_models.dart' as domain;
+import 'package:script_mirror/i18n/app_strings.dart';
 import 'package:script_mirror/main.dart';
 import 'package:script_mirror/platform/capture_service.dart';
 
 class _MemorySettingsRepository implements SettingsRepository {
-  _MemorySettingsRepository() : settings = const domain.AppSettings();
+  _MemorySettingsRepository()
+    : settings = const domain.AppSettings(language: AppLanguage.chinese);
 
   domain.AppSettings settings;
 
@@ -48,6 +50,43 @@ class _DelayedScriptRepository extends InMemoryScriptRepository {
 }
 
 void main() {
+  // Keep the legacy interaction suite readable while the product's first-run
+  // language is now English. Dedicated localization tests below exercise the
+  // new default and the persisted language switch.
+  setUp(() => AppStrings.setLanguage(AppLanguage.chinese));
+
+  testWidgets('first run uses English product chrome', (tester) async {
+    AppStrings.setLanguage(AppLanguage.english);
+    await tester.pumpWidget(const ScriptMirrorApp());
+    await tester.pumpAndSettle();
+
+    expect(find.text('Start recording'), findsOneWidget);
+    expect(find.text('开始拍摄'), findsNothing);
+    expect(find.text('Recent scripts'), findsOneWidget);
+  });
+
+  testWidgets('language preference can switch and persist', (tester) async {
+    final repository = _MemorySettingsRepository();
+    await tester.pumpWidget(
+      MaterialApp(home: SettingsPage(repository: repository)),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.byIcon(Icons.language_outlined),
+      280,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byIcon(Icons.language_outlined));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('English'));
+    await tester.pumpAndSettle();
+
+    expect(repository.settings.language, AppLanguage.english);
+    expect(AppStrings.currentLanguage, AppLanguage.english);
+    expect(find.text('Language'), findsWidgets);
+  });
+
   testWidgets('home shows the primary capture flow', (tester) async {
     await tester.pumpWidget(const ScriptMirrorApp());
 
@@ -180,6 +219,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    await tester.scrollUntilVisible(
+      find.text('自拍镜像'),
+      220,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.tap(find.text('自拍镜像'));
     await tester.pumpAndSettle();
     expect(find.byType(Switch), findsOneWidget);
@@ -245,6 +289,15 @@ void main() {
     expect(find.text('文稿信息'), findsOneWidget);
     expect(find.text('台词内容'), findsOneWidget);
     expect(find.text('整理台词并继续'), findsOneWidget);
+  });
+
+  testWidgets('new script exposes TXT and Markdown import', (tester) async {
+    await tester.pumpWidget(const ScriptMirrorApp());
+    await tester.tap(find.text('新建文稿'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('导入文稿'), findsOneWidget);
+    expect(find.byTooltip('导入文稿'), findsOneWidget);
   });
 
   testWidgets('new script protects an unfinished draft on back', (

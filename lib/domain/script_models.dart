@@ -1,3 +1,5 @@
+import '../i18n/app_strings.dart';
+
 /// The smallest unit shown by the teleprompter and consumed by alignment.
 class ScriptLine {
   ScriptLine({
@@ -76,6 +78,33 @@ enum CaptureResolution {
   };
 }
 
+/// Language used by the on-device speech recognizer. This is intentionally
+/// separate from [AppLanguage]: the interface language and the language a
+/// creator speaks do not have to be the same.
+enum RecognitionLanguage { automatic, chinese, english }
+
+extension RecognitionLanguageX on RecognitionLanguage {
+  String get storageValue => name;
+
+  static RecognitionLanguage fromStorage(String? value) => switch (value) {
+    'chinese' => RecognitionLanguage.chinese,
+    'english' => RecognitionLanguage.english,
+    _ => RecognitionLanguage.automatic,
+  };
+}
+
+/// Chooses the bundled recognizer for a script when the user leaves language
+/// selection on automatic. A small CJK/Latin ratio is more reliable than the
+/// app UI language for international creators who keep English UI with a
+/// Chinese script (or the reverse).
+RecognitionLanguage detectRecognitionLanguage(Iterable<String> lines) {
+  final text = lines.join(' ');
+  final cjkCount = RegExp(r'[\u3400-\u9fff]').allMatches(text).length;
+  final latinCount = RegExp(r'[A-Za-z]').allMatches(text).length;
+  if (latinCount > cjkCount) return RecognitionLanguage.english;
+  return RecognitionLanguage.chinese;
+}
+
 /// User-level teleprompter and capture preferences. Values are intentionally
 /// small and serializable so they can be persisted alongside scripts in
 /// SQLite.
@@ -87,6 +116,8 @@ class AppSettings {
     this.lineHeight = 1.35,
     this.mirrorPreview = true,
     this.captureResolution = CaptureResolution.fhd1080,
+    this.recognitionLanguage = RecognitionLanguage.automatic,
+    this.language = AppLanguage.english,
   });
 
   final double fontSize;
@@ -95,6 +126,8 @@ class AppSettings {
   final double lineHeight;
   final bool mirrorPreview;
   final CaptureResolution captureResolution;
+  final RecognitionLanguage recognitionLanguage;
+  final AppLanguage language;
 
   /// Keeps persisted or externally supplied values inside the ranges that the
   /// settings sheets and the recording renderer can safely consume. This is
@@ -111,6 +144,8 @@ class AppSettings {
         : 1.35,
     mirrorPreview: mirrorPreview,
     captureResolution: captureResolution,
+    recognitionLanguage: recognitionLanguage,
+    language: language,
   );
 
   AppSettings copyWith({
@@ -120,6 +155,8 @@ class AppSettings {
     double? lineHeight,
     bool? mirrorPreview,
     CaptureResolution? captureResolution,
+    RecognitionLanguage? recognitionLanguage,
+    AppLanguage? language,
   }) => AppSettings(
     fontSize: fontSize ?? this.fontSize,
     backgroundOpacity: backgroundOpacity ?? this.backgroundOpacity,
@@ -127,6 +164,8 @@ class AppSettings {
     lineHeight: lineHeight ?? this.lineHeight,
     mirrorPreview: mirrorPreview ?? this.mirrorPreview,
     captureResolution: captureResolution ?? this.captureResolution,
+    recognitionLanguage: recognitionLanguage ?? this.recognitionLanguage,
+    language: language ?? this.language,
   );
 }
 

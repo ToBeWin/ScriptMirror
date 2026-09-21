@@ -39,7 +39,7 @@ abstract interface class AudioFeed {
   AudioFeedCapability get capability;
 }
 
-/// The Android native capture owner exposes PCM only while a recording is
+/// The native mobile capture owner exposes PCM only while a recording is
 /// active. No second Dart/plugin microphone is opened.
 class NativeAudioFeed implements AudioFeed {
   static const _events = EventChannel('scriptmirror/audio_feed');
@@ -98,6 +98,7 @@ class UnavailableAudioFeed implements AudioFeed {
 }
 
 AudioFeed audioFeedForCurrentPlatform() =>
-    defaultTargetPlatform == TargetPlatform.android
+    defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS
     ? NativeAudioFeed()
     : const UnavailableAudioFeed();

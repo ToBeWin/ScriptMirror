@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:file_selector/file_selector.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/services.dart';
 
 import 'data/sqlite_script_repository.dart';
@@ -11,6 +14,7 @@ import 'domain/alignment_engine.dart';
 import 'domain/asr_provider.dart';
 import 'domain/script_models.dart' as domain;
 import 'domain/script_parser.dart';
+import 'i18n/app_strings.dart';
 import 'platform/capture_service.dart';
 import 'platform/sherpa_asr_provider.dart';
 
@@ -25,7 +29,8 @@ const _cyan = Color(0xFF16DDE0);
 const _cyanDim = Color(0xFF0C7377);
 const _red = Color(0xFFFF4D4F);
 const _amber = Color(0xFFFFB454);
-const _appVersion = '0.1.1+2008';
+const _appVersion = '0.1.3+2010';
+const _tabletContentWidth = 760.0;
 final RouteObserver<ModalRoute<void>> _routeObserver =
     RouteObserver<ModalRoute<void>>();
 
@@ -34,6 +39,41 @@ String _formatDurationMs(int? durationMs) {
   final totalSeconds = durationMs ~/ 1000;
   return '${(totalSeconds ~/ 60).toString().padLeft(2, '0')}:${(totalSeconds % 60).toString().padLeft(2, '0')}';
 }
+
+String _lineCountLabel(int count) {
+  if (AppStrings.currentLanguage == AppLanguage.chinese) {
+    return '$count 行';
+  }
+  return '$count ${count == 1 ? 'line' : 'lines'}';
+}
+
+String _characterCountLabel(int count) {
+  if (AppStrings.currentLanguage == AppLanguage.chinese) {
+    return '$count 字';
+  }
+  return '$count ${count == 1 ? 'character' : 'characters'}';
+}
+
+String _lookaheadLabel(int count) {
+  if (AppStrings.currentLanguage == AppLanguage.chinese) {
+    return '当前及后续 $count 句';
+  }
+  return 'Current + next $count ${count == 1 ? 'line' : 'lines'}';
+}
+
+String _recognitionLanguageLabel(domain.RecognitionLanguage language) =>
+    switch (language) {
+      domain.RecognitionLanguage.automatic => tr('自动（按文稿）'),
+      domain.RecognitionLanguage.chinese => tr('中文'),
+      domain.RecognitionLanguage.english => 'English',
+    };
+
+String _recognitionHeadline(domain.RecognitionLanguage language) =>
+    switch (language) {
+      domain.RecognitionLanguage.english => tr('本地离线识别 · 英文模型已内置'),
+      domain.RecognitionLanguage.chinese => tr('本地离线识别 · 中文模型已内置'),
+      domain.RecognitionLanguage.automatic => tr('本地离线识别 · 按文稿自动选择'),
+    };
 
 /// A successful, explicit stop has no unfinished capture to resume. Clear the
 /// durable checkpoint before showing the completion page so a process killed
@@ -65,9 +105,12 @@ Future<domain.CaptureResolution?> _showResolutionPicker(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const ListTile(
-            title: Text('视频画质', style: TextStyle(fontWeight: FontWeight.w800)),
-            subtitle: Text('设备不支持时会自动选择更低画质'),
+          ListTile(
+            title: Text(
+              tr('视频画质'),
+              style: const TextStyle(fontWeight: FontWeight.w800),
+            ),
+            subtitle: Text(tr('设备不支持时会自动选择更低画质')),
           ),
           for (final resolution in domain.CaptureResolution.values)
             ListTile(
@@ -100,32 +143,32 @@ Future<bool> _showCapturePermissionRationale(BuildContext context) async =>
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                '准备开始录制',
+              Text(
+                tr('准备开始录制'),
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
               ),
               const SizedBox(height: 6),
-              const Text(
-                '镜词只在你点击开始后使用相机和麦克风，视频交给系统相册管理。',
+              Text(
+                tr('镜词只在你点击开始后使用相机和麦克风，视频交给系统相册管理。'),
                 style: TextStyle(color: _muted),
               ),
               const SizedBox(height: 18),
-              const _PermissionReasonRow(
+              _PermissionReasonRow(
                 icon: Icons.videocam_outlined,
-                title: '相机',
-                detail: '用于录制自拍视频。',
+                title: tr('相机'),
+                detail: tr('用于录制自拍视频。'),
               ),
               const SizedBox(height: 12),
-              const _PermissionReasonRow(
+              _PermissionReasonRow(
                 icon: Icons.mic_none_outlined,
-                title: '麦克风',
-                detail: '用于保存视频声音与智能跟稿。',
+                title: tr('麦克风'),
+                detail: tr('用于保存视频声音与智能跟稿。'),
               ),
               const SizedBox(height: 12),
-              const _PermissionReasonRow(
+              _PermissionReasonRow(
                 icon: Icons.photo_library_outlined,
-                title: '系统相册',
-                detail: '完成后写入系统媒体库，便于在照片中找到视频。',
+                title: tr('系统相册'),
+                detail: tr('完成后写入系统媒体库，便于在照片中找到视频。'),
               ),
               const SizedBox(height: 20),
               Row(
@@ -133,14 +176,14 @@ Future<bool> _showCapturePermissionRationale(BuildContext context) async =>
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () => Navigator.pop(context, false),
-                      child: const Text('稍后'),
+                      child: Text(tr('稍后')),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: FilledButton(
                       onPressed: () => Navigator.pop(context, true),
-                      child: const Text('继续并授权'),
+                      child: Text(tr('继续并授权')),
                     ),
                   ),
                 ],
@@ -194,22 +237,28 @@ class ScriptMirrorApp extends StatelessWidget {
   const ScriptMirrorApp({super.key});
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-    title: '镜词',
-    debugShowCheckedModeBanner: false,
-    theme: ThemeData(
-      brightness: Brightness.dark,
-      scaffoldBackgroundColor: _ink,
-      colorScheme: const ColorScheme.dark(
-        primary: _cyan,
-        surface: _panel,
-        onSurface: _paper,
+  Widget build(BuildContext context) => ValueListenableBuilder<AppLanguage>(
+    valueListenable: AppStrings.language,
+    builder: (context, language, child) => MaterialApp(
+      title: tr('镜词'),
+      locale: Locale(language == AppLanguage.chinese ? 'zh' : 'en'),
+      supportedLocales: const [Locale('en'), Locale('zh')],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: _ink,
+        colorScheme: const ColorScheme.dark(
+          primary: _cyan,
+          surface: _panel,
+          onSurface: _paper,
+        ),
+        useMaterial3: true,
+        fontFamily: 'sans-serif',
       ),
-      useMaterial3: true,
-      fontFamily: 'sans-serif',
+      navigatorObservers: [_routeObserver],
+      home: const HomePage(),
     ),
-    navigatorObservers: [_routeObserver],
-    home: const HomePage(),
   );
 }
 
@@ -248,6 +297,27 @@ final demoLines = <ScriptLine>[
   ScriptLine('接下来，让我们看看它是如何工作的。', seconds: 4),
 ];
 
+final _englishDemoLines = <ScriptLine>[
+  ScriptLine(
+    'Today I want to share a simple way to feel natural on camera.',
+    seconds: 5,
+  ),
+  ScriptLine(
+    'Keep your eyes on the lens without losing your next line.',
+    seconds: 4,
+  ),
+  ScriptLine(
+    'Bring in a script, set your pace, and start recording with confidence.',
+    seconds: 5,
+  ),
+  ScriptLine('Let’s see how ScriptMirror keeps the flow moving.', seconds: 4),
+];
+
+List<ScriptLine> _demoLinesForLanguage() =>
+    AppStrings.currentLanguage == AppLanguage.chinese
+    ? demoLines
+    : _englishDemoLines;
+
 // Demo scripts are intentionally not written to the user's library, but a
 // capture checkpoint still needs a stable identity so an interrupted demo
 // take can be restored after the process is killed. Avoid title.hashCode:
@@ -267,7 +337,7 @@ domain.Script? _demoScriptForId(String id) {
     title: title,
     createdAt: now,
     updatedAt: now,
-    lines: demoLines
+    lines: _demoLinesForLanguage()
         .asMap()
         .entries
         .map(
@@ -290,11 +360,20 @@ domain.Script? _demoScriptForTitle(String title) {
   return null;
 }
 
-int get _demoDurationMs => demoLines.fold<int>(
+int get _demoDurationMs => _demoLinesForLanguage().fold<int>(
   0,
   (total, line) =>
       total + (line.seconds * 1000).round() + (line.pause * 1000).round(),
 );
+
+String _displayScriptTitle(domain.Script? script) {
+  if (script == null) return tr('示例文稿');
+  // Demo titles are product copy and can follow the selected UI language.
+  // User-authored titles must remain exactly as entered.
+  return _demoScriptTitles.containsKey(script.id)
+      ? tr(script.title)
+      : script.title;
+}
 
 class AppScaffold extends StatelessWidget {
   const AppScaffold({
@@ -322,7 +401,7 @@ class AppScaffold extends StatelessWidget {
             leading: onBack == null
                 ? null
                 : IconButton(
-                    tooltip: '返回',
+                    tooltip: tr('返回'),
                     icon: const Icon(Icons.arrow_back),
                     onPressed: onBack,
                   ),
@@ -333,7 +412,26 @@ class AppScaffold extends StatelessWidget {
             centerTitle: false,
             actions: actions,
           ),
-    body: SafeArea(child: child),
+    body: SafeArea(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          // Keep editing and settings surfaces comfortably readable on iPad
+          // and Android tablets without shrinking the recording surface. The
+          // camera page uses its own full-screen Scaffold and is intentionally
+          // not routed through AppScaffold.
+          final contentWidth = constraints.maxWidth > _tabletContentWidth
+              ? _tabletContentWidth
+              : constraints.maxWidth;
+          return Center(
+            child: SizedBox(
+              width: contentWidth,
+              height: constraints.maxHeight,
+              child: child,
+            ),
+          );
+        },
+      ),
+    ),
   );
 }
 
@@ -353,8 +451,19 @@ class _HomePageState extends State<HomePage> with RouteAware {
   @override
   void initState() {
     super.initState();
+    _loadSettings();
     _loadSavedScripts();
     _loadRecovery();
+  }
+
+  Future<void> _loadSettings() async {
+    try {
+      final settings = await _repository.loadSettings();
+      if (!AppStrings.explicitlySet) AppStrings.setLanguage(settings.language);
+    } catch (_) {
+      // English remains the safe first-run default when local settings are
+      // unavailable on desktop or during a cold database migration.
+    }
   }
 
   @override
@@ -453,14 +562,14 @@ class _HomePageState extends State<HomePage> with RouteAware {
     if (lines.isEmpty) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('请先粘贴一段文稿')));
+      ).showSnackBar(SnackBar(content: Text(tr('请先粘贴一段文稿'))));
       return;
     }
     final now = DateTime.now();
     final script = domain.Script(
       id: 'script-${now.microsecondsSinceEpoch}',
       title: (values['title'] ?? '').trim().isEmpty
-          ? '未命名文稿'
+          ? tr('未命名文稿')
           : values['title']!.trim(),
       createdAt: now,
       updatedAt: now,
@@ -473,7 +582,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
       if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(const SnackBar(content: Text('文稿暂时无法保存，请稍后重试')));
+        ).showSnackBar(SnackBar(content: Text(tr('文稿暂时无法保存，请稍后重试'))));
       }
     }
   }
@@ -528,14 +637,14 @@ class _HomePageState extends State<HomePage> with RouteAware {
                   ),
                 ),
                 const SizedBox(width: 10),
-                const Expanded(
+                Expanded(
                   child: Text(
-                    '镜词',
+                    tr('镜词'),
                     style: TextStyle(fontSize: 21, fontWeight: FontWeight.w800),
                   ),
                 ),
                 IconButton(
-                  tooltip: '设置',
+                  tooltip: tr('设置'),
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -548,10 +657,12 @@ class _HomePageState extends State<HomePage> with RouteAware {
             ),
             Expanded(
               child: ListView(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
                 padding: const EdgeInsets.only(top: 22),
                 children: [
-                  const Text(
-                    'SCRIPT MIRROR  /  CREATOR TOOL',
+                  Text(
+                    tr('SCRIPT MIRROR  /  CREATOR TOOL'),
                     style: TextStyle(
                       color: _cyan,
                       fontSize: 10,
@@ -560,8 +671,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  const Text(
-                    '看着镜头，\n也不用忘记下一句。',
+                  Text(
+                    tr('看着镜头，\n也不用忘记下一句。'),
                     style: TextStyle(
                       fontSize: 30,
                       height: 1.12,
@@ -569,8 +680,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  const Text(
-                    '把注意力留给镜头，把节奏交给镜词。',
+                  Text(
+                    tr('把注意力留给镜头，把节奏交给镜词。'),
                     style: TextStyle(color: _muted, fontSize: 14, height: 1.35),
                   ),
                   const SizedBox(height: 18),
@@ -591,8 +702,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
                         ),
                       ),
                       icon: const Icon(Icons.videocam_outlined, size: 21),
-                      label: const Text(
-                        '开始拍摄',
+                      label: Text(
+                        tr('开始拍摄'),
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
@@ -615,7 +726,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                         child: OutlinedButton.icon(
                           onPressed: _createScript,
                           icon: const Icon(Icons.add, size: 17),
-                          label: const Text('新建文稿'),
+                          label: Text(tr('新建文稿')),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: _paper,
                             side: const BorderSide(color: _border),
@@ -634,7 +745,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                             Icons.library_books_outlined,
                             size: 17,
                           ),
-                          label: const Text('全部文稿'),
+                          label: Text(tr('全部文稿')),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: _muted,
                             side: const BorderSide(color: _border),
@@ -675,7 +786,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                         } catch (_) {
                           if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('暂时无法丢弃这条恢复记录，请稍后重试')),
+                            SnackBar(content: Text(tr('暂时无法丢弃这条恢复记录，请稍后重试'))),
                           );
                         }
                       },
@@ -684,11 +795,15 @@ class _HomePageState extends State<HomePage> with RouteAware {
                   const SizedBox(height: 24),
                   Row(
                     children: [
-                      const Text(
-                        '最近文稿',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
+                      Expanded(
+                        child: Text(
+                          tr('最近文稿'),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                       const Spacer(),
@@ -698,7 +813,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                           foregroundColor: _cyan,
                           padding: EdgeInsets.zero,
                         ),
-                        child: const Text('全部  ›'),
+                        child: Text(tr('全部  ›')),
                       ),
                     ],
                   ),
@@ -707,26 +822,26 @@ class _HomePageState extends State<HomePage> with RouteAware {
                       ? [
                           ScriptCard(
                             badge: '01',
-                            title: '夏季防晒分享',
-                            lines: '4 行',
+                            title: tr('夏季防晒分享'),
+                            lines: _lineCountLabel(4),
                             duration: _formatDurationMs(_demoDurationMs),
-                            updated: '示例文稿',
+                            updated: tr('示例文稿'),
                             onTap: () => _openDemoScript('夏季防晒分享'),
                           ),
                           ScriptCard(
                             badge: '02',
-                            title: '课程开场',
-                            lines: '4 行',
+                            title: tr('课程开场'),
+                            lines: _lineCountLabel(4),
                             duration: _formatDurationMs(_demoDurationMs),
-                            updated: '示例文稿',
+                            updated: tr('示例文稿'),
                             onTap: () => _openDemoScript('课程开场'),
                           ),
                           ScriptCard(
                             badge: '03',
-                            title: '产品介绍短视频',
-                            lines: '4 行',
+                            title: tr('产品介绍短视频'),
+                            lines: _lineCountLabel(4),
                             duration: _formatDurationMs(_demoDurationMs),
-                            updated: '示例文稿',
+                            updated: tr('示例文稿'),
                             onTap: () => _openDemoScript('产品介绍短视频'),
                           ),
                         ]
@@ -737,17 +852,17 @@ class _HomePageState extends State<HomePage> with RouteAware {
                                 badge: '${_savedScripts.indexOf(script) + 1}'
                                     .padLeft(2, '0'),
                                 title: script.title,
-                                lines: '${script.lines.length} 行',
+                                lines: _lineCountLabel(script.lines.length),
                                 duration: _formatDurationMs(
                                   script.estimatedDurationMs,
                                 ),
-                                updated: '已保存到本机',
+                                updated: tr('已保存到本机'),
                                 onTap: () => _openEditor(script: script),
                               ),
                             )),
                   const SizedBox(height: 4),
-                  const Text(
-                    '离线优先  ·  文稿与视频只保存在本机',
+                  Text(
+                    tr('离线优先  ·  文稿与视频只保存在本机'),
                     style: TextStyle(color: _muted, fontSize: 11),
                   ),
                 ],
@@ -774,44 +889,48 @@ class ScriptCard extends StatelessWidget {
   final String title, lines, duration, updated;
   final VoidCallback? onTap;
   @override
-  Widget build(BuildContext context) => Card(
-    color: const Color(0xFF14171B),
-    margin: const EdgeInsets.only(bottom: 12),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(14),
-      side: const BorderSide(color: _border),
-    ),
-    child: ListTile(
-      onTap: onTap,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      leading: Container(
-        width: 38,
-        height: 38,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: badge == '01' ? _cyan : _surfaceTint(badge),
-          borderRadius: BorderRadius.circular(11),
-        ),
-        child: Text(
-          badge,
-          style: TextStyle(
-            color: badge == '01' ? _ink : _paper,
-            fontSize: 11,
-            fontWeight: FontWeight.w800,
+  Widget build(BuildContext context) => Semantics(
+    button: onTap != null,
+    label: '$title, $lines, $duration, $updated',
+    child: Card(
+      color: const Color(0xFF14171B),
+      margin: const EdgeInsets.only(bottom: 12),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(14),
+        side: const BorderSide(color: _border),
+      ),
+      child: ListTile(
+        onTap: onTap,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        leading: Container(
+          width: 38,
+          height: 38,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: badge == '01' ? _cyan : _surfaceTint(badge),
+            borderRadius: BorderRadius.circular(11),
+          ),
+          child: Text(
+            badge,
+            style: TextStyle(
+              color: badge == '01' ? _ink : _paper,
+              fontSize: 11,
+              fontWeight: FontWeight.w800,
+            ),
           ),
         ),
-      ),
-      title: Text(title, style: const TextStyle(fontSize: 18)),
-      subtitle: Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: Text(
-          '$lines  ·  $duration  ·  $updated',
-          style: const TextStyle(color: _muted),
+        title: Text(title, style: const TextStyle(fontSize: 18)),
+        subtitle: Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: Text(
+            '$lines  ·  $duration  ·  $updated',
+            style: const TextStyle(color: _muted),
+          ),
         ),
+        trailing: onTap == null
+            ? null
+            : const Icon(Icons.chevron_right, color: _muted),
       ),
-      trailing: onTap == null
-          ? null
-          : const Icon(Icons.chevron_right, color: _muted),
     ),
   );
 }
@@ -878,14 +997,14 @@ class _ScriptLibraryPageState extends State<ScriptLibraryPage> {
     if (lines.isEmpty) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('请先粘贴一段文稿')));
+      ).showSnackBar(SnackBar(content: Text(tr('请先粘贴一段文稿'))));
       return;
     }
     final now = DateTime.now();
     final script = domain.Script(
       id: 'script-${now.microsecondsSinceEpoch}',
       title: (values['title'] ?? '').trim().isEmpty
-          ? '未命名文稿'
+          ? tr('未命名文稿')
           : values['title']!.trim(),
       createdAt: now,
       updatedAt: now,
@@ -898,14 +1017,14 @@ class _ScriptLibraryPageState extends State<ScriptLibraryPage> {
       if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(const SnackBar(content: Text('文稿暂时无法保存，请稍后重试')));
+        ).showSnackBar(SnackBar(content: Text(tr('文稿暂时无法保存，请稍后重试'))));
       }
     }
   }
 
   @override
   Widget build(BuildContext context) => AppScaffold(
-    title: '全部文稿',
+    title: tr('全部文稿'),
     onBack: () => Navigator.pop(context),
     child: loading
         ? const Center(child: CircularProgressIndicator(color: _cyan))
@@ -922,10 +1041,10 @@ class _ScriptLibraryPageState extends State<ScriptLibraryPage> {
                     color: _muted,
                   ),
                   const SizedBox(height: 16),
-                  const Text('还没有保存的文稿'),
+                  Text(tr('还没有保存的文稿')),
                   const SizedBox(height: 8),
-                  const Text(
-                    '回到首页粘贴一篇文稿即可开始。',
+                  Text(
+                    tr('回到首页粘贴一篇文稿即可开始。'),
                     style: TextStyle(color: _muted),
                     textAlign: TextAlign.center,
                   ),
@@ -933,7 +1052,7 @@ class _ScriptLibraryPageState extends State<ScriptLibraryPage> {
                   FilledButton.icon(
                     onPressed: _createScript,
                     icon: const Icon(Icons.add),
-                    label: const Text('新建文稿'),
+                    label: Text(tr('新建文稿')),
                     style: FilledButton.styleFrom(
                       backgroundColor: _cyan,
                       foregroundColor: _ink,
@@ -944,15 +1063,16 @@ class _ScriptLibraryPageState extends State<ScriptLibraryPage> {
             ),
           )
         : ListView.builder(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
             itemCount: scripts.length,
             itemBuilder: (context, index) {
               final script = scripts[index];
               return ScriptCard(
                 title: script.title,
-                lines: '${script.lines.length} 行',
+                lines: _lineCountLabel(script.lines.length),
                 duration: _formatDurationMs(script.estimatedDurationMs),
-                updated: '已保存到本机',
+                updated: tr('已保存到本机'),
                 onTap: () => _openScript(script),
               );
             },
@@ -997,13 +1117,13 @@ class _RecoveryBanner extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  '发现未完成录制',
+                Text(
+                  tr('发现未完成录制'),
                   style: TextStyle(fontWeight: FontWeight.w800),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${script.title} · 从第 $lineNumber 行继续',
+                  '${_displayScriptTitle(script)} · ${AppStrings.replace('从第 {line} 行继续', {'line': lineNumber})}',
                   style: const TextStyle(color: _muted),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -1017,7 +1137,7 @@ class _RecoveryBanner extends StatelessWidget {
                         foregroundColor: _amber,
                         padding: EdgeInsets.zero,
                       ),
-                      child: const Text('继续准备'),
+                      child: Text(tr('继续准备')),
                     ),
                     const SizedBox(width: 10),
                     TextButton(
@@ -1026,7 +1146,7 @@ class _RecoveryBanner extends StatelessWidget {
                         foregroundColor: _muted,
                         padding: EdgeInsets.zero,
                       ),
-                      child: const Text('丢弃记录'),
+                      child: Text(tr('丢弃记录')),
                     ),
                   ],
                 ),
@@ -1047,7 +1167,7 @@ class ScriptEntryPage extends StatefulWidget {
 }
 
 class _ScriptEntryPageState extends State<ScriptEntryPage> {
-  final titleController = TextEditingController(text: '未命名文稿');
+  final titleController = TextEditingController(text: tr('未命名文稿'));
   final bodyController = TextEditingController();
   bool _backPromptOpen = false;
 
@@ -1071,10 +1191,52 @@ class _ScriptEntryPageState extends State<ScriptEntryPage> {
 
   void _onBodyChanged() => setState(() {});
 
+  Future<void> _importScript() async {
+    try {
+      final file = await openFile(
+        acceptedTypeGroups: const [
+          XTypeGroup(
+            label: 'Text documents',
+            extensions: ['txt', 'md', 'markdown'],
+          ),
+        ],
+      );
+      if (!mounted || file == null) return;
+      final contents = await file.readAsString();
+      if (!mounted) return;
+      if (contents.trim().isEmpty) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(tr('这个文件没有可用的文字内容'))));
+        return;
+      }
+      bodyController.text = contents;
+      final currentTitle = titleController.text.trim();
+      if (currentTitle.isEmpty || currentTitle == tr('未命名文稿')) {
+        final importedTitle = file.name.replaceFirst(
+          RegExp(r'\.(?:txt|md|markdown)$', caseSensitive: false),
+          '',
+        );
+        if (importedTitle.trim().isNotEmpty) {
+          titleController.text = importedTitle.trim();
+        }
+      }
+      FocusScope.of(context).unfocus();
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(tr('文稿已导入'))));
+    } on Exception catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(tr('文件读取失败，请重试'))));
+    }
+  }
+
   bool get _hasUnsavedDraft {
     final title = titleController.text.trim();
     return bodyController.text.trim().isNotEmpty ||
-        (title.isNotEmpty && title != '未命名文稿');
+        (title.isNotEmpty && title != tr('未命名文稿'));
   }
 
   int get _lineCount {
@@ -1087,7 +1249,7 @@ class _ScriptEntryPageState extends State<ScriptEntryPage> {
     if (bodyController.text.trim().isEmpty) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('先输入一段台词，镜词才能帮你整理节奏')));
+      ).showSnackBar(SnackBar(content: Text(tr('先输入一段台词，镜词才能帮你整理节奏'))));
       return;
     }
     Navigator.pop(context, <String, String>{
@@ -1109,16 +1271,16 @@ class _ScriptEntryPageState extends State<ScriptEntryPage> {
         context: context,
         builder: (context) => AlertDialog(
           backgroundColor: _panel,
-          title: const Text('放弃这篇文稿？'),
-          content: const Text('已经输入的标题和台词还没有保存，离开后需要重新录入。'),
+          title: Text(tr('放弃这篇文稿？')),
+          content: Text(tr('已经输入的标题和台词还没有保存，离开后需要重新录入。')),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('继续编辑'),
+              child: Text(tr('继续编辑')),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('放弃文稿'),
+              child: Text(tr('放弃文稿')),
             ),
           ],
         ),
@@ -1136,12 +1298,20 @@ class _ScriptEntryPageState extends State<ScriptEntryPage> {
       if (!didPop) unawaited(_handleBack());
     },
     child: AppScaffold(
-      title: '新建文稿',
+      title: tr('新建文稿'),
       onBack: () => unawaited(_handleBack()),
+      actions: [
+        IconButton(
+          tooltip: tr('导入文稿'),
+          onPressed: _importScript,
+          icon: const Icon(Icons.file_open_outlined),
+        ),
+      ],
       child: Column(
         children: [
           Expanded(
             child: ListView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               padding: const EdgeInsets.fromLTRB(20, 14, 20, 24),
               children: [
                 Container(
@@ -1155,7 +1325,7 @@ class _ScriptEntryPageState extends State<ScriptEntryPage> {
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(color: _cyanDim.withValues(alpha: .7)),
                   ),
-                  child: const Row(
+                  child: Row(
                     children: [
                       Icon(Icons.auto_awesome, color: _cyan, size: 22),
                       SizedBox(width: 10),
@@ -1164,7 +1334,7 @@ class _ScriptEntryPageState extends State<ScriptEntryPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '先把想说的话放进来',
+                              tr('先把想说的话放进来'),
                               style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.w800,
@@ -1172,7 +1342,7 @@ class _ScriptEntryPageState extends State<ScriptEntryPage> {
                             ),
                             SizedBox(height: 4),
                             Text(
-                              '镜词会按中英文标点自动拆成可提词的台词行。',
+                              tr('镜词会按中英文标点自动拆成可提词的台词行。'),
                               style: TextStyle(color: _muted, fontSize: 12),
                             ),
                           ],
@@ -1183,7 +1353,7 @@ class _ScriptEntryPageState extends State<ScriptEntryPage> {
                   ),
                 ),
                 const SizedBox(height: 22),
-                const _EntrySectionLabel(label: '文稿信息'),
+                _EntrySectionLabel(label: tr('文稿信息')),
                 const SizedBox(height: 10),
                 TextField(
                   controller: titleController,
@@ -1193,8 +1363,8 @@ class _ScriptEntryPageState extends State<ScriptEntryPage> {
                     fontWeight: FontWeight.w600,
                   ),
                   decoration: InputDecoration(
-                    labelText: '文稿标题',
-                    hintText: '例如：夏季防晒分享',
+                    labelText: tr('文稿标题'),
+                    hintText: tr('例如：夏季防晒分享'),
                     prefixIcon: const Icon(Icons.title_outlined, color: _muted),
                     filled: true,
                     fillColor: _panel,
@@ -1215,15 +1385,26 @@ class _ScriptEntryPageState extends State<ScriptEntryPage> {
                 const SizedBox(height: 22),
                 Row(
                   children: [
-                    const _EntrySectionLabel(label: '台词内容'),
-                    const Spacer(),
-                    Text(
-                      bodyController.text.isEmpty
-                          ? '等待输入'
-                          : '${bodyController.text.trim().length} 字  ·  $_lineCount 行',
-                      style: const TextStyle(color: _cyan, fontSize: 12),
+                    Expanded(child: _EntrySectionLabel(label: tr('台词内容'))),
+                    TextButton.icon(
+                      onPressed: _importScript,
+                      style: TextButton.styleFrom(
+                        foregroundColor: _cyan,
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                      ),
+                      icon: const Icon(Icons.file_open_outlined, size: 17),
+                      label: Text(tr('导入文稿')),
                     ),
                   ],
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    bodyController.text.isEmpty
+                        ? tr('等待输入')
+                        : '${_characterCountLabel(bodyController.text.trim().length)}  ·  ${_lineCountLabel(_lineCount)}',
+                    style: const TextStyle(color: _cyan, fontSize: 12),
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Container(
@@ -1242,8 +1423,8 @@ class _ScriptEntryPageState extends State<ScriptEntryPage> {
                     maxLines: 15,
                     textAlignVertical: TextAlignVertical.top,
                     style: const TextStyle(fontSize: 16, height: 1.5),
-                    decoration: const InputDecoration(
-                      hintText: '输入或粘贴整篇台词……\n\n每个句号、问号或换行都会成为自然的提词停顿。',
+                    decoration: InputDecoration(
+                      hintText: tr('输入或粘贴整篇台词……\n\n每个句号、问号或换行都会成为自然的提词停顿。'),
                       hintStyle: TextStyle(color: _muted, height: 1.5),
                       contentPadding: EdgeInsets.fromLTRB(16, 16, 16, 18),
                       border: InputBorder.none,
@@ -1251,12 +1432,12 @@ class _ScriptEntryPageState extends State<ScriptEntryPage> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                const Row(
+                Row(
                   children: [
                     Icon(Icons.offline_bolt_outlined, color: _cyan, size: 16),
                     SizedBox(width: 6),
                     Text(
-                      '离线处理 · 文稿不会上传',
+                      tr('离线处理 · 文稿不会上传'),
                       style: TextStyle(color: _muted, fontSize: 12),
                     ),
                   ],
@@ -1271,8 +1452,8 @@ class _ScriptEntryPageState extends State<ScriptEntryPage> {
               child: FilledButton.icon(
                 onPressed: _submit,
                 icon: const Icon(Icons.arrow_forward_rounded, size: 20),
-                label: const Text(
-                  '整理台词并继续',
+                label: Text(
+                  tr('整理台词并继续'),
                   style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
                 ),
                 style: FilledButton.styleFrom(
@@ -1302,8 +1483,8 @@ class _EntryBadge extends StatelessWidget {
       color: _cyanDim.withValues(alpha: .35),
       borderRadius: BorderRadius.circular(9),
     ),
-    child: const Text(
-      '本机',
+    child: Text(
+      tr('本机'),
       style: TextStyle(color: _cyan, fontSize: 11, fontWeight: FontWeight.w700),
     ),
   );
@@ -1339,7 +1520,7 @@ class ScriptEditorPage extends StatefulWidget {
 }
 
 class _ScriptEditorPageState extends State<ScriptEditorPage> {
-  late String title = widget.script?.title ?? '夏季防晒分享';
+  late String title = widget.script?.title ?? tr('夏季防晒分享');
   bool _savingAndContinue = false;
   bool _dirty = false;
   bool _backPromptOpen = false;
@@ -1356,7 +1537,7 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
           .toList()
         ..addAll(
           widget.script == null
-              ? demoLines
+              ? _demoLinesForLanguage()
                     .map((line) => ScriptLine(line.text, seconds: line.seconds))
                     .toList()
               : <ScriptLine>[],
@@ -1372,7 +1553,7 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
 
   domain.Script _buildPersistedScript(DateTime now) => domain.Script(
     id: widget.script?.id ?? 'script-${now.microsecondsSinceEpoch}',
-    title: title.trim().isEmpty ? '未命名文稿' : title.trim(),
+    title: title.trim().isEmpty ? tr('未命名文稿') : title.trim(),
     createdAt: widget.script?.createdAt ?? now,
     updatedAt: now,
     lines: List<domain.ScriptLine>.generate(
@@ -1410,7 +1591,7 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
       if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(const SnackBar(content: Text('文稿暂时无法保存，请稍后重试')));
+        ).showSnackBar(SnackBar(content: Text(tr('文稿暂时无法保存，请稍后重试'))));
       }
     } finally {
       if (mounted) setState(() => _savingAndContinue = false);
@@ -1432,20 +1613,20 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
         context: context,
         builder: (context) => AlertDialog(
           backgroundColor: _panel,
-          title: const Text('保存这次改动？'),
-          content: const Text('你修改了台词内容或节奏，保存后下次拍摄会使用最新版本。'),
+          title: Text(tr('保存这次改动？')),
+          content: Text(tr('你修改了台词内容或节奏，保存后下次拍摄会使用最新版本。')),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('继续编辑'),
+              child: Text(tr('继续编辑')),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('放弃改动'),
+              child: Text(tr('放弃改动')),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('保存并返回'),
+              child: Text(tr('保存并返回')),
             ),
           ],
         ),
@@ -1464,7 +1645,7 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
         if (!mounted) return;
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(const SnackBar(content: Text('文稿暂时无法保存，请稍后重试')));
+        ).showSnackBar(SnackBar(content: Text(tr('文稿暂时无法保存，请稍后重试'))));
       } finally {
         if (mounted) setState(() => _savingAndContinue = false);
       }
@@ -1480,7 +1661,7 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
     });
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('已添加台词，可点击右侧按钮编辑内容和时长')));
+    ).showSnackBar(SnackBar(content: Text(tr('已添加台词，可点击右侧按钮编辑内容和时长'))));
   }
 
   @override
@@ -1495,12 +1676,12 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
       actions: [
         IconButton(
           onPressed: _renameScript,
-          tooltip: '重命名文稿',
+          tooltip: tr('重命名文稿'),
           icon: const Icon(Icons.edit_outlined),
         ),
         IconButton(
           onPressed: widget.script == null ? null : _deleteScript,
-          tooltip: '删除文稿',
+          tooltip: tr('删除文稿'),
           icon: const Icon(Icons.delete_outline),
         ),
       ],
@@ -1512,15 +1693,15 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
               title: title,
               lineCount: lines.length,
               duration: _estimatedDuration,
-              badge: '本机保存',
+              badge: tr('本机保存'),
             ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 18, 20, 2),
             child: Row(
               children: [
-                const Text(
-                  '台词内容',
+                Text(
+                  tr('台词内容'),
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
                 ),
                 const Spacer(),
@@ -1531,23 +1712,24 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 6),
                   ),
                   icon: const Icon(Icons.add, size: 18),
-                  label: const Text('添加台词'),
+                  label: Text(tr('添加台词')),
                 ),
               ],
             ),
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.fromLTRB(20, 0, 20, 2),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                '长按拖动排序 · 点击编辑时长与停顿',
+                tr('长按拖动排序 · 点击编辑时长与停顿'),
                 style: TextStyle(color: _muted, fontSize: 12),
               ),
             ),
           ),
           Expanded(
             child: ReorderableListView.builder(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 18),
               itemCount: lines.length,
               onReorderItem: (oldIndex, newIndex) => setState(() {
@@ -1586,8 +1768,8 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
                           color: _ink,
                         ),
                       )
-                    : const Text(
-                        '进入拍摄准备',
+                    : Text(
+                        tr('进入拍摄准备'),
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
@@ -1629,7 +1811,7 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
                 pause < 0) {
               ScaffoldMessenger.of(
                 context,
-              ).showSnackBar(const SnackBar(content: Text('请填写有效的台词、时长和停顿')));
+              ).showSnackBar(SnackBar(content: Text(tr('请填写有效的台词、时长和停顿'))));
               return;
             }
             Navigator.pop(
@@ -1684,12 +1866,12 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '编辑这句台词',
+                            tr('编辑这句台词'),
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w800,
@@ -1697,7 +1879,7 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
                           ),
                           SizedBox(height: 3),
                           Text(
-                            '调整内容与镜头前的节奏',
+                            tr('调整内容与镜头前的节奏'),
                             style: TextStyle(color: _muted, fontSize: 12),
                           ),
                         ],
@@ -1713,7 +1895,7 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
                   maxLines: 4,
                   style: const TextStyle(color: _paper),
                   decoration: InputDecoration(
-                    labelText: '台词内容',
+                    labelText: tr('台词内容'),
                     filled: true,
                     fillColor: _ink.withValues(alpha: .45),
                     border: OutlineInputBorder(
@@ -1731,8 +1913,8 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                const Text(
-                  '节奏设置',
+                Text(
+                  tr('节奏设置'),
                   style: TextStyle(color: _muted, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 8),
@@ -1745,7 +1927,7 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
                           decimal: true,
                         ),
                         decoration: InputDecoration(
-                          labelText: '预计时长（秒）',
+                          labelText: tr('预计时长（秒）'),
                           suffixText: 's',
                           filled: true,
                           fillColor: _ink.withValues(alpha: .45),
@@ -1764,7 +1946,7 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
                           decimal: true,
                         ),
                         decoration: InputDecoration(
-                          labelText: '句后停顿（秒）',
+                          labelText: tr('句后停顿（秒）'),
                           suffixText: 's',
                           filled: true,
                           fillColor: _ink.withValues(alpha: .45),
@@ -1782,7 +1964,7 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
                   width: double.infinity,
                   child: FilledButton(
                     onPressed: () => submit(_LineEditAction.save),
-                    child: const Text('保存这句'),
+                    child: Text(tr('保存这句')),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -1792,7 +1974,7 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
                       child: OutlinedButton.icon(
                         onPressed: () => submit(_LineEditAction.split),
                         icon: const Icon(Icons.call_split_rounded, size: 18),
-                        label: const Text('拆分这句'),
+                        label: Text(tr('拆分这句')),
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -1802,7 +1984,7 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
                             ? () => submit(_LineEditAction.merge)
                             : null,
                         icon: const Icon(Icons.merge_type_rounded, size: 18),
-                        label: const Text('合并下一句'),
+                        label: Text(tr('合并下一句')),
                       ),
                     ),
                   ],
@@ -1846,7 +2028,7 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
     if (chunks.length < 2) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('这句暂时找不到合适的拆分位置，请先加入标点或空格')));
+      ).showSnackBar(SnackBar(content: Text(tr('这句暂时找不到合适的拆分位置，请先加入标点或空格'))));
       return;
     }
     final totalUnits = chunks.fold<int>(
@@ -1878,16 +2060,18 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
       lines.insertAll(index + 1, splitLines.skip(1));
       _dirty = true;
     });
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('已拆分为 ${splitLines.length} 句台词')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${tr('已拆分为')} ${splitLines.length} ${tr('句台词')}'),
+      ),
+    );
   }
 
   void _mergeLine(int index, _LineEditResult draft) {
     if (index >= lines.length - 1) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('最后一句没有可合并的下一句')));
+      ).showSnackBar(SnackBar(content: Text(tr('最后一句没有可合并的下一句'))));
       return;
     }
     final next = lines[index + 1];
@@ -1903,7 +2087,7 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
     });
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('已与下一句合并')));
+    ).showSnackBar(SnackBar(content: Text(tr('已与下一句合并'))));
   }
 
   List<String> _splitTextForEditor(String value) {
@@ -1967,17 +2151,21 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: _panel,
-        title: const Text('删除这篇文稿？'),
-        content: Text('“${script.title}”以及它的台词行会从本机移除。'),
+        title: Text(tr('删除这篇文稿？')),
+        content: Text(
+          AppStrings.replace('“{title}”以及它的台词行会从本机移除。', {
+            'title': script.title,
+          }),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('取消'),
+            child: Text(tr('取消')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: _red),
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('删除'),
+            child: Text(tr('删除')),
           ),
         ],
       ),
@@ -2001,7 +2189,7 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
       if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(const SnackBar(content: Text('文稿暂时无法删除，请稍后重试')));
+        ).showSnackBar(SnackBar(content: Text(tr('文稿暂时无法删除，请稍后重试'))));
       }
     }
   }
@@ -2014,22 +2202,22 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
         context: context,
         builder: (context) => AlertDialog(
           backgroundColor: _panel,
-          title: const Text('重命名文稿'),
+          title: Text(tr('重命名文稿')),
           content: TextField(
             controller: controller,
             autofocus: true,
             textInputAction: TextInputAction.done,
-            decoration: const InputDecoration(labelText: '文稿标题'),
+            decoration: InputDecoration(labelText: tr('文稿标题')),
             onSubmitted: (value) => Navigator.pop(context, value),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('取消'),
+              child: Text(tr('取消')),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(context, controller.text),
-              child: const Text('保存'),
+              child: Text(tr('保存')),
             ),
           ],
         ),
@@ -2062,7 +2250,7 @@ class _ScriptEditorPageState extends State<ScriptEditorPage> {
       });
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('标题暂时无法保存，请稍后重试')));
+      ).showSnackBar(SnackBar(content: Text(tr('标题暂时无法保存，请稍后重试'))));
     }
   }
 }
@@ -2138,11 +2326,11 @@ class ScriptOverviewCard extends StatelessWidget {
         const SizedBox(height: 16),
         Row(
           children: [
-            _OverviewMetric(label: '台词', value: '$lineCount 行'),
+            _OverviewMetric(label: tr('台词'), value: _lineCountLabel(lineCount)),
             const _OverviewDivider(),
-            _OverviewMetric(label: '预计时长', value: duration),
+            _OverviewMetric(label: tr('预计时长'), value: duration),
             const _OverviewDivider(),
-            const _OverviewMetric(label: '模式', value: '离线优先'),
+            _OverviewMetric(label: tr('模式'), value: tr('离线优先')),
           ],
         ),
       ],
@@ -2261,12 +2449,13 @@ class ScriptLineCard extends StatelessWidget {
                     children: [
                       _LineMetaChip(
                         icon: Icons.timer_outlined,
-                        label: '${line.seconds.toStringAsFixed(1)} 秒',
+                        label: '${line.seconds.toStringAsFixed(1)} ${tr('秒')}',
                         highlighted: index == 0,
                       ),
                       _LineMetaChip(
                         icon: Icons.pause_circle_outline,
-                        label: '停 ${line.pause.toStringAsFixed(1)} 秒',
+                        label:
+                            '${tr('停')} ${line.pause.toStringAsFixed(1)} ${tr('秒')}',
                       ),
                     ],
                   ),
@@ -2275,7 +2464,7 @@ class ScriptLineCard extends StatelessWidget {
             ),
             const SizedBox(width: 4),
             IconButton(
-              tooltip: '编辑台词',
+              tooltip: tr('编辑台词'),
               onPressed: onEdit,
               icon: Icon(
                 Icons.tune_rounded,
@@ -2355,13 +2544,19 @@ class _PreparePageState extends State<PreparePage> {
         .where((line) => line.isNotEmpty)
         .toList();
     if (scriptLines == null || scriptLines.isEmpty) {
-      return demoLines.map((line) => line.text).toList();
+      return _demoLinesForLanguage().map((line) => line.text).toList();
     }
     return scriptLines;
   }
 
   int get _previewIndex =>
       widget.initialLineIndex.clamp(0, _previewLines.length - 1).toInt();
+
+  domain.RecognitionLanguage get _recognitionLanguage {
+    final requested = settings.recognitionLanguage;
+    if (requested != domain.RecognitionLanguage.automatic) return requested;
+    return domain.detectRecognitionLanguage(_previewLines);
+  }
 
   @override
   void initState() {
@@ -2374,6 +2569,7 @@ class _PreparePageState extends State<PreparePage> {
     if (repository == null) return;
     try {
       final loaded = await repository.loadSettings();
+      if (!AppStrings.explicitlySet) AppStrings.setLanguage(loaded.language);
       if (mounted) setState(() => settings = loaded);
     } catch (_) {
       // Defaults keep the capture path available on platforms without SQLite.
@@ -2389,7 +2585,7 @@ class _PreparePageState extends State<PreparePage> {
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('画质设置暂时无法保存，将继续使用当前值')));
+      ).showSnackBar(SnackBar(content: Text(tr('画质设置暂时无法保存，将继续使用当前值'))));
     }
   }
 
@@ -2411,9 +2607,9 @@ class _PreparePageState extends State<PreparePage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const ListTile(
-              title: Text('提词速度'),
-              subtitle: Text('控制自动推进每句台词的等待时间'),
+            ListTile(
+              title: Text(tr('提词速度')),
+              subtitle: Text(tr('控制自动推进每句台词的等待时间')),
             ),
             for (final option in const [
               ('慢速', '给停顿和思考留出更多时间'),
@@ -2421,8 +2617,8 @@ class _PreparePageState extends State<PreparePage> {
               ('快速', '更紧凑地推进台词'),
             ])
               ListTile(
-                title: Text(option.$1),
-                subtitle: Text(option.$2),
+                title: Text(tr(option.$1)),
+                subtitle: Text(tr(option.$2)),
                 trailing: Icon(
                   option.$1 == promptSpeed
                       ? Icons.radio_button_checked
@@ -2455,9 +2651,9 @@ class _PreparePageState extends State<PreparePage> {
       if (!granted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('权限未开启，无法开始录制；请在系统设置重新允许相机和麦克风'),
+            content: Text(tr('权限未开启，无法开始录制；请在系统设置重新允许相机和麦克风')),
             action: SnackBarAction(
-              label: '打开设置',
+              label: tr('打开设置'),
               onPressed: () {
                 unawaited(PlatformCaptureService.openAppSettings());
               },
@@ -2491,33 +2687,33 @@ class _PreparePageState extends State<PreparePage> {
     final previewLines = _previewLines;
     final previewIndex = _previewIndex;
     return AppScaffold(
-      title: '拍摄准备',
+      title: tr('拍摄准备'),
       onBack: () => Navigator.pop(context),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.offline_bolt_outlined, color: _cyan, size: 18),
                   SizedBox(width: 8),
                   Text(
-                    '本地离线识别 · 开始前自动准备',
+                    _recognitionHeadline(_recognitionLanguage),
                     style: TextStyle(color: _cyan, fontWeight: FontWeight.w700),
                   ),
                 ],
               ),
               const SizedBox(height: 22),
               ScriptOverviewCard(
-                title: widget.script?.title ?? '示例文稿',
+                title: _displayScriptTitle(widget.script),
                 lineCount: previewLines.length,
                 duration:
                     _formatDurationMs(widget.script?.estimatedDurationMs) == '—'
                     ? _formatDurationMs(_demoDurationMs)
                     : _formatDurationMs(widget.script?.estimatedDurationMs),
-                badge: '拍摄草稿',
+                badge: tr('拍摄草稿'),
               ),
               const SizedBox(height: 14),
               PromptPreviewCard(
@@ -2529,10 +2725,10 @@ class _PreparePageState extends State<PreparePage> {
                 totalLines: previewLines.length,
               ),
               const SizedBox(height: 24),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  '镜头选择',
+                  tr('镜头选择'),
                   style: TextStyle(
                     color: _muted,
                     fontSize: 12,
@@ -2546,7 +2742,7 @@ class _PreparePageState extends State<PreparePage> {
                 children: [
                   Expanded(
                     child: CameraChoice(
-                      label: '前置镜头',
+                      label: tr('前置镜头'),
                       icon: Icons.camera_front_outlined,
                       selected: front,
                       onTap: () => setState(() => front = true),
@@ -2555,7 +2751,7 @@ class _PreparePageState extends State<PreparePage> {
                   const SizedBox(width: 16),
                   Expanded(
                     child: CameraChoice(
-                      label: '后置镜头',
+                      label: tr('后置镜头'),
                       icon: Icons.camera_rear_outlined,
                       selected: !front,
                       onTap: () => setState(() => front = false),
@@ -2564,10 +2760,10 @@ class _PreparePageState extends State<PreparePage> {
                 ],
               ),
               const SizedBox(height: 28),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  '录制设置',
+                  tr('录制设置'),
                   style: TextStyle(
                     color: _muted,
                     fontSize: 12,
@@ -2579,15 +2775,15 @@ class _PreparePageState extends State<PreparePage> {
               const SizedBox(height: 10),
               SettingTile(
                 icon: Icons.high_quality_outlined,
-                label: '视频画质',
+                label: tr('视频画质'),
                 value: settings.captureResolution.label,
                 onTap: _editResolution,
               ),
               const SizedBox(height: 12),
               SettingTile(
                 icon: Icons.speed_outlined,
-                label: '提词速度',
-                value: promptSpeed,
+                label: tr('提词速度'),
+                value: tr(promptSpeed),
                 slider: true,
                 progress: switch (promptSpeed) {
                   '慢速' => .3,
@@ -2599,8 +2795,8 @@ class _PreparePageState extends State<PreparePage> {
               const SizedBox(height: 12),
               SettingTile(
                 icon: Icons.graphic_eq,
-                label: '自动推进',
-                value: autoAdvance ? '按预设时长自动滚动' : '手动翻句',
+                label: tr('自动推进'),
+                value: autoAdvance ? tr('按预设时长自动滚动') : tr('手动翻句'),
                 toggle: autoAdvance,
                 onToggle: (value) => setState(() => autoAdvance = value),
               ),
@@ -2625,7 +2821,7 @@ class _PreparePageState extends State<PreparePage> {
                         )
                       : const Icon(Icons.fiber_manual_record, size: 18),
                   label: Text(
-                    _startingRecording ? '正在准备…' : '开始录制',
+                    _startingRecording ? tr('正在准备…') : tr('开始录制'),
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800),
                   ),
                 ),
@@ -2651,29 +2847,34 @@ class CameraChoice extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
   @override
-  Widget build(BuildContext context) => InkWell(
-    onTap: onTap,
-    borderRadius: BorderRadius.circular(16),
-    child: Ink(
-      height: 128,
-      decoration: BoxDecoration(
-        color: _panel,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: selected ? _cyan : _border,
-          width: selected ? 2 : 1,
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 40, color: selected ? _cyan : _muted),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+  Widget build(BuildContext context) => Semantics(
+    button: true,
+    selected: selected,
+    label: label,
+    child: InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Ink(
+        height: 128,
+        decoration: BoxDecoration(
+          color: _panel,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: selected ? _cyan : _border,
+            width: selected ? 2 : 1,
           ),
-        ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 40, color: selected ? _cyan : _muted),
+            const SizedBox(height: 8),
+            Text(
+              label,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+            ),
+          ],
+        ),
       ),
     ),
   );
@@ -2709,7 +2910,10 @@ class PromptPreviewCard extends StatelessWidget {
           children: [
             const Icon(Icons.visibility_outlined, color: _cyan, size: 18),
             const SizedBox(width: 8),
-            const Text('提词预览', style: TextStyle(fontWeight: FontWeight.w800)),
+            Text(
+              tr('提词预览'),
+              style: const TextStyle(fontWeight: FontWeight.w800),
+            ),
             const Spacer(),
             Text(
               '$lineNumber / $totalLines',
@@ -2900,7 +3104,11 @@ class _RecordingPageState extends State<RecordingPage>
     // EventChannel can deliver the controller's current/failed phase during
     // listen(), and the failure path must never touch an uninitialized late
     // field while the page is still being mounted.
-    asrProvider = asrProviderForCurrentPlatform();
+    asrProvider = asrProviderForCurrentPlatform(
+      language: widget.settings.recognitionLanguage,
+      scriptLines:
+          widget.script?.lines.map((line) => line.text) ?? const <String>[],
+    );
     capturePhaseSubscription = captureService.phase.listen((event) {
       final wasRecording =
           captureReady || capturePhase == domain.CapturePhase.recording;
@@ -2930,14 +3138,14 @@ class _RecordingPageState extends State<RecordingPage>
       timer?.cancel();
       sessionStopwatch.stop();
       final message = switch (event.reason) {
-        'camera_unavailable' => '相机没有准备好，请返回后重试',
-        'audio_unavailable' => '麦克风无法启动，请检查权限后重试',
-        'storage_low' => '可用存储空间不足，请清理后重试',
-        'capture_busy' => '上一段录制正在保存，请稍候再试',
-        'capture_cancelled' => '已取消录制准备，请返回拍摄准备后重试',
-        'recording_failed' => '相机编码器未能生成视频，请返回后重试',
-        'capture_disposed' => '录制已被中断，视频未保存',
-        _ => '录制过程中出现问题，视频未保存，请返回后重试',
+        'camera_unavailable' => tr('相机没有准备好，请返回后重试'),
+        'audio_unavailable' => tr('麦克风无法启动，请检查权限后重试'),
+        'storage_low' => tr('可用存储空间不足，请清理后重试'),
+        'capture_busy' => tr('上一段录制正在保存，请稍候再试'),
+        'capture_cancelled' => tr('已取消录制准备，请返回拍摄准备后重试'),
+        'recording_failed' => tr('相机编码器未能生成视频，请返回后重试'),
+        'capture_disposed' => tr('录制已被中断，视频未保存'),
+        _ => tr('录制过程中出现问题，视频未保存，请返回后重试'),
       };
       setState(() {
         state = RecognitionVisual.degraded;
@@ -2968,7 +3176,7 @@ class _RecordingPageState extends State<RecordingPage>
         )
         .toList();
     lines = configuredLines == null || configuredLines.isEmpty
-        ? demoLines
+        ? _demoLinesForLanguage()
         : configuredLines;
     current = widget.initialLineIndex.clamp(0, lines.length - 1).toInt();
     alignmentEngine = AlignmentEngine(
@@ -3010,7 +3218,7 @@ class _RecordingPageState extends State<RecordingPage>
         setState(() {
           state = RecognitionVisual.degraded;
           countdownRemaining = 0;
-          captureError = '相机初始化失败，请返回准备页检查权限或更换镜头';
+          captureError = tr('相机初始化失败，请返回准备页检查权限或更换镜头');
         });
       }
       return;
@@ -3090,11 +3298,11 @@ class _RecordingPageState extends State<RecordingPage>
           state = RecognitionVisual.degraded;
           countdownRemaining = 0;
           captureError = switch (error.code) {
-            'capture_busy' => '上一段录制正在保存，请稍候再试',
-            'capture_cancelled' => '已取消录制准备，请返回拍摄准备后重试',
-            'camera_unavailable' => '相机初始化失败，请返回后重试',
-            'audio_unavailable' => '麦克风无法启动，请检查权限后重试',
-            _ => '录制启动失败，视频未保存，请返回后重试',
+            'capture_busy' => tr('上一段录制正在保存，请稍候再试'),
+            'capture_cancelled' => tr('已取消录制准备，请返回拍摄准备后重试'),
+            'camera_unavailable' => tr('相机初始化失败，请返回后重试'),
+            'audio_unavailable' => tr('麦克风无法启动，请检查权限后重试'),
+            _ => tr('录制启动失败，视频未保存，请返回后重试'),
           };
         });
       }
@@ -3115,7 +3323,7 @@ class _RecordingPageState extends State<RecordingPage>
           sessionStopwatch.stop();
           state = RecognitionVisual.degraded;
           countdownRemaining = 0;
-          captureError = '录制启动失败，视频未保存，请返回后重试';
+          captureError = tr('录制启动失败，视频未保存，请返回后重试');
         });
       }
       return;
@@ -3206,7 +3414,7 @@ class _RecordingPageState extends State<RecordingPage>
         setState(() {
           countdownRemaining = 0;
           captureErrorDuringSession = false;
-          captureError = '录制准备被中断，请回到拍摄准备后重试';
+          captureError = tr('录制准备被中断，请回到拍摄准备后重试');
           state = RecognitionVisual.degraded;
         });
         // If CameraX crossed the start hand-off boundary just before the
@@ -3264,7 +3472,7 @@ class _RecordingPageState extends State<RecordingPage>
           setState(() {
             captureFinalizing = false;
             captureErrorDuringSession = true;
-            captureError = '录制已中断，保存结果暂未返回，请稍后到系统相册查看';
+            captureError = tr('录制已中断，保存结果暂未返回，请稍后到系统相册查看');
           });
         }
         return;
@@ -3303,7 +3511,7 @@ class _RecordingPageState extends State<RecordingPage>
         setState(() {
           countdownRemaining = 0;
           captureErrorDuringSession = false;
-          captureError = '已取消录制准备，请返回拍摄准备后重试';
+          captureError = tr('已取消录制准备，请返回拍摄准备后重试');
           state = RecognitionVisual.degraded;
         });
         // A user tapping Cancel owns the just-started hand-off window. If the
@@ -3332,7 +3540,7 @@ class _RecordingPageState extends State<RecordingPage>
     try {
       result = await captureService.stop();
     } catch (_) {
-      result = const CaptureResult(saved: false, error: '录制服务暂时不可用，视频未保存');
+      result = CaptureResult(saved: false, error: tr('录制服务暂时不可用，视频未保存'));
     }
     if (!mounted) return;
     await _presentComplete(result);
@@ -3371,7 +3579,7 @@ class _RecordingPageState extends State<RecordingPage>
     if (isStopping || captureFinalizing || checkingInterruptedResult) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('正在保存录制结果，请稍候')));
+      ).showSnackBar(SnackBar(content: Text(tr('正在保存录制结果，请稍候'))));
       return;
     }
 
@@ -3381,18 +3589,18 @@ class _RecordingPageState extends State<RecordingPage>
         context: context,
         builder: (context) => AlertDialog(
           backgroundColor: _panel,
-          title: Text(captureReady ? '结束这次录制？' : '离开拍摄准备？'),
+          title: Text(tr(captureReady ? '结束这次录制？' : '离开拍摄准备？')),
           content: Text(
-            captureReady ? '确认后会结束并保存当前视频。' : '确认后会取消本次录制准备，不会生成视频。',
+            captureReady ? tr('确认后会结束并保存当前视频。') : tr('确认后会取消本次录制准备，不会生成视频。'),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('继续录制'),
+              child: Text(tr('继续录制')),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(context, true),
-              child: Text(captureReady ? '结束并保存' : '离开'),
+              child: Text(tr(captureReady ? '结束并保存' : '离开')),
             ),
           ],
         ),
@@ -3418,6 +3626,9 @@ class _RecordingPageState extends State<RecordingPage>
 
   Widget _cameraSurface() {
     if (PlatformCaptureService.isSupported) {
+      if (defaultTargetPlatform == TargetPlatform.iOS) {
+        return const UiKitView(viewType: 'scriptmirror.camera_preview');
+      }
       return const AndroidView(viewType: 'scriptmirror.camera_preview');
     }
     return Container(
@@ -3458,13 +3669,13 @@ class _RecordingPageState extends State<RecordingPage>
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                '录制中设置',
+              Text(
+                tr('录制中设置'),
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
               ),
               const SizedBox(height: 8),
-              const Text(
-                '本次录制的镜头、画质和镜像状态已锁定，下一次录制前可在设置中调整。',
+              Text(
+                tr('本次录制的镜头、画质和镜像状态已锁定，下一次录制前可在设置中调整。'),
                 style: TextStyle(color: _muted, height: 1.45),
               ),
               const SizedBox(height: 16),
@@ -3472,7 +3683,7 @@ class _RecordingPageState extends State<RecordingPage>
                 width: double.infinity,
                 child: FilledButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('知道了'),
+                  child: Text(tr('知道了')),
                 ),
               ),
             ],
@@ -3507,13 +3718,16 @@ class _RecordingPageState extends State<RecordingPage>
   @override
   Widget build(BuildContext context) {
     final status = switch (state) {
-      RecognitionVisual.listening when widget.autoAdvance => ('跟稿中', _cyan),
-      RecognitionVisual.listening => ('手动翻句', _muted),
-      RecognitionVisual.confirming => ('准备本地识别', _amber),
+      RecognitionVisual.listening when widget.autoAdvance => (tr('跟稿中'), _cyan),
+      RecognitionVisual.listening => (tr('手动翻句'), _muted),
+      RecognitionVisual.confirming => (tr('准备本地识别'), _amber),
       // With automatic advancement disabled there is no timed fallback either;
       // an unavailable recognizer leaves the user in the explicit manual mode.
-      RecognitionVisual.degraded when widget.autoAdvance => ('按节奏提词', _amber),
-      RecognitionVisual.degraded => ('手动翻句', _muted),
+      RecognitionVisual.degraded when widget.autoAdvance => (
+        tr('按节奏提词'),
+        _amber,
+      ),
+      RecognitionVisual.degraded => (tr('手动翻句'), _muted),
     };
     return PopScope<void>(
       canPop: captureError != null && !captureFinalizing,
@@ -3550,7 +3764,7 @@ class _RecordingPageState extends State<RecordingPage>
                 child: IgnorePointer(
                   child: Semantics(
                     liveRegion: true,
-                    label: '设备温度较高，建议录制完成后切换到 720p',
+                    label: tr('设备温度较高，建议录制完成后切换到 720p'),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 14,
@@ -3561,7 +3775,7 @@ class _RecordingPageState extends State<RecordingPage>
                         borderRadius: BorderRadius.circular(14),
                         border: Border.all(color: _amber.withValues(alpha: .8)),
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
@@ -3572,7 +3786,7 @@ class _RecordingPageState extends State<RecordingPage>
                           SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              '设备温度较高 · 本次录制不会中断，下一次可切换 720p',
+                              tr('设备温度较高 · 本次录制不会中断，下一次可切换 720p'),
                               style: TextStyle(color: _paper, fontSize: 12),
                             ),
                           ),
@@ -3656,7 +3870,7 @@ class _RecordingPageState extends State<RecordingPage>
                             ),
                             const Spacer(),
                             IconButton(
-                              tooltip: '录制设置',
+                              tooltip: tr('录制设置'),
                               onPressed: _openSettings,
                               icon: const Icon(Icons.tune),
                             ),
@@ -3687,19 +3901,27 @@ class _RecordingPageState extends State<RecordingPage>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  AnimatedSwitcher(
-                                    duration: const Duration(milliseconds: 260),
-                                    child: Text(
-                                      lines[current].text,
-                                      key: ValueKey(current),
-                                      style:
-                                          const TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            color: _paper,
-                                          ).copyWith(
-                                            fontSize: widget.settings.fontSize,
-                                            height: widget.settings.lineHeight,
-                                          ),
+                                  Semantics(
+                                    liveRegion: true,
+                                    label: lines[current].text,
+                                    child: AnimatedSwitcher(
+                                      duration: const Duration(
+                                        milliseconds: 260,
+                                      ),
+                                      child: Text(
+                                        lines[current].text,
+                                        key: ValueKey(current),
+                                        style:
+                                            const TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              color: _paper,
+                                            ).copyWith(
+                                              fontSize:
+                                                  widget.settings.fontSize,
+                                              height:
+                                                  widget.settings.lineHeight,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(height: 24),
@@ -3756,19 +3978,19 @@ class _RecordingPageState extends State<RecordingPage>
                           children: [
                             RecordingControl(
                               icon: Icons.skip_previous,
-                              label: '上一句',
+                              label: tr('上一句'),
                               enabled: current > 0,
                               onTap: current > 0 ? () => _move(-1) : null,
                             ),
                             RecordingControl(
                               icon: captureReady ? Icons.stop : Icons.close,
-                              label: captureReady ? '停止' : '取消',
+                              label: tr(captureReady ? '停止' : '取消'),
                               critical: true,
                               onTap: _stopRecording,
                             ),
                             RecordingControl(
                               icon: Icons.skip_next,
-                              label: '下一句',
+                              label: tr('下一句'),
                               enabled: current < lines.length - 1,
                               onTap: current < lines.length - 1
                                   ? () => _move(1)
@@ -3798,7 +4020,7 @@ class _RecordingPageState extends State<RecordingPage>
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        captureErrorDuringSession ? '录制已中断' : '暂时无法开始录制',
+                        tr(captureErrorDuringSession ? '录制已中断' : '暂时无法开始录制'),
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w800,
@@ -3814,7 +4036,7 @@ class _RecordingPageState extends State<RecordingPage>
                       const SizedBox(height: 22),
                       FilledButton(
                         onPressed: () => Navigator.pop(context),
-                        child: const Text('返回拍摄准备'),
+                        child: Text(tr('返回拍摄准备')),
                       ),
                     ],
                   ),
@@ -3832,16 +4054,16 @@ class _RecordingPageState extends State<RecordingPage>
                     children: [
                       const CircularProgressIndicator(color: _cyan),
                       const SizedBox(height: 18),
-                      const Text(
-                        '正在保存录制结果',
+                      Text(
+                        tr('正在保存录制结果'),
                         style: TextStyle(
                           fontSize: 21,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        '请稍候，音视频正在完成合并。',
+                      Text(
+                        tr('请稍候，音视频正在完成合并。'),
                         style: TextStyle(color: _muted),
                         textAlign: TextAlign.center,
                       ),
@@ -3911,7 +4133,10 @@ class RecordingControl extends StatelessWidget {
 class CompletePage extends StatelessWidget {
   const CompletePage({
     super.key,
-    this.result = const CaptureResult(saved: false, error: '暂无录制结果'),
+    this.result = const CaptureResult(
+      saved: false,
+      error: 'No recording result',
+    ),
     this.script,
     this.resumeLineIndex,
     this.settingsRepository,
@@ -3964,27 +4189,29 @@ class CompletePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 26),
                   Text(
-                    result.saved ? '录制完成' : '录制未保存',
+                    tr(result.saved ? '录制完成' : '录制未保存'),
                     style: TextStyle(fontSize: 32, fontWeight: FontWeight.w800),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     result.interrupted
-                        ? (result.saved ? '录制被中断，但视频已保存' : '录制被中断，视频未保存')
-                        : (result.saved ? '视频已保存到相册' : '视频文件没有写入相册'),
+                        ? tr(result.saved ? '录制被中断，但视频已保存' : '录制被中断，视频未保存')
+                        : tr(result.saved ? '视频已保存到相册' : '视频文件没有写入相册'),
                     style: const TextStyle(fontSize: 16, color: _muted),
                   ),
                   if (result.interrupted && resumeLineIndex != null) ...[
                     const SizedBox(height: 10),
                     Text(
-                      '已保留到第 ${resumeLineIndex! + 1} 行，可从这里继续',
+                      AppStrings.replace('已保留到第 {line} 行，可从这里继续', {
+                        'line': resumeLineIndex! + 1,
+                      }),
                       style: const TextStyle(color: _cyan),
                     ),
                   ],
                   if (result.error != null) ...[
                     const SizedBox(height: 10),
                     Text(
-                      result.error!,
+                      tr(result.error!),
                       textAlign: TextAlign.center,
                       style: const TextStyle(color: _amber),
                     ),
@@ -4000,16 +4227,20 @@ class CompletePage extends StatelessWidget {
                     child: Column(
                       children: [
                         InfoRow(
-                          '分辨率',
-                          result.resolution ?? (result.saved ? '未读取' : '未生成'),
+                          tr('分辨率'),
+                          result.resolution ??
+                              (result.saved ? tr('未读取') : tr('未生成')),
                         ),
                         Divider(color: _border),
-                        InfoRow('时长', _formatDurationMs(result.durationMs)),
+                        InfoRow(tr('时长'), _formatDurationMs(result.durationMs)),
                         Divider(color: _border),
-                        InfoRow('文件大小', result.saved ? '由系统相册管理' : '—'),
+                        InfoRow(tr('文件大小'), result.saved ? tr('由系统相册管理') : '—'),
                         if (result.saved) ...[
                           Divider(color: _border),
-                          InfoRow('保存位置', result.storageLocation ?? '系统相册'),
+                          InfoRow(
+                            tr('保存位置'),
+                            tr(result.storageLocation ?? '系统相册'),
+                          ),
                         ],
                       ],
                     ),
@@ -4025,14 +4256,12 @@ class CompletePage extends StatelessWidget {
                           );
                           if (!opened && context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('系统没有可打开此视频的相册或播放器'),
-                              ),
+                              SnackBar(content: Text(tr('系统没有可打开此视频的相册或播放器'))),
                             );
                           }
                         },
                         icon: const Icon(Icons.play_circle_outline),
-                        label: const Text('打开已保存视频'),
+                        label: Text(tr('打开已保存视频')),
                         style: OutlinedButton.styleFrom(
                           foregroundColor: _cyan,
                           side: const BorderSide(color: _cyanDim),
@@ -4057,8 +4286,8 @@ class CompletePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(18),
                         ),
                       ),
-                      child: const Text(
-                        '完成',
+                      child: Text(
+                        tr('完成'),
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w800,
@@ -4093,8 +4322,10 @@ class CompletePage extends StatelessWidget {
                       ),
                       child: Text(
                         result.interrupted && resumeLineIndex != null
-                            ? '从第 ${resumeLineIndex! + 1} 行继续'
-                            : '再录一次',
+                            ? AppStrings.replace('从第 {line} 行继续', {
+                                'line': resumeLineIndex! + 1,
+                              })
+                            : tr('再录一次'),
                       ),
                     ),
                   ),
@@ -4113,10 +4344,7 @@ class CompletePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    child: const Text(
-                      '继续拍同一文稿',
-                      style: TextStyle(color: _muted),
-                    ),
+                    child: Text(tr('继续拍同一文稿'), style: TextStyle(color: _muted)),
                   ),
                 ],
               ),
@@ -4136,11 +4364,23 @@ class InfoRow extends StatelessWidget {
     padding: const EdgeInsets.symmetric(vertical: 7),
     child: Row(
       children: [
-        Text(label, style: const TextStyle(color: _muted, fontSize: 18)),
+        Expanded(
+          child: Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(color: _muted, fontSize: 18),
+          ),
+        ),
         const Spacer(),
-        Text(
-          value,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+        Flexible(
+          child: Text(
+            value,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.right,
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+          ),
         ),
       ],
     ),
@@ -4178,6 +4418,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _saveSettings(domain.AppSettings next) async {
     if (!mounted) return;
     final normalized = next.normalized();
+    AppStrings.setLanguage(normalized.language);
     setState(() => settings = normalized);
     try {
       await widget.repository?.saveSettings(normalized);
@@ -4185,14 +4426,14 @@ class _SettingsPageState extends State<SettingsPage> {
       if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(const SnackBar(content: Text('设置暂时无法保存，将继续使用当前值')));
+        ).showSnackBar(SnackBar(content: Text(tr('设置暂时无法保存，将继续使用当前值'))));
       }
     }
   }
 
   Future<void> _editFontSize() async {
     final value = await _showSlider(
-      title: '默认字号',
+      title: tr('默认字号'),
       initial: settings.fontSize,
       min: 18,
       max: 42,
@@ -4204,7 +4445,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> _editOpacity() async {
     final value = await _showSlider(
-      title: '背景透明度',
+      title: tr('背景透明度'),
       initial: settings.backgroundOpacity,
       min: .2,
       max: .9,
@@ -4219,7 +4460,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> _editLineHeight() async {
     final value = await _showSlider(
-      title: '行距',
+      title: tr('行距'),
       initial: settings.lineHeight,
       min: 1.15,
       max: 1.8,
@@ -4237,10 +4478,10 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const ListTile(title: Text('前瞻行数')),
+            ListTile(title: Text(tr('前瞻行数'))),
             for (var count = 1; count <= 3; count++)
               ListTile(
-                title: Text('当前句 + 后续 $count 句'),
+                title: Text(_lookaheadLabel(count)),
                 trailing: Icon(
                   count == settings.lookaheadLines
                       ? Icons.radio_button_checked
@@ -4263,8 +4504,8 @@ class _SettingsPageState extends State<SettingsPage> {
       backgroundColor: _panel,
       builder: (context) => SafeArea(
         child: SwitchListTile(
-          title: const Text('自拍镜像'),
-          subtitle: const Text('前置预览和保存视频保持一致的镜像效果'),
+          title: Text(tr('自拍镜像')),
+          subtitle: Text(tr('前置预览和保存视频保持一致的镜像效果')),
           value: settings.mirrorPreview,
           activeThumbColor: _cyan,
           onChanged: (value) => Navigator.pop(context, value),
@@ -4272,6 +4513,93 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
     );
     if (value != null) _saveSettings(settings.copyWith(mirrorPreview: value));
+  }
+
+  Future<void> _editRecognitionLanguage() async {
+    final value = await showModalBottomSheet<domain.RecognitionLanguage>(
+      context: context,
+      backgroundColor: _panel,
+      builder: (context) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: Text(tr('识别语言')),
+              subtitle: Text(tr('自动按文稿选择，也可以手动指定')),
+            ),
+            for (final option in domain.RecognitionLanguage.values)
+              ListTile(
+                title: Text(_recognitionLanguageLabel(option)),
+                subtitle: Text(
+                  tr(switch (option) {
+                    domain.RecognitionLanguage.automatic => '根据文稿中英文字符自动选择模型',
+                    domain.RecognitionLanguage.chinese => '使用中文离线模型',
+                    domain.RecognitionLanguage.english => '使用英文离线模型',
+                  }),
+                ),
+                trailing: Icon(
+                  option == settings.recognitionLanguage
+                      ? Icons.radio_button_checked
+                      : Icons.radio_button_unchecked,
+                  color: option == settings.recognitionLanguage
+                      ? _cyan
+                      : _muted,
+                ),
+                onTap: () => Navigator.pop(context, option),
+              ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+    if (value != null) {
+      await _saveSettings(settings.copyWith(recognitionLanguage: value));
+    }
+  }
+
+  Future<void> _editLanguage() async {
+    final value = await showModalBottomSheet<AppLanguage>(
+      context: context,
+      backgroundColor: _panel,
+      builder: (context) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(title: Text(tr('语言'))),
+            ListTile(
+              title: const Text('English'),
+              subtitle: Text(tr('默认语言，适合国际版发布')),
+              trailing: Icon(
+                settings.language == AppLanguage.english
+                    ? Icons.radio_button_checked
+                    : Icons.radio_button_unchecked,
+                color: settings.language == AppLanguage.english
+                    ? _cyan
+                    : _muted,
+              ),
+              onTap: () => Navigator.pop(context, AppLanguage.english),
+            ),
+            ListTile(
+              title: const Text('简体中文'),
+              subtitle: Text(tr('中文界面与本地离线识别')),
+              trailing: Icon(
+                settings.language == AppLanguage.chinese
+                    ? Icons.radio_button_checked
+                    : Icons.radio_button_unchecked,
+                color: settings.language == AppLanguage.chinese
+                    ? _cyan
+                    : _muted,
+              ),
+              onTap: () => Navigator.pop(context, AppLanguage.chinese),
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+    if (value != null) {
+      await _saveSettings(settings.copyWith(language: value));
+    }
   }
 
   Future<void> _editResolution() async {
@@ -4289,7 +4617,7 @@ class _SettingsPageState extends State<SettingsPage> {
     if (!mounted) return;
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('已恢复默认设置')));
+    ).showSnackBar(SnackBar(content: Text(tr('已恢复默认设置'))));
   }
 
   Future<void> _showInfoSheet({
@@ -4339,7 +4667,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 width: double.infinity,
                 child: FilledButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('知道了'),
+                  child: Text(tr('知道了')),
                 ),
               ),
             ],
@@ -4351,26 +4679,25 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> _showStorageInfo() => _showInfoSheet(
     icon: Icons.photo_library_outlined,
-    title: '存储位置',
-    body:
-        '录制完成后，视频会交给系统相册管理，优先保存到 DCIM/ScriptMirror。\n\n'
-        'Android 8/9 如果设备不允许创建自定义目录，会自动回退到系统共享视频位置；应用不会清理其他相册内容。',
+    title: tr('存储位置'),
+    body: tr(
+      '录制完成后，视频会交给系统相册管理，优先保存到 DCIM/ScriptMirror。\n\nAndroid 8/9 如果设备不允许创建自定义目录，会自动回退到系统共享视频位置；应用不会清理其他相册内容。',
+    ),
   );
 
   Future<void> _showAsrInfo() => _showInfoSheet(
     icon: Icons.offline_bolt_outlined,
-    title: '语音识别',
-    body:
-        '镜词内置 sherpa-onnx 中文流式识别模型，识别在本机 CPU 完成，不需要网络，也不会上传录音。\n\n'
-        '如果设备无法初始化模型，录制仍会继续，并自动切换为按节奏或手动提词。',
+    title: tr('语音识别'),
+    body: tr(
+      '镜词内置 sherpa-onnx 中英文流式识别模型，识别在本机 CPU 完成，不需要网络，也不会上传录音。\n\n默认会根据文稿中的中英文字符自动选择模型，也可以在“识别语言”中手动指定。\n\n如果设备无法初始化模型，录制仍会继续，并自动切换为按节奏或手动提词。',
+    ),
   );
 
   Future<void> _showAbout() => _showInfoSheet(
     icon: Icons.info_outline,
-    title: '关于镜词',
+    title: tr('关于镜词'),
     body:
-        '镜词是一款本地优先的自拍视频提词器：让你看着镜头，也不用忘记下一句。\n\n'
-        '版本 $_appVersion · 文稿、录音和视频默认只保存在本机。',
+        '${tr('镜词是一款本地优先的自拍视频提词器：让你看着镜头，也不用忘记下一句。\n\n版本')} $_appVersion · ${tr('文稿、录音和视频默认只保存在本机。')}',
   );
 
   Future<double?> _showSlider({
@@ -4414,7 +4741,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   width: double.infinity,
                   child: FilledButton(
                     onPressed: () => Navigator.pop(context, value),
-                    child: const Text('保存'),
+                    child: Text(tr('保存')),
                   ),
                 ),
               ],
@@ -4427,89 +4754,107 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) => AppScaffold(
-    title: '设置',
+    title: tr('设置'),
     onBack: () => Navigator.pop(context),
     child: ListView(
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
       children: [
         SettingsSection(
-          title: '提词器偏好',
+          title: tr('提词器偏好'),
           children: [
             SettingsItem(
               Icons.format_size,
-              '默认字号',
+              tr('默认字号'),
               '${settings.fontSize.round()}sp',
               onTap: _editFontSize,
             ),
             SettingsItem(
               Icons.opacity,
-              '背景透明度',
+              tr('背景透明度'),
               '${(settings.backgroundOpacity * 100).round()}%',
               onTap: _editOpacity,
             ),
             SettingsItem(
               Icons.visibility_outlined,
-              '前瞻行数',
-              '当前及后续 ${settings.lookaheadLines} 句',
+              tr('前瞻行数'),
+              _lookaheadLabel(settings.lookaheadLines),
               onTap: _editLookahead,
             ),
             SettingsItem(
               Icons.format_line_spacing,
-              '行距',
+              tr('行距'),
               '${settings.lineHeight.toStringAsFixed(2)}x',
               onTap: _editLineHeight,
             ),
           ],
         ),
         SettingsSection(
-          title: '录制与行为',
+          title: tr('录制与行为'),
           children: [
             SettingsItem(
               Icons.flip,
-              '自拍镜像',
-              settings.mirrorPreview ? '预览与成片均镜像' : '预览与成片均正常',
+              tr('自拍镜像'),
+              tr(settings.mirrorPreview ? '预览与成片均镜像' : '预览与成片均正常'),
               onTap: _editMirror,
             ),
             SettingsItem(
               Icons.high_quality_outlined,
-              '默认画质',
+              tr('默认画质'),
               settings.captureResolution.label,
               onTap: _editResolution,
             ),
             SettingsItem(
               Icons.photo_library_outlined,
-              '存储位置',
-              '系统相册',
+              tr('存储位置'),
+              tr('系统相册'),
               onTap: _showStorageInfo,
             ),
           ],
         ),
         SettingsSection(
-          title: '隐私与识别',
+          title: tr('隐私与识别'),
           children: [
             SettingsItem(
               Icons.offline_bolt_outlined,
-              '语音识别',
-              '本地离线处理 · 音频不会上传',
+              tr('语音识别'),
+              tr('本地离线处理 · 中英文模型'),
               onTap: _showAsrInfo,
+            ),
+            SettingsItem(
+              Icons.translate_outlined,
+              tr('识别语言'),
+              _recognitionLanguageLabel(settings.recognitionLanguage),
+              onTap: _editRecognitionLanguage,
             ),
           ],
         ),
         SettingsSection(
-          title: '关于',
+          title: tr('关于'),
           children: [
             SettingsItem(
               Icons.info_outline,
-              '关于镜词',
-              '本地优先的自拍视频提词器',
+              tr('关于镜词'),
+              tr('本地优先的自拍视频提词器'),
               onTap: _showAbout,
+            ),
+          ],
+        ),
+        SettingsSection(
+          title: tr('语言'),
+          children: [
+            SettingsItem(
+              Icons.language_outlined,
+              tr('语言'),
+              settings.language == AppLanguage.english ? 'English' : '简体中文',
+              onTap: _editLanguage,
             ),
           ],
         ),
         TextButton.icon(
           onPressed: _resetSettings,
           icon: const Icon(Icons.restore, size: 17),
-          label: const Text('恢复默认设置'),
+          label: Text(tr('恢复默认设置')),
           style: TextButton.styleFrom(foregroundColor: _muted),
         ),
       ],
